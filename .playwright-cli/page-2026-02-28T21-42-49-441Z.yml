@@ -1,0 +1,102 @@
+- generic [ref=e3]:
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - button "Open invitation seal" [ref=e11] [cursor=pointer]:
+        - generic [ref=e14]:
+          - img [ref=e15]
+          - img [ref=e22]
+      - generic:
+        - generic:
+          - generic:
+            - group "Language selector":
+              - button "IT" [pressed]
+              - button "EN"
+          - heading "Sara e Ben si sposano" [level=2]
+    - paragraph [ref=e29]: Click to break the seal
+    - group "Language selector" [ref=e31]:
+      - button "IT" [pressed] [ref=e32] [cursor=pointer]
+      - button "EN" [ref=e33] [cursor=pointer]
+  - main [ref=e35]:
+    - generic [ref=e36]:
+      - group "Language selector" [ref=e38]:
+        - button "IT" [pressed] [ref=e39] [cursor=pointer]
+        - button "EN" [ref=e40] [cursor=pointer]
+      - generic [ref=e41]:
+        - heading "Sara e Ben si sposano" [level=1] [ref=e42]
+        - generic [ref=e43]:
+          - generic [ref=e44]: Domenica 27 settembre 2026
+          - generic [ref=e45]: Tenuta Savoca, Piazza Armerina
+          - link "Apri Google Maps" [ref=e46] [cursor=pointer]:
+            - /url: https://www.google.com/maps/search/?api=1&query=Tenuta+Savoca+Piazza+Armerina
+    - generic [ref=e47]:
+      - article [ref=e48]:
+        - heading "Programma" [level=2] [ref=e49]
+        - paragraph [ref=e50]: Orari indicativi per capire il ritmo della giornata.
+        - list [ref=e51]:
+          - listitem [ref=e52]:
+            - generic [ref=e53]: 1:30
+            - generic [ref=e54]: Partenza bus da Catania
+          - listitem [ref=e55]:
+            - generic [ref=e56]: 3:00
+            - generic [ref=e57]: Arrivo a Tenuta Savoca
+          - listitem [ref=e58]:
+            - generic [ref=e59]: 3:30
+            - generic [ref=e60]: Cerimonia
+          - listitem [ref=e61]:
+            - generic [ref=e62]: 4:00
+            - generic [ref=e63]: Accoglienza (Bosco)
+          - listitem [ref=e64]:
+            - generic [ref=e65]: 5:30
+            - generic [ref=e66]: Aperitivo
+          - listitem [ref=e67]:
+            - generic [ref=e68]: 8:00
+            - generic [ref=e69]: Cena
+          - listitem [ref=e70]:
+            - generic [ref=e71]: 9:30
+            - generic [ref=e72]: Taglio torta e general frolicking
+          - listitem [ref=e73]:
+            - generic [ref=e74]: 11:00
+            - generic [ref=e75]: Rave
+          - listitem [ref=e76]:
+            - generic [ref=e77]: 02:00
+            - generic [ref=e78]: 😴
+          - listitem [ref=e79]:
+            - generic [ref=e80]: 10:00
+            - generic [ref=e81]: Navetta hotel ogni 30 min
+          - listitem [ref=e82]:
+            - generic [ref=e83]: 15:00
+            - generic [ref=e84]: (Lunedì 28) Bus verso Catania
+      - article [ref=e85]:
+        - img "Warm autumn bouquet inspiration." [ref=e86]
+      - article [ref=e87]:
+        - img "Golden floral detail inspiration." [ref=e88]
+      - article [ref=e89]:
+        - heading "Location e come raggiungerlo" [level=3] [ref=e90]
+        - list [ref=e91]:
+          - listitem [ref=e92]:
+            - generic [ref=e93]: ●
+            - generic [ref=e94]: "Location: Tenuta Savoca, vicino Piazza Armerina."
+          - listitem [ref=e95]:
+            - generic [ref=e96]: ●
+            - generic [ref=e97]: "Aeroporto consigliato: Catania (CTA)."
+          - listitem [ref=e98]:
+            - generic [ref=e99]: ●
+            - generic [ref=e100]: Sabato è previsto il bus organizzato da Catania.
+        - link "Apri Google Maps" [ref=e101] [cursor=pointer]:
+          - /url: https://www.google.com/maps/search/?api=1&query=Tenuta+Savoca+Piazza+Armerina
+      - article [ref=e102]:
+        - img "Rustic floral entrance inspiration." [ref=e103]
+      - article [ref=e104]:
+        - img "Golden floral detail inspiration." [ref=e105]
+    - generic [ref=e106]:
+      - heading "FAQ" [level=2] [ref=e107]
+      - list [ref=e108]:
+        - listitem [ref=e109]:
+          - heading "Cosa portare?" [level=3] [ref=e110]
+          - paragraph [ref=e111]: Look elegante ma comodo, più una giacca leggera per la sera.
+        - listitem [ref=e112]:
+          - heading "Cerimonia e cena sono nello stesso punto?" [level=3] [ref=e113]
+          - paragraph [ref=e114]: No. Cerimonia nel bosco, cena in un'altra area della tenuta.
+        - listitem [ref=e115]:
+          - heading "Quando conviene arrivare?" [level=3] [ref=e116]
+          - paragraph [ref=e117]: Meglio arrivare il sabato o comunque con margine su CTA.

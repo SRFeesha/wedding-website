@@ -1,0 +1,138 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Sora:wght@500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  line-height: 1.55;
+}
+
+.open-flap {
+  transform: perspective(1100px) rotateX(-170deg);
+}
+
+.wax-seal-ring {
+  position: relative;
+  display: inline-flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 48% 52% 55% 45% / 43% 50% 50% 57%;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 243, 220, 0.95) 0%, rgba(255, 243, 220, 0) 36%),
+    radial-gradient(circle at 70% 78%, rgba(126, 79, 45, 0.35) 0%, rgba(126, 79, 45, 0) 48%),
+    conic-gradient(
+      from 210deg,
+      #e7c79b 0deg,
+      #cda274 70deg,
+      #f0d6b1 130deg,
+      #b57f54 210deg,
+      #d8b287 280deg,
+      #e7c79b 360deg
+    );
+  box-shadow:
+    0 10px 16px rgba(84, 52, 30, 0.28),
+    inset -8px -10px 14px rgba(110, 70, 45, 0.24),
+    inset 9px 8px 12px rgba(255, 246, 229, 0.54);
+}
+
+.wax-seal-rim {
+  position: absolute;
+  inset: 8%;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 32%, rgba(247, 224, 194, 0.6) 0%, rgba(247, 224, 194, 0) 64%);
+  box-shadow:
+    inset 0 0 0 1.5px rgba(121, 74, 45, 0.2),
+    inset 0 -6px 9px rgba(140, 93, 58, 0.2);
+}
+
+.wax-seal-inner {
+  position: relative;
+  display: inline-flex;
+  height: 72%;
+  width: 72%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 28% 28%, rgba(245, 220, 188, 0.75) 0%, rgba(245, 220, 188, 0) 46%),
+    radial-gradient(circle at 70% 75%, rgba(108, 67, 41, 0.22) 0%, rgba(108, 67, 41, 0) 52%),
+    linear-gradient(158deg, #ebcd9f 0%, #c79261 46%, #b0754a 100%);
+  box-shadow:
+    inset 0 0 0 1.8px rgba(125, 82, 49, 0.38),
+    inset 0 2px 4px rgba(255, 248, 233, 0.5),
+    inset 0 -3px 6px rgba(134, 86, 53, 0.34);
+}
+
+.wax-seal-emblem {
+  position: absolute;
+  height: 52%;
+  width: 52%;
+}
+
+.wax-seal-emblem-shadow {
+  color: rgba(93, 54, 34, 0.42);
+  transform: translate(1.4px, 1.5px);
+}
+
+.wax-seal-emblem-main {
+  color: rgba(123, 75, 46, 0.9);
+}
+
+.wax-seal-gloss {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 24% 20%, rgba(255, 253, 247, 0.74) 0%, rgba(255, 253, 247, 0) 30%),
+    radial-gradient(circle at 72% 82%, rgba(125, 76, 46, 0.25) 0%, rgba(125, 76, 46, 0) 40%);
+}
+
+.hero-photo-fade {
+  -webkit-mask-image: radial-gradient(circle at 50% 40%, #000 28%, transparent 92%);
+  mask-image: radial-gradient(circle at 50% 40%, #000 28%, transparent 92%);
+}
+
+.mask-fade-bottom {
+  -webkit-mask-image: linear-gradient(to bottom, #000 12%, #000 65%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 12%, #000 65%, transparent 100%);
+}
+
+.mask-fade-soft {
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 55%, transparent 100%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 55%, transparent 100%);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
