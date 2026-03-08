@@ -141,7 +141,7 @@ export default function RSVPForm() {
               <button
                 className={`flex-1 rounded-full border py-3 font-body text-[17px] transition ${
                   form.attending === true
-                    ? "border-crimson-600/35 bg-white text-crimson-700"
+                    ? "border-crimson-600 bg-crimson-600 text-canvas-50"
                     : "border-[#C4A87A] bg-white/60 text-ink/50 hover:border-ink/30 hover:text-ink/70"
                 }`}
                 onClick={() => handleChange("attending", true)}
@@ -151,7 +151,7 @@ export default function RSVPForm() {
               <button
                 className={`flex-1 rounded-full border py-3 font-body text-[17px] transition ${
                   form.attending === false
-                    ? "border-[#C4A87A] bg-canvas-50 text-ink/70"
+                    ? "border-ink/40 bg-ink/10 text-ink"
                     : "border-[#C4A87A] bg-white/60 text-ink/50 hover:border-ink/30 hover:text-ink/70"
                 }`}
                 onClick={() => handleChange("attending", false)}
