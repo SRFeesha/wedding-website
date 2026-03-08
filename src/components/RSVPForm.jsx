@@ -19,8 +19,19 @@ const ARRIVAL_OPTIONS = [
 ];
 
 const labelClass = "block text-xs font-semibold uppercase tracking-widest text-ink/50 mb-2";
-const inputClass =
-  "w-full bg-transparent border-b border-[#C4A87A] pb-2 font-body text-[18px] text-ink placeholder:text-ink/30 outline-none focus:border-ink/50 transition-colors";
+
+function inputClass(hasError) {
+  return `w-full bg-transparent border-b pb-2 font-body text-[18px] text-ink placeholder:text-ink/30 outline-none transition-colors ${
+    hasError
+      ? "border-amber-500 focus:border-amber-500"
+      : "border-[#C4A87A] focus:border-ink/50"
+  }`;
+}
+
+function FieldError({ msg }) {
+  if (!msg) return null;
+  return <p className="mt-1.5 text-xs text-amber-500">{msg}</p>;
+}
 
 function Chevron() {
   return (
@@ -49,22 +60,25 @@ export default function RSVPForm() {
     message: "",
   });
   const [status, setStatus] = useState("idle");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errors, setErrors] = useState({});
 
   const handleChange = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
   const handleSubmit = async () => {
-    if (!form.firstName || !form.lastName) {
-      setErrorMsg("Please enter your full name.");
+    const newErrors = {};
+    if (!form.firstName) newErrors.firstName = "Please enter your first name.";
+    if (!form.lastName) newErrors.lastName = "Please enter your last name.";
+    if (form.attending === null) newErrors.attending = "Please let us know if you'll be joining us.";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
-    if (form.attending === null) {
-      setErrorMsg("Please let us know if you'll be attending.");
-      return;
-    }
-    setErrorMsg("");
+
+    setErrors({});
     setStatus("loading");
 
     try {
@@ -117,27 +131,29 @@ export default function RSVPForm() {
             <div>
               <label className={labelClass}>First Name</label>
               <input
-                className={inputClass}
+                className={inputClass(!!errors.firstName)}
                 placeholder="Maria"
                 value={form.firstName}
                 onChange={(e) => handleChange("firstName", e.target.value)}
               />
+              <FieldError msg={errors.firstName} />
             </div>
             <div>
               <label className={labelClass}>Last Name</label>
               <input
-                className={inputClass}
+                className={inputClass(!!errors.lastName)}
                 placeholder="Rossi"
                 value={form.lastName}
                 onChange={(e) => handleChange("lastName", e.target.value)}
               />
+              <FieldError msg={errors.lastName} />
             </div>
           </div>
 
           {/* Attendance */}
           <div>
             <label className={labelClass}>Will you be joining us?</label>
-            <div className="flex gap-3">
+            <div className={`flex gap-3 rounded-full ${errors.attending ? "outline outline-1 outline-amber-500/60 outline-offset-4" : ""}`}>
               <button
                 className={`flex-1 rounded-full border py-3 font-body text-[17px] transition ${
                   form.attending === true
@@ -159,6 +175,7 @@ export default function RSVPForm() {
                 Regretfully declines
               </button>
             </div>
+            <FieldError msg={errors.attending} />
           </div>
 
           {/* Conditional fields */}
@@ -168,7 +185,7 @@ export default function RSVPForm() {
                 <label className={labelClass}>Dietary Preferences</label>
                 <div className="relative">
                   <select
-                    className={`${inputClass} appearance-none pr-6 cursor-pointer`}
+                    className={`${inputClass(false)} appearance-none pr-6 cursor-pointer`}
                     value={form.dietary}
                     onChange={(e) => handleChange("dietary", e.target.value)}
                   >
@@ -185,7 +202,7 @@ export default function RSVPForm() {
                 <label className={labelClass}>Planned Arrival</label>
                 <div className="relative">
                   <select
-                    className={`${inputClass} appearance-none pr-6 cursor-pointer`}
+                    className={`${inputClass(false)} appearance-none pr-6 cursor-pointer`}
                     value={form.arrival}
                     onChange={(e) => handleChange("arrival", e.target.value)}
                   >
@@ -206,7 +223,7 @@ export default function RSVPForm() {
               A note for the couple <span className="normal-case font-normal">(optional)</span>
             </label>
             <textarea
-              className={inputClass}
+              className={inputClass(false)}
               placeholder="Share a wish, a memory, or anything you'd like us to know…"
               rows={3}
               value={form.message}
@@ -214,11 +231,6 @@ export default function RSVPForm() {
               style={{ resize: "none", lineHeight: "1.7" }}
             />
           </div>
-
-          {/* Error */}
-          {errorMsg && (
-            <p className="text-sm text-crimson-700">{errorMsg}</p>
-          )}
 
           {/* Submit */}
           <div>
@@ -233,7 +245,7 @@ export default function RSVPForm() {
 
           {/* Submit error */}
           {status === "error" && (
-            <p className="text-sm text-crimson-700">
+            <p className="text-sm text-amber-500">
               Something went wrong. Please try again or contact us directly.
             </p>
           )}
