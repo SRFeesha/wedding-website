@@ -6,7 +6,10 @@
       "Bash(curl:*)",
       "Bash(git config:*)",
       "Bash(git remote:*)",
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "Bash(npm install:*)",
+      "Bash(node:*)",
+      "Bash(npm:*)"
     ]
   }
 }

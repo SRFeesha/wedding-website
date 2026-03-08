@@ -69,7 +69,7 @@ export default function App() {
     easeY2: { value: DEFAULT_INTRO_TUNING.easeY2, min: -0.4, max: 1.4, step: 0.01, label: "Ease y2", onChange: set("easeY2") },
     "Play animation": button(() => playAnimationRef.current?.()),
     "Reset envelope": button(() => resetEnvelopeRef.current?.()),
-  }));
+  }), { collapsed: true });
 
   const introEasing = useMemo(
     () => `cubic-bezier(${introTuning.easeX1}, ${introTuning.easeY1}, ${introTuning.easeX2}, ${introTuning.easeY2})`,

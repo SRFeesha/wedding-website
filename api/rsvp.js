@@ -51,16 +51,13 @@ export default async function handler(req, res) {
             select: { name: attending }, // "Yes" or "No"
           },
           Dietary: {
-            rich_text: [{ text: { content: dietary || "" } }],
+            multi_select: dietary ? [{ name: dietary }] : [],
           },
           Arrival: {
             rich_text: [{ text: { content: arrival || "" } }],
           },
           Message: {
             rich_text: [{ text: { content: message || "" } }],
-          },
-          "Submitted At": {
-            date: { start: new Date().toISOString() },
           },
         },
       }),
