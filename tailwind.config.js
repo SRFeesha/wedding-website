@@ -5,31 +5,32 @@ export default {
     extend: {
       colors: {
         canvas: {
-          50: "#f8f1e8",
-          100: "#ecdecb",
+          50: "#F5EBD8",   // aged linen — light
+          100: "#E6D3B8",  // aged linen — mid
         },
         saffron: {
-          500: "#d8a145",
-          600: "#bf8426",
+          500: "#C9A96E",  // wheat gold
+          600: "#A67D42",  // wheat gold — deep
         },
         crimson: {
-          600: "#6b1d23",
-          700: "#4c1318",
+          600: "#B5541A",  // burnt sienna
+          700: "#8C3F12",  // burnt sienna — deep
         },
         amber: {
-          500: "#b9652f",
+          500: "#6B2230",  // dried merlot
         },
         forest: {
-          500: "#44503b",
+          500: "#8A9E84",  // dusty sage
         },
         dusty: {
-          500: "#6f7f93",
+          500: "#7C5635",  // raw umber
         },
-        ink: "#2c1a16",
+        ink: "#2C1610",    // warm dark — toward raw umber
       },
       fontFamily: {
-        display: ["Cormorant Garamond", "serif"],
-        body: ["Sora", "sans-serif"],
+        display: ["DM Serif Display", "serif"],
+        body: ["EB Garamond", "serif"],
+        script: ["Lovers Quarrel", "cursive"],
       },
       boxShadow: {
         card: "0 12px 36px rgba(44, 26, 22, 0.09)",

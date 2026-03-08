@@ -18,6 +18,27 @@ const ARRIVAL_OPTIONS = [
   "Day of only (Saturday)",
 ];
 
+const labelClass = "block text-xs font-semibold uppercase tracking-widest text-ink/50 mb-2";
+const inputClass =
+  "w-full bg-transparent border-b border-[#C4A87A] pb-2 font-body text-[18px] text-ink placeholder:text-ink/30 outline-none focus:border-ink/50 transition-colors";
+
+function Chevron() {
+  return (
+    <svg
+      className="pointer-events-none absolute right-0 bottom-3 text-ink/40"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden="true"
+    >
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  );
+}
+
 export default function RSVPForm() {
   const [form, setForm] = useState({
     firstName: "",
@@ -27,10 +48,8 @@ export default function RSVPForm() {
     arrival: "",
     message: "",
   });
-  const [status, setStatus] = useState("idle"); // idle | loading | success | error
+  const [status, setStatus] = useState("idle");
   const [errorMsg, setErrorMsg] = useState("");
-
-  const DEADLINE = "June 1, 2026";
 
   const handleChange = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -70,208 +89,86 @@ export default function RSVPForm() {
 
   if (status === "success") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-stone-50 px-4">
-        <div className="text-center max-w-md">
-          <div className="text-5xl mb-6">🌿</div>
-          <h2
-            className="text-3xl mb-3 text-stone-700"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, letterSpacing: "0.05em" }}
-          >
-            {form.attending ? "We can't wait to celebrate with you." : "We'll miss you."}
+      <section className="bg-canvas-100 px-5 py-16 sm:px-8 sm:py-20">
+        <div className="mx-auto max-w-2xl py-8">
+          <h2 className="font-display text-4xl text-ink sm:text-5xl">
+            {form.attending ? "See you in Sicily." : "We'll miss you."}
           </h2>
-          <p className="text-stone-500 text-sm tracking-wide">
+          <p className="mt-4 text-ink/75">
             {form.attending
               ? "Your RSVP has been received. More details to follow."
               : "Thank you for letting us know. We'll be thinking of you."}
           </p>
         </div>
-      </div>
+      </section>
     );
   }
 
   return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400&display=swap');
+    <section id="rsvp" className="bg-canvas-100 px-5 py-16 sm:px-8 sm:py-20">
+      <div className="mx-auto max-w-2xl">
+        <h2 className="font-display text-4xl text-ink sm:text-5xl">RSVP</h2>
+        <p className="mt-3 text-ink/75">Please respond by June 1, 2026.</p>
 
-        .rsvp-input {
-          width: 100%;
-          background: transparent;
-          border: none;
-          border-bottom: 1px solid #d6d3d1;
-          padding: 8px 0;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.9rem;
-          font-weight: 300;
-          color: #44403c;
-          outline: none;
-          transition: border-color 0.2s;
-        }
-        .rsvp-input:focus {
-          border-bottom-color: #a8a29e;
-        }
-        .rsvp-input::placeholder {
-          color: #c4bfba;
-        }
-        .rsvp-select {
-          appearance: none;
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a8a29e' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-          background-repeat: no-repeat;
-          background-position: right 4px center;
-          padding-right: 24px;
-          cursor: pointer;
-        }
-        .attend-btn {
-          flex: 1;
-          padding: 12px;
-          border: 1px solid #d6d3d1;
-          background: transparent;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.8rem;
-          font-weight: 300;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: #78716c;
-          cursor: pointer;
-          transition: all 0.2s;
-        }
-        .attend-btn:hover {
-          border-color: #a8a29e;
-          color: #44403c;
-        }
-        .attend-btn.selected-yes {
-          background: #44403c;
-          border-color: #44403c;
-          color: #fafaf9;
-        }
-        .attend-btn.selected-no {
-          background: #d6d3d1;
-          border-color: #d6d3d1;
-          color: #44403c;
-        }
-        .submit-btn {
-          width: 100%;
-          padding: 14px;
-          background: #44403c;
-          color: #fafaf9;
-          border: none;
-          font-family: 'Jost', sans-serif;
-          font-size: 0.8rem;
-          font-weight: 300;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-          cursor: pointer;
-          transition: background 0.2s;
-        }
-        .submit-btn:hover {
-          background: #292524;
-        }
-        .submit-btn:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-        .ornament {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          color: #d6d3d1;
-          font-size: 0.7rem;
-          letter-spacing: 0.2em;
-        }
-        .ornament::before,
-        .ornament::after {
-          content: '';
-          flex: 1;
-          height: 1px;
-          background: #e7e5e4;
-        }
-      `}</style>
+        <div className="mt-10 space-y-8">
 
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center px-4 py-16">
-        <div className="w-full max-w-lg">
-
-          {/* Header */}
-          <div className="text-center mb-12">
-            <p className="text-xs tracking-widest text-stone-400 uppercase mb-4" style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300 }}>
-              You're invited
-            </p>
-            <h1
-              className="text-5xl text-stone-700 mb-2"
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, letterSpacing: "0.03em" }}
-            >
-              RSVP
-            </h1>
-            <p
-              className="text-xl text-stone-400 italic mb-6"
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}
-            >
-              September 2026 · Sicily
-            </p>
-            <div className="ornament" style={{ fontFamily: "'Jost', sans-serif" }}>
-              Please respond by {DEADLINE}
+          {/* Name */}
+          <div className="grid grid-cols-2 gap-6">
+            <div>
+              <label className={labelClass}>First Name</label>
+              <input
+                className={inputClass}
+                placeholder="Maria"
+                value={form.firstName}
+                onChange={(e) => handleChange("firstName", e.target.value)}
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Last Name</label>
+              <input
+                className={inputClass}
+                placeholder="Rossi"
+                value={form.lastName}
+                onChange={(e) => handleChange("lastName", e.target.value)}
+              />
             </div>
           </div>
 
-          {/* Form */}
-          <div className="space-y-8">
-
-            {/* Name */}
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <label className="block text-xs tracking-widest text-stone-400 uppercase mb-2" style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300 }}>
-                  First Name
-                </label>
-                <input
-                  className="rsvp-input"
-                  placeholder="Maria"
-                  value={form.firstName}
-                  onChange={(e) => handleChange("firstName", e.target.value)}
-                />
-              </div>
-              <div>
-                <label className="block text-xs tracking-widest text-stone-400 uppercase mb-2" style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300 }}>
-                  Last Name
-                </label>
-                <input
-                  className="rsvp-input"
-                  placeholder="Rossi"
-                  value={form.lastName}
-                  onChange={(e) => handleChange("lastName", e.target.value)}
-                />
-              </div>
+          {/* Attendance */}
+          <div>
+            <label className={labelClass}>Will you be joining us?</label>
+            <div className="flex gap-3">
+              <button
+                className={`flex-1 rounded-full border py-3 font-body text-[17px] transition ${
+                  form.attending === true
+                    ? "border-crimson-600/35 bg-white text-crimson-700"
+                    : "border-[#C4A87A] bg-white/60 text-ink/50 hover:border-ink/30 hover:text-ink/70"
+                }`}
+                onClick={() => handleChange("attending", true)}
+              >
+                Joyfully accepts
+              </button>
+              <button
+                className={`flex-1 rounded-full border py-3 font-body text-[17px] transition ${
+                  form.attending === false
+                    ? "border-[#C4A87A] bg-canvas-50 text-ink/70"
+                    : "border-[#C4A87A] bg-white/60 text-ink/50 hover:border-ink/30 hover:text-ink/70"
+                }`}
+                onClick={() => handleChange("attending", false)}
+              >
+                Regretfully declines
+              </button>
             </div>
+          </div>
 
-            {/* Attendance */}
-            <div>
-              <label className="block text-xs tracking-widest text-stone-400 uppercase mb-3" style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300 }}>
-                Will you be joining us?
-              </label>
-              <div className="flex gap-3">
-                <button
-                  className={`attend-btn ${form.attending === true ? "selected-yes" : ""}`}
-                  onClick={() => handleChange("attending", true)}
-                >
-                  Joyfully accepts
-                </button>
-                <button
-                  className={`attend-btn ${form.attending === false ? "selected-no" : ""}`}
-                  onClick={() => handleChange("attending", false)}
-                >
-                  Regretfully declines
-                </button>
-              </div>
-            </div>
-
-            {/* Conditional fields — only if attending */}
-            {form.attending === true && (
-              <>
-                {/* Dietary */}
-                <div>
-                  <label className="block text-xs tracking-widest text-stone-400 uppercase mb-2" style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300 }}>
-                    Dietary Preferences
-                  </label>
+          {/* Conditional fields */}
+          {form.attending === true && (
+            <>
+              <div>
+                <label className={labelClass}>Dietary Preferences</label>
+                <div className="relative">
                   <select
-                    className="rsvp-input rsvp-select"
+                    className={`${inputClass} appearance-none pr-6 cursor-pointer`}
                     value={form.dietary}
                     onChange={(e) => handleChange("dietary", e.target.value)}
                   >
@@ -280,15 +177,15 @@ export default function RSVPForm() {
                       <option key={o} value={o}>{o}</option>
                     ))}
                   </select>
+                  <Chevron />
                 </div>
+              </div>
 
-                {/* Arrival */}
-                <div>
-                  <label className="block text-xs tracking-widest text-stone-400 uppercase mb-2" style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300 }}>
-                    Planned Arrival
-                  </label>
+              <div>
+                <label className={labelClass}>Planned Arrival</label>
+                <div className="relative">
                   <select
-                    className="rsvp-input rsvp-select"
+                    className={`${inputClass} appearance-none pr-6 cursor-pointer`}
                     value={form.arrival}
                     onChange={(e) => handleChange("arrival", e.target.value)}
                   >
@@ -297,50 +194,52 @@ export default function RSVPForm() {
                       <option key={o} value={o}>{o}</option>
                     ))}
                   </select>
+                  <Chevron />
                 </div>
-              </>
-            )}
+              </div>
+            </>
+          )}
 
-            {/* Message */}
-            <div>
-              <label className="block text-xs tracking-widest text-stone-400 uppercase mb-2" style={{ fontFamily: "'Jost', sans-serif", fontWeight: 300 }}>
-                A note for the couple <span className="normal-case">(optional)</span>
-              </label>
-              <textarea
-                className="rsvp-input"
-                placeholder="Share a wish, a memory, or anything you'd like us to know…"
-                rows={3}
-                value={form.message}
-                onChange={(e) => handleChange("message", e.target.value)}
-                style={{ resize: "none", lineHeight: "1.7" }}
-              />
-            </div>
+          {/* Message */}
+          <div>
+            <label className={labelClass}>
+              A note for the couple <span className="normal-case font-normal">(optional)</span>
+            </label>
+            <textarea
+              className={inputClass}
+              placeholder="Share a wish, a memory, or anything you'd like us to know…"
+              rows={3}
+              value={form.message}
+              onChange={(e) => handleChange("message", e.target.value)}
+              style={{ resize: "none", lineHeight: "1.7" }}
+            />
+          </div>
 
-            {/* Error */}
-            {errorMsg && (
-              <p className="text-xs text-red-400 tracking-wide" style={{ fontFamily: "'Jost', sans-serif" }}>
-                {errorMsg}
-              </p>
-            )}
+          {/* Error */}
+          {errorMsg && (
+            <p className="text-sm text-crimson-700">{errorMsg}</p>
+          )}
 
-            {/* Submit */}
+          {/* Submit */}
+          <div>
             <button
-              className="submit-btn"
+              className="inline-flex rounded-full border border-crimson-600/35 bg-white px-6 py-2.5 font-semibold text-crimson-700 transition hover:bg-canvas-50 disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={handleSubmit}
               disabled={status === "loading"}
             >
               {status === "loading" ? "Sending…" : "Send RSVP"}
             </button>
-
-            {status === "error" && (
-              <p className="text-xs text-center text-red-400 tracking-wide" style={{ fontFamily: "'Jost', sans-serif" }}>
-                Something went wrong. Please try again or contact us directly.
-              </p>
-            )}
-
           </div>
+
+          {/* Submit error */}
+          {status === "error" && (
+            <p className="text-sm text-crimson-700">
+              Something went wrong. Please try again or contact us directly.
+            </p>
+          )}
+
         </div>
       </div>
-    </>
+    </section>
   );
 }
