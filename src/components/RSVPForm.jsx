@@ -18,27 +18,36 @@ const ARRIVAL_OPTIONS = [
   "Day of only (Saturday)",
 ];
 
-const labelClass = "block text-xs font-semibold uppercase tracking-widest text-ink/50 mb-2";
+const ERROR = "#B5340F";
+
+const labelClass = "block text-[18px] font-semibold uppercase tracking-wide text-ink/70 mb-1.5";
 
 function inputClass(hasError) {
-  return `w-full bg-transparent border-b pb-2 font-body text-[18px] text-ink placeholder:text-ink/30 outline-none transition-colors ${
-    hasError
-      ? "border-amber-500 focus:border-amber-500"
-      : "border-[#C4A87A] focus:border-ink/50"
-  }`;
+  const base =
+    "w-full rounded-md border bg-white px-3 py-2 font-body text-[18px] text-ink outline-none transition focus:ring-2";
+  return hasError
+    ? `${base} border-[${ERROR}] bg-[#FDF5F0] focus:border-[${ERROR}] focus:ring-[${ERROR}]/15`
+    : `${base} border-[#C4A87A] focus:border-ink/60 focus:ring-ink/10`;
 }
 
 function FieldError({ msg }) {
   if (!msg) return null;
-  return <p className="mt-1.5 text-xs text-amber-500">{msg}</p>;
+  return (
+    <p className="mt-1.5 flex items-center gap-1.5 text-xs" style={{ color: ERROR }}>
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" style={{ flexShrink: 0 }}>
+        <path d="M8 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1Zm-.75 3.25a.75.75 0 0 1 1.5 0v3.5a.75.75 0 0 1-1.5 0v-3.5ZM8 11a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
+      </svg>
+      {msg}
+    </p>
+  );
 }
 
 function Chevron() {
   return (
     <svg
-      className="pointer-events-none absolute right-0 bottom-3 text-ink/40"
-      width="14"
-      height="14"
+      className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink/40"
+      width="13"
+      height="13"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -124,51 +133,53 @@ export default function RSVPForm() {
         <h2 className="font-display text-4xl text-ink sm:text-5xl">RSVP</h2>
         <p className="mt-3 text-ink/75">Please respond by June 1, 2026.</p>
 
-        <div className="mt-10 space-y-8">
+        <div className="mt-10 space-y-6">
 
-          {/* Name */}
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <label className={labelClass}>First Name</label>
-              <input
-                className={inputClass(!!errors.firstName)}
-                placeholder="Maria"
-                value={form.firstName}
-                onChange={(e) => handleChange("firstName", e.target.value)}
-              />
-              <FieldError msg={errors.firstName} />
-            </div>
-            <div>
-              <label className={labelClass}>Last Name</label>
-              <input
-                className={inputClass(!!errors.lastName)}
-                placeholder="Rossi"
-                value={form.lastName}
-                onChange={(e) => handleChange("lastName", e.target.value)}
-              />
-              <FieldError msg={errors.lastName} />
-            </div>
+          {/* First name */}
+          <div>
+            <label className={labelClass}>First Name</label>
+            <input
+              className={inputClass(!!errors.firstName)}
+              value={form.firstName}
+              onChange={(e) => handleChange("firstName", e.target.value)}
+            />
+            <FieldError msg={errors.firstName} />
           </div>
 
-          {/* Attendance */}
+          {/* Last name */}
+          <div>
+            <label className={labelClass}>Last Name</label>
+            <input
+              className={inputClass(!!errors.lastName)}
+              value={form.lastName}
+              onChange={(e) => handleChange("lastName", e.target.value)}
+            />
+            <FieldError msg={errors.lastName} />
+          </div>
+
+          {/* Attendance — segmented control */}
           <div>
             <label className={labelClass}>Will you be joining us?</label>
-            <div className={`flex gap-3 rounded-full ${errors.attending ? "outline outline-1 outline-amber-500/60 outline-offset-4" : ""}`}>
+            <div
+              className={`flex gap-1.5 rounded-lg border p-1.5 transition ${
+                errors.attending ? `border-[${ERROR}] bg-[#FDF5F0]` : "border-[#C4A87A] bg-canvas-50"
+              }`}
+            >
               <button
-                className={`flex-1 rounded-full border py-3 font-body text-[17px] transition ${
+                className={`flex-1 rounded-md py-2.5 font-body text-[18px] transition ${
                   form.attending === true
-                    ? "border-crimson-600 bg-crimson-600 text-canvas-50"
-                    : "border-[#C4A87A] bg-white/60 text-ink/50 hover:border-ink/30 hover:text-ink/70"
+                    ? "bg-white text-crimson-700 shadow-sm ring-1 ring-[#C4A87A]/40"
+                    : "text-ink/50 hover:text-ink/70"
                 }`}
                 onClick={() => handleChange("attending", true)}
               >
                 Joyfully accepts
               </button>
               <button
-                className={`flex-1 rounded-full border py-3 font-body text-[17px] transition ${
+                className={`flex-1 rounded-md py-2.5 font-body text-[18px] transition ${
                   form.attending === false
-                    ? "border-ink/40 bg-ink/10 text-ink"
-                    : "border-[#C4A87A] bg-white/60 text-ink/50 hover:border-ink/30 hover:text-ink/70"
+                    ? "bg-white text-ink shadow-sm ring-1 ring-[#C4A87A]/40"
+                    : "text-ink/50 hover:text-ink/70"
                 }`}
                 onClick={() => handleChange("attending", false)}
               >
@@ -185,7 +196,7 @@ export default function RSVPForm() {
                 <label className={labelClass}>Dietary Preferences</label>
                 <div className="relative">
                   <select
-                    className={`${inputClass(false)} appearance-none pr-6 cursor-pointer`}
+                    className={`${inputClass(false)} appearance-none pr-8 cursor-pointer`}
                     value={form.dietary}
                     onChange={(e) => handleChange("dietary", e.target.value)}
                   >
@@ -202,7 +213,7 @@ export default function RSVPForm() {
                 <label className={labelClass}>Planned Arrival</label>
                 <div className="relative">
                   <select
-                    className={`${inputClass(false)} appearance-none pr-6 cursor-pointer`}
+                    className={`${inputClass(false)} appearance-none pr-8 cursor-pointer`}
                     value={form.arrival}
                     onChange={(e) => handleChange("arrival", e.target.value)}
                   >
@@ -224,7 +235,6 @@ export default function RSVPForm() {
             </label>
             <textarea
               className={inputClass(false)}
-              placeholder="Share a wish, a memory, or anything you'd like us to know…"
               rows={3}
               value={form.message}
               onChange={(e) => handleChange("message", e.target.value)}
@@ -233,7 +243,7 @@ export default function RSVPForm() {
           </div>
 
           {/* Submit */}
-          <div>
+          <div className="pt-2">
             <button
               className="inline-flex rounded-full border border-crimson-600/35 bg-white px-6 py-2.5 font-semibold text-crimson-700 transition hover:bg-canvas-50 disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={handleSubmit}
@@ -245,9 +255,7 @@ export default function RSVPForm() {
 
           {/* Submit error */}
           {status === "error" && (
-            <p className="text-sm text-amber-500">
-              Something went wrong. Please try again or contact us directly.
-            </p>
+            <FieldError msg="Something went wrong. Please try again or contact us directly." />
           )}
 
         </div>
