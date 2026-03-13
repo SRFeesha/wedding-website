@@ -36,7 +36,7 @@ const DEFAULT_INTRO_TUNING = {
 
 export default function App() {
   const [locale, setLocale] = useState(getInitialLocale);
-  const [introPhase, setIntroPhase] = useState("locked");
+  const [introPhase, setIntroPhase] = useState("revealed");
   // React state drives all animation values — leva pushes into it via onChange
   const [introTuning, setIntroTuning] = useState(DEFAULT_INTRO_TUNING);
   const revealTimerRef = useRef(null);
