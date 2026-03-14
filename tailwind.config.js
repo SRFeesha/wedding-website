@@ -21,6 +21,7 @@ export default {
         },
         forest: {
           500: "#8A9E84",  // dusty sage
+          700: "#3A6647",  // deep forest — accessible success green
         },
         dusty: {
           500: "#7C5635",  // raw umber

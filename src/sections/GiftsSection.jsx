@@ -34,9 +34,10 @@ export default function GiftsSection({ copy }) {
           >
             {copied ? copy.copiedIban : copy.copyIban}
             {copied ? (
-              /* Lucide check icon */
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeOpacity="0.7" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <polyline points="20 6 9 17 4 12" />
+              /* Lucide circle-check icon */
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A6647" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="9 12 11 14 15 10" />
               </svg>
             ) : (
               /* Lucide copy icon */
