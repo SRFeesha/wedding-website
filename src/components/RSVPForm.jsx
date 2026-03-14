@@ -1,24 +1,22 @@
 import { useState } from "react";
 
 const DIETARY_OPTIONS = [
-  "No restrictions",
+  "I eat everything",
   "Vegetarian",
   "Vegan",
   "Gluten-free",
-  "Halal",
-  "Kosher",
   "Other (see note)",
 ];
 
 const ERROR = "#B5340F";
 
 const labelClass =
-  "block font-sans text-base font-semibold uppercase tracking-tight text-ink/70 px-1.5 pb-1";
+  "block font-ibm text-base font-semibold uppercase tracking-tight text-ink/70 px-1.5 pb-1";
 
 function inputClass(hasError) {
   if (hasError)
-    return "w-full rounded-2xl bg-white px-4 py-3 font-body text-[18px] text-ink outline outline-2 outline-[#B5340F] focus:outline-[#B5340F] transition";
-  return "w-full rounded-2xl bg-white px-4 py-3 font-body text-[18px] text-ink outline outline-2 outline-black/20 focus:outline-ink/40 transition";
+    return "w-full rounded-2xl bg-white px-4 py-3 font-ibm text-[18px] text-ink outline outline-2 outline-[#B5340F] focus:outline-[#B5340F] transition";
+  return "w-full rounded-2xl bg-white px-4 py-3 font-ibm text-[18px] text-ink outline outline-2 outline-black/20 focus:outline-ink/40 transition";
 }
 
 function FieldError({ msg }) {
@@ -84,7 +82,7 @@ export default function RSVPForm() {
         body: JSON.stringify({
           name: form.name,
           attending: form.attending ? "Yes" : "No",
-          dietary: form.dietary || "No restrictions",
+          dietary: form.dietary || "I eat everything",
           message: form.message,
         }),
       });
@@ -158,7 +156,7 @@ export default function RSVPForm() {
                       <div className="w-px self-stretch bg-black/20" />
                     )}
                     <button
-                      className={`flex-1 rounded-full px-3.5 py-1.5 font-sans text-base font-medium leading-6 transition outline-none ${
+                      className={`flex-1 rounded-xl px-3.5 py-1.5 font-ibm text-base font-medium leading-6 transition outline-none ${
                         active
                           ? "bg-crimson-600 text-white outline outline-1 outline-offset-[-1px] outline-black/25"
                           : "text-ink"
