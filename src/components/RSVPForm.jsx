@@ -43,7 +43,7 @@ export default function RSVPForm({ copy }) {
   const [form, setForm] = useState({
     name: "",
     attending: null,
-    dietary: "",
+    dietary: t.dietaryOptions[0],
     message: "",
   });
   const [status, setStatus] = useState("idle");
@@ -175,7 +175,6 @@ export default function RSVPForm({ copy }) {
                   value={form.dietary}
                   onChange={(e) => handleChange("dietary", e.target.value)}
                 >
-                  <option value="" disabled>—</option>
                   {t.dietaryOptions.map((o) => (
                     <option key={o} value={o}>{o}</option>
                   ))}
