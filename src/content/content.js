@@ -54,7 +54,7 @@ export const content = {
     },
     locationDescription: "La tenuta si trova nell'entroterra siciliano, nei pressi di Piazza Armerina. Il posto si trova a circa 600m di altitudine — la sera fa freschino!",
     giftsTitle: "Regali",
-    giftsBody: "Il regalo più grande è la vostra presenza. Se volete contribuire al nostro viaggio di nozze, ecco i nostri riferimenti.",
+    giftsBody: "Non ci servono cose — la casa è già piena. Il regalo più bello è la vostra presenza. Se volete contribuire al nostro viaggio di nozze, ecco l'IBAN:",
     faqTitle: "Domande frequenti",
     faqList: [
       {
@@ -114,7 +114,7 @@ export const content = {
     },
     locationDescription: "The estate sits in the Sicilian hinterland, near Piazza Armerina, at around 600m altitude — evenings can be quite chilly!",
     giftsTitle: "Gifts",
-    giftsBody: "Your presence is the greatest gift. If you'd like to contribute to our honeymoon, here are our details.",
+    giftsBody: "We don't need things — the house is already full. Your presence is the greatest gift. If you'd like to contribute to our honeymoon, here's the IBAN:",
     faqTitle: "Frequently asked questions",
     faqList: [
       {
