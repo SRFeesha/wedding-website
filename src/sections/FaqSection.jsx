@@ -2,7 +2,7 @@ export default function FaqSection({ copy }) {
   return (
     <section id="faq" className="bg-canvas-100 px-5 py-16 sm:px-8 sm:py-20">
       <div className="mx-auto max-w-2xl">
-        <h2 className="text-center font-display text-4xl text-ink sm:text-5xl">
+        <h2 className="text-center font-display text-5xl font-semibold text-ink">
           {copy.faqTitle}
         </h2>
         <ul className="mt-8">

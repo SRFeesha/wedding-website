@@ -20,13 +20,13 @@ export default function App() {
   const [locale, setLocale] = useState(getInitialLocale)
   const copy = content[locale]
   const [previewKey, setPreviewKey] = useState(0)
-  const [bodyDelay, setBodyDelay] = useState(2900)
+  const [bodyDelay, setBodyDelay] = useState(1000)
 
   useControls("RSVP · Success state", {
     bodyDelay: {
-      value: 2900,
+      value: 1000,
       min: 0,
-      max: 3000,
+      max: 4000,
       step: 50,
       label: "Body fade delay (ms)",
       onChange: (v) => setBodyDelay(v),
@@ -74,7 +74,7 @@ export default function App() {
                     mixBlendMode: "multiply",
                     pointerEvents: "none",
                     transform: "translateZ(0)",
-                    animation: `fadeOut 400ms ease-in ${bodyDelay - 150}ms both`,
+                    animation: `fadeOut 400ms ease-in ${bodyDelay - 400}ms both`,
                   }}
                 >
                   <source
@@ -91,7 +91,10 @@ export default function App() {
                   {attending ? copy.rsvp.successAttending : copy.rsvp.successDecline}
                 </h2>
               </div>
-              <p className="mt-4 text-ink/75">
+              <p
+                className="mt-4 font-display text-ink/75"
+                style={{ animation: `fadeInUp 560ms ease-out ${bodyDelay + 200}ms both` }}
+              >
                 {attending ? copy.rsvp.successAttendingBody : copy.rsvp.successDeclineBody}
               </p>
             </div>

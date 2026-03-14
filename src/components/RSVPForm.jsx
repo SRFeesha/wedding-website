@@ -38,7 +38,7 @@ function Chevron() {
 const SUBMIT_SHADOW =
   "0px 2px 4px 0px rgba(0,0,0,0.30), inset 0px 8px 8px 0px rgba(255,255,255,0.05)";
 
-export default function RSVPForm({ copy, bodyDelay = 2900 }) {
+export default function RSVPForm({ copy, bodyDelay = 1000 }) {
   const t = copy.rsvp;
   const [form, setForm] = useState({
     name: "",
@@ -101,7 +101,7 @@ export default function RSVPForm({ copy, bodyDelay = 2900 }) {
                 mixBlendMode: "multiply",
                 pointerEvents: "none",
                 transform: "translateZ(0)",
-                animation: `fadeOut 400ms ease-in ${bodyDelay - 150}ms both`,
+                animation: `fadeOut 400ms ease-in ${bodyDelay - 400}ms both`,
               }}
             >
               <source
@@ -118,7 +118,10 @@ export default function RSVPForm({ copy, bodyDelay = 2900 }) {
               {form.attending ? t.successAttending : t.successDecline}
             </h2>
           </div>
-          <p className="mt-4 text-ink/75">
+          <p
+            className="mt-4 font-display text-ink/75"
+            style={{ animation: `fadeInUp 560ms ease-out ${bodyDelay + 200}ms both` }}
+          >
             {form.attending ? t.successAttendingBody : t.successDeclineBody}
           </p>
         </div>
