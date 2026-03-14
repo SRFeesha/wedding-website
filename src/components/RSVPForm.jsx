@@ -10,24 +10,15 @@ const DIETARY_OPTIONS = [
   "Other (see note)",
 ];
 
-const ARRIVAL_OPTIONS = [
-  "Friday afternoon (before dinner)",
-  "Friday evening",
-  "Saturday morning",
-  "Saturday afternoon",
-  "Day of only (Saturday)",
-];
-
 const ERROR = "#B5340F";
 
-const labelClass = "block text-[18px] font-semibold uppercase tracking-wide text-ink/70 mb-1.5";
+const labelClass =
+  "block font-sans text-base font-semibold uppercase tracking-tight text-ink/70 px-1.5 pb-1";
 
 function inputClass(hasError) {
-  const base =
-    "w-full rounded-md border bg-white px-3 py-2 font-body text-[18px] text-ink outline-none transition focus:ring-2";
-  return hasError
-    ? `${base} border-[${ERROR}] bg-[#FDF5F0] focus:border-[${ERROR}] focus:ring-[${ERROR}]/15`
-    : `${base} border-[#C4A87A] focus:border-ink/60 focus:ring-ink/10`;
+  if (hasError)
+    return "w-full rounded-2xl bg-white px-4 py-3 font-body text-[18px] text-ink outline outline-2 outline-[#B5340F] focus:outline-[#B5340F] transition";
+  return "w-full rounded-2xl bg-white px-4 py-3 font-body text-[18px] text-ink outline outline-2 outline-black/20 focus:outline-ink/40 transition";
 }
 
 function FieldError({ msg }) {
@@ -46,26 +37,22 @@ function Chevron() {
   return (
     <svg
       className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink/40"
-      width="13"
-      height="13"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      aria-hidden="true"
+      width="13" height="13" viewBox="0 0 24 24"
+      fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"
     >
       <polyline points="6 9 12 15 18 9" />
     </svg>
   );
 }
 
+const SUBMIT_SHADOW =
+  "0px 2px 4px 0px rgba(0,0,0,0.30), inset 0px 8px 8px 0px rgba(255,255,255,0.05)";
+
 export default function RSVPForm() {
   const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     attending: null,
     dietary: "",
-    arrival: "",
     message: "",
   });
   const [status, setStatus] = useState("idle");
@@ -78,9 +65,9 @@ export default function RSVPForm() {
 
   const handleSubmit = async () => {
     const newErrors = {};
-    if (!form.firstName) newErrors.firstName = "Please enter your first name.";
-    if (!form.lastName) newErrors.lastName = "Please enter your last name.";
-    if (form.attending === null) newErrors.attending = "Please let us know if you'll be joining us.";
+    if (!form.name) newErrors.name = "Please enter your name.";
+    if (form.attending === null)
+      newErrors.attending = "Please let us know if you'll be joining us.";
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -95,10 +82,9 @@ export default function RSVPForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: `${form.firstName} ${form.lastName}`,
+          name: form.name,
           attending: form.attending ? "Yes" : "No",
           dietary: form.dietary || "No restrictions",
-          arrival: form.attending ? form.arrival : "",
           message: form.message,
         }),
       });
@@ -112,9 +98,9 @@ export default function RSVPForm() {
 
   if (status === "success") {
     return (
-      <section className="bg-canvas-100 px-5 py-16 sm:px-8 sm:py-20">
-        <div className="mx-auto max-w-2xl py-8">
-          <h2 className="font-display text-4xl text-ink sm:text-5xl">
+      <section className="bg-canvas-50 px-5 py-20 sm:px-8">
+        <div className="mx-auto max-w-[600px] text-center py-8">
+          <h2 className="font-display text-5xl font-semibold text-ink">
             {form.attending ? "See you in Sicily." : "We'll miss you."}
           </h2>
           <p className="mt-4 text-ink/75">
@@ -128,111 +114,94 @@ export default function RSVPForm() {
   }
 
   return (
-    <section id="rsvp" className="bg-canvas-100 px-5 py-16 sm:px-8 sm:py-20">
+    <section id="rsvp" className="bg-canvas-50 px-5 py-20 sm:px-8">
       <div className="mx-auto max-w-2xl">
-        <h2 className="font-display text-4xl text-ink sm:text-5xl">RSVP</h2>
-        <p className="mt-3 text-ink/75">Please respond by June 1, 2026.</p>
+        {/* Header */}
+        <div className="text-center">
+          <h2 className="font-display text-5xl font-semibold text-ink">RSVP</h2>
+          <p className="mt-3 font-body text-xl text-ink/75">
+            Please respond by June 1, 2026.
+          </p>
+        </div>
 
-        <div className="mt-10 space-y-6">
+        <div className="mx-auto mt-9 max-w-[600px] space-y-8">
 
-          {/* First name */}
+          {/* Full name */}
           <div>
-            <label className={labelClass}>First Name</label>
+            <label className={labelClass}>Nome completo</label>
             <input
-              className={inputClass(!!errors.firstName)}
-              value={form.firstName}
-              onChange={(e) => handleChange("firstName", e.target.value)}
+              className={inputClass(!!errors.name)}
+              value={form.name}
+              onChange={(e) => handleChange("name", e.target.value)}
             />
-            <FieldError msg={errors.firstName} />
-          </div>
-
-          {/* Last name */}
-          <div>
-            <label className={labelClass}>Last Name</label>
-            <input
-              className={inputClass(!!errors.lastName)}
-              value={form.lastName}
-              onChange={(e) => handleChange("lastName", e.target.value)}
-            />
-            <FieldError msg={errors.lastName} />
+            <FieldError msg={errors.name} />
           </div>
 
           {/* Attendance — segmented control */}
           <div>
             <label className={labelClass}>Will you be joining us?</label>
             <div
-              className={`flex gap-1.5 rounded-lg border p-1.5 transition ${
-                errors.attending ? `border-[${ERROR}] bg-[#FDF5F0]` : "border-[#C4A87A] bg-canvas-50"
+              className={`flex rounded-2xl p-1.5 backdrop-blur-sm outline outline-offset-[-1px] transition ${
+                errors.attending
+                  ? "bg-[#FDF5F0] outline-[#B5340F]"
+                  : "bg-canvas-50/60 outline-black/20"
               }`}
             >
-              <button
-                className={`flex-1 rounded-md py-2.5 font-body text-[18px] transition ${
-                  form.attending === true
-                    ? "bg-white text-crimson-700 shadow-sm ring-1 ring-[#C4A87A]/40"
-                    : "text-ink/50 hover:text-ink/70"
-                }`}
-                onClick={() => handleChange("attending", true)}
-              >
-                Joyfully accepts
-              </button>
-              <button
-                className={`flex-1 rounded-md py-2.5 font-body text-[18px] transition ${
-                  form.attending === false
-                    ? "bg-white text-ink shadow-sm ring-1 ring-[#C4A87A]/40"
-                    : "text-ink/50 hover:text-ink/70"
-                }`}
-                onClick={() => handleChange("attending", false)}
-              >
-                Regretfully declines
-              </button>
+              {[
+                { value: true, label: "Joyfully accepts" },
+                { value: false, label: "Regretfully declines" },
+              ].map((opt, i) => {
+                const active = form.attending === opt.value;
+                return (
+                  <div key={i} className="flex flex-1 items-stretch">
+                    {i > 0 && form.attending === null && (
+                      <div className="w-px self-stretch bg-black/20" />
+                    )}
+                    <button
+                      className={`flex-1 rounded-full px-3.5 py-1.5 font-sans text-base font-medium leading-6 transition outline-none ${
+                        active
+                          ? "bg-crimson-600 text-white outline outline-1 outline-offset-[-1px] outline-black/25"
+                          : "text-ink"
+                      }`}
+                      style={
+                        active
+                          ? { boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.30), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" }
+                          : undefined
+                      }
+                      onClick={() => handleChange("attending", opt.value)}
+                    >
+                      {opt.label}
+                    </button>
+                  </div>
+                );
+              })}
             </div>
             <FieldError msg={errors.attending} />
           </div>
 
-          {/* Conditional fields */}
+          {/* Dietary (conditional) */}
           {form.attending === true && (
-            <>
-              <div>
-                <label className={labelClass}>Dietary Preferences</label>
-                <div className="relative">
-                  <select
-                    className={`${inputClass(false)} appearance-none pr-8 cursor-pointer`}
-                    value={form.dietary}
-                    onChange={(e) => handleChange("dietary", e.target.value)}
-                  >
-                    <option value="" disabled>Select an option</option>
-                    {DIETARY_OPTIONS.map((o) => (
-                      <option key={o} value={o}>{o}</option>
-                    ))}
-                  </select>
-                  <Chevron />
-                </div>
+            <div>
+              <label className={labelClass}>Dietary Preferences</label>
+              <div className="relative">
+                <select
+                  className={`${inputClass(false)} appearance-none cursor-pointer pr-8`}
+                  value={form.dietary}
+                  onChange={(e) => handleChange("dietary", e.target.value)}
+                >
+                  <option value="" disabled>Select an option</option>
+                  {DIETARY_OPTIONS.map((o) => (
+                    <option key={o} value={o}>{o}</option>
+                  ))}
+                </select>
+                <Chevron />
               </div>
-
-              <div>
-                <label className={labelClass}>Planned Arrival</label>
-                <div className="relative">
-                  <select
-                    className={`${inputClass(false)} appearance-none pr-8 cursor-pointer`}
-                    value={form.arrival}
-                    onChange={(e) => handleChange("arrival", e.target.value)}
-                  >
-                    <option value="" disabled>Select an option</option>
-                    {ARRIVAL_OPTIONS.map((o) => (
-                      <option key={o} value={o}>{o}</option>
-                    ))}
-                  </select>
-                  <Chevron />
-                </div>
-              </div>
-            </>
+            </div>
           )}
 
           {/* Message */}
           <div>
-            <label className={labelClass}>
-              A note for the couple <span className="normal-case font-normal">(optional)</span>
-            </label>
+            <label className={labelClass}>Vuoi lasciare una nota? :)</label>
             <textarea
               className={inputClass(false)}
               rows={3}
@@ -243,17 +212,17 @@ export default function RSVPForm() {
           </div>
 
           {/* Submit */}
-          <div className="pt-2">
+          <div className="py-2">
             <button
-              className="inline-flex rounded-full border border-crimson-600/35 bg-white px-6 py-2.5 font-semibold text-crimson-700 transition hover:bg-canvas-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full rounded-2xl bg-crimson-600 px-7 py-3 font-sans text-2xl font-medium text-white outline outline-2 outline-offset-[-2px] outline-black/25 transition hover:bg-crimson-700 disabled:cursor-not-allowed disabled:opacity-50"
+              style={{ boxShadow: SUBMIT_SHADOW }}
               onClick={handleSubmit}
               disabled={status === "loading"}
             >
-              {status === "loading" ? "Sending…" : "Send RSVP"}
+              {status === "loading" ? "Invio…" : "Invia"}
             </button>
           </div>
 
-          {/* Submit error */}
           {status === "error" && (
             <FieldError msg="Something went wrong. Please try again or contact us directly." />
           )}

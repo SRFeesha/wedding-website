@@ -28,9 +28,10 @@ export default {
         ink: "#2C1610",    // warm dark — toward raw umber
       },
       fontFamily: {
-        display: ["DM Serif Display", "serif"],
-        body: ["EB Garamond", "serif"],
-        script: ["Lovers Quarrel", "cursive"],
+        sans: ["Instrument Sans", "sans-serif"],
+        display: ["Crimson Pro", "serif"],
+        body: ["Crimson Text", "serif"],
+        script: ["Alex Brush", "cursive"],
       },
       boxShadow: {
         card: "0 12px 36px rgba(44, 26, 22, 0.09)",

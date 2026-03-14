@@ -24,7 +24,7 @@ const moodboardImages = [
 
 export const content = {
   it: {
-    siteTitle: "Sara e Ben si sposano",
+    siteTitle: "Sara & Ben",
     dateLabel: "Domenica 27 settembre 2026",
     locationLabel: "Tenuta Savoca, Piazza Armerina",
     mapsLabel: "Apri Google Maps",
@@ -48,29 +48,43 @@ export const content = {
       ],
       locationTitle: "Location e come raggiungerlo",
       locationLines: [
-        "Location: Tenuta Savoca, vicino Piazza Armerina.",
-        "Aeroporto consigliato: Catania (CTA).",
-        "Sabato è previsto il bus organizzato da Catania.",
+        "Vicino a Piazza Armerina",
+        "Aeroporto consigliato: Catania (CTA)",
       ],
     },
-    faqTitle: "FAQ",
+    locationDescription: "La tenuta si trova nell'entroterra siciliano, nei pressi di Piazza Armerina. Il posto si trova a circa 600m di altitudine — la sera fa freschino!",
+    giftsTitle: "Regali",
+    giftsBody: "Il regalo più grande è la vostra presenza. Se volete contribuire al nostro viaggio di nozze, ecco i nostri riferimenti.",
+    faqTitle: "Domande frequenti",
     faqList: [
       {
-        q: "Cosa portare?",
-        a: "Look elegante ma comodo, più una giacca leggera per la sera.",
+        q: "Come arrivare alla location",
+        a: "Domenica mattina (orario da confermare) partirà un bus (organizzato da noi) che da Catania vi porterà alla location del matrimonio (durata: circa 1h 30). Ritorno previsto Lunedì verso le 15. Tutti gli orari sono indicativi.",
       },
       {
-        q: "Cerimonia e cena sono nello stesso punto?",
-        a: "No. Cerimonia nel bosco, cena in un'altra area della tenuta.",
+        q: "Programma della serata",
+        a: "Sarà a cena! Inizio stimato per le 15. Seguiranno maggiori dettagli.",
       },
       {
-        q: "Quando conviene arrivare?",
-        a: "Meglio arrivare il sabato o comunque con margine su CTA.",
+        q: "Dresscode?",
+        items: [
+          "Eleganti, stare comodi, sentirvi voi stessi.",
+          "Occhio ai tacchi a spillo.",
+          "Portare una giacchettina per la sera che potrebbe fare freschetto.",
+          "Per ispirazione, ecco una moodboard.",
+        ],
+      },
+      {
+        q: "Dove dormire",
+        items: [
+          "Purtroppo non possiamo offrire il soggiorno.",
+          "Vi consigliamo di pernottare la notte prima a Catania e la notte delle nozze invece a Piazza Armerina. Siamo in contatto con alcuni hotel per prezzi favorevoli. Seguiranno aggiornamenti.",
+        ],
       },
     ],
   },
   en: {
-    siteTitle: "Sara & Ben are getting married",
+    siteTitle: "Sara & Ben",
     dateLabel: "Sunday, September 27, 2026",
     locationLabel: "Tenuta Savoca, Piazza Armerina",
     mapsLabel: "Open Google Maps",
@@ -94,24 +108,38 @@ export const content = {
       ],
       locationTitle: "Location and how to reach it",
       locationLines: [
-        "Venue: Tenuta Savoca, near Piazza Armerina.",
-        "Recommended airport: Catania (CTA).",
-        "On Saturday, we run an organized bus from Catania.",
+        "Near Piazza Armerina",
+        "Recommended airport: Catania (CTA)",
       ],
     },
-    faqTitle: "FAQ",
+    locationDescription: "The estate sits in the Sicilian hinterland, near Piazza Armerina, at around 600m altitude — evenings can be quite chilly!",
+    giftsTitle: "Gifts",
+    giftsBody: "Your presence is the greatest gift. If you'd like to contribute to our honeymoon, here are our details.",
+    faqTitle: "Frequently asked questions",
     faqList: [
       {
-        q: "What should I bring?",
-        a: "Elegant but comfortable outfit, plus a light jacket for the evening.",
+        q: "Getting to the venue",
+        a: "On Sunday morning (time TBC) a bus organised by us will depart from Catania to the wedding venue (approx. 1h 30). Return on Monday around 15:00. All times are approximate.",
       },
       {
-        q: "Are ceremony and dinner in the same spot?",
-        a: "No. Ceremony is in the woods, dinner is in another area of the estate.",
+        q: "Programme",
+        a: "It's a dinner! Estimated start around 15:00. More details to follow.",
       },
       {
-        q: "When should I arrive?",
-        a: "Best to arrive on Saturday or with buffer time at CTA.",
+        q: "Dresscode?",
+        items: [
+          "Elegant but comfortable, be yourselves.",
+          "Watch out for stilettos on the grass.",
+          "Bring a light jacket for the evening — it might get chilly.",
+          "For inspiration, here's a moodboard.",
+        ],
+      },
+      {
+        q: "Where to stay",
+        items: [
+          "Unfortunately we're unable to offer accommodation.",
+          "We recommend staying the night before in Catania and the wedding night in Piazza Armerina. We're in touch with some hotels for preferential rates. Updates to follow.",
+        ],
       },
     ],
   },
