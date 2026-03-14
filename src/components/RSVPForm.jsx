@@ -1,13 +1,5 @@
 import { useState } from "react";
 
-const DIETARY_OPTIONS = [
-  "I eat everything",
-  "Vegetarian",
-  "Vegan",
-  "Gluten-free",
-  "Other (see note)",
-];
-
 const ERROR = "#B5340F";
 
 const labelClass =
@@ -46,7 +38,8 @@ function Chevron() {
 const SUBMIT_SHADOW =
   "0px 2px 4px 0px rgba(0,0,0,0.30), inset 0px 8px 8px 0px rgba(255,255,255,0.05)";
 
-export default function RSVPForm() {
+export default function RSVPForm({ copy }) {
+  const t = copy.rsvp;
   const [form, setForm] = useState({
     name: "",
     attending: null,
@@ -63,9 +56,8 @@ export default function RSVPForm() {
 
   const handleSubmit = async () => {
     const newErrors = {};
-    if (!form.name) newErrors.name = "Please enter your name.";
-    if (form.attending === null)
-      newErrors.attending = "Please let us know if you'll be joining us.";
+    if (!form.name) newErrors.name = t.validationName;
+    if (form.attending === null) newErrors.attending = t.validationAttendance;
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -82,7 +74,7 @@ export default function RSVPForm() {
         body: JSON.stringify({
           name: form.name,
           attending: form.attending ? "Yes" : "No",
-          dietary: form.dietary || "I eat everything",
+          dietary: form.dietary || t.dietaryOptions[0],
           message: form.message,
         }),
       });
@@ -99,12 +91,10 @@ export default function RSVPForm() {
       <section className="bg-canvas-50 px-5 py-20 sm:px-8">
         <div className="mx-auto max-w-[600px] text-center py-8">
           <h2 className="font-display text-5xl font-semibold text-ink">
-            {form.attending ? "See you in Sicily." : "We'll miss you."}
+            {form.attending ? t.successAttending : t.successDecline}
           </h2>
           <p className="mt-4 text-ink/75">
-            {form.attending
-              ? "Your RSVP has been received. More details to follow."
-              : "Thank you for letting us know. We'll be thinking of you."}
+            {form.attending ? t.successAttendingBody : t.successDeclineBody}
           </p>
         </div>
       </section>
@@ -116,17 +106,15 @@ export default function RSVPForm() {
       <div className="mx-auto max-w-2xl">
         {/* Header */}
         <div className="text-center">
-          <h2 className="font-display text-5xl font-semibold text-ink">RSVP</h2>
-          <p className="mt-3 font-body text-xl text-ink/75">
-            Please respond by June 1, 2026.
-          </p>
+          <h2 className="font-display text-5xl font-semibold text-ink">{t.title}</h2>
+          <p className="mt-3 font-body text-xl text-ink/75">{t.deadline}</p>
         </div>
 
         <div className="mx-auto mt-9 max-w-[600px] space-y-8">
 
           {/* Full name */}
           <div>
-            <label className={labelClass}>Nome completo</label>
+            <label className={labelClass}>{t.namePlaceholder}</label>
             <input
               className={inputClass(!!errors.name)}
               value={form.name}
@@ -137,7 +125,7 @@ export default function RSVPForm() {
 
           {/* Attendance — segmented control */}
           <div>
-            <label className={labelClass}>Will you be joining us?</label>
+            <label className={labelClass}>{t.attendanceLabel}</label>
             <div
               className={`flex rounded-2xl p-1.5 backdrop-blur-sm outline outline-offset-[-1px] transition ${
                 errors.attending
@@ -146,8 +134,8 @@ export default function RSVPForm() {
               }`}
             >
               {[
-                { value: true, label: "Joyfully accepts" },
-                { value: false, label: "Regretfully declines" },
+                { value: true, label: t.attendanceYes },
+                { value: false, label: t.attendanceNo },
               ].map((opt, i) => {
                 const active = form.attending === opt.value;
                 return (
@@ -180,15 +168,15 @@ export default function RSVPForm() {
           {/* Dietary (conditional) */}
           {form.attending === true && (
             <div>
-              <label className={labelClass}>Dietary Preferences</label>
+              <label className={labelClass}>{t.dietaryLabel}</label>
               <div className="relative">
                 <select
                   className={`${inputClass(false)} appearance-none cursor-pointer pr-8`}
                   value={form.dietary}
                   onChange={(e) => handleChange("dietary", e.target.value)}
                 >
-                  <option value="" disabled>Select an option</option>
-                  {DIETARY_OPTIONS.map((o) => (
+                  <option value="" disabled>—</option>
+                  {t.dietaryOptions.map((o) => (
                     <option key={o} value={o}>{o}</option>
                   ))}
                 </select>
@@ -199,7 +187,7 @@ export default function RSVPForm() {
 
           {/* Message */}
           <div>
-            <label className={labelClass}>Vuoi lasciare una nota? :)</label>
+            <label className={labelClass}>{t.messageLabel}</label>
             <textarea
               className={inputClass(false)}
               rows={3}
@@ -217,12 +205,12 @@ export default function RSVPForm() {
               onClick={handleSubmit}
               disabled={status === "loading"}
             >
-              {status === "loading" ? "Invio…" : "Invia"}
+              {status === "loading" ? t.submittingLabel : t.submitLabel}
             </button>
           </div>
 
           {status === "error" && (
-            <FieldError msg="Something went wrong. Please try again or contact us directly." />
+            <FieldError msg={t.errorMsg} />
           )}
 
         </div>

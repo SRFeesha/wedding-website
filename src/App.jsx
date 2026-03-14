@@ -33,7 +33,7 @@ export default function App() {
         <FaqSection copy={copy} />
         <SectionDivider className="bg-canvas-100" />
         <GiftsSection copy={copy} />
-        <RSVPForm />
+        <RSVPForm copy={copy} />
       </main>
     </div>
   )
