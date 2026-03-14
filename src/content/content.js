@@ -81,7 +81,10 @@ export const content = {
     faqList: [
       {
         q: "Come arrivare alla location",
-        a: "Domenica mattina (orario da confermare) partirà un bus (organizzato da noi) che da Catania vi porterà alla location del matrimonio (durata: circa 1h 30). Ritorno previsto Lunedì verso le 15. Tutti gli orari sono indicativi.",
+        items: [
+          "Se arrivate in macchina, nessun problema: trovate il link di Google Maps qui sotto e lui vi guiderà fino a noi (1.30h).",
+          "Se invece preferite godervi la giornata senza pensare alla guida, stiamo organizzando un bus che partirà da Catania la domenica mattina per portarvi alla location. Stiamo valutando di organizzare il rientro il lunedì da Piazza Armerina, invece che la notte stessa dell'evento, così da poter festeggiare tutti con più tranquillità. Aggiorneremo presto questa sezione.",
+        ],
       },
       {
         q: "Programma della serata",
@@ -163,7 +166,10 @@ export const content = {
     faqList: [
       {
         q: "Getting to the venue",
-        a: "On Sunday morning (time TBC) a bus organised by us will depart from Catania to the wedding venue (approx. 1h 30). Return on Monday around 15:00. All times are approximate.",
+        items: [
+          "If you're driving, no problem — find the Google Maps link below and it'll guide you straight to us (approx. 1h 30).",
+          "If you'd rather enjoy the day without worrying about driving, we're organising a bus from Catania on Sunday morning. We're also looking into arranging the return trip on Monday from Piazza Armerina, rather than the same night, so everyone can celebrate without rushing. We'll update this section soon.",
+        ],
       },
       {
         q: "Programme",
