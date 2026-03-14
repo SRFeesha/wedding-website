@@ -1,7 +1,8 @@
-export const defaultLocale = "it";
-export const locales = ["it", "en"];
+export const defaultLocale = "it"
+export const locales = ["it", "en"]
 
-const mapsUrl = "https://www.google.com/maps/search/?api=1&query=Tenuta+Savoca+Piazza+Armerina";
+const mapsUrl =
+  "https://www.google.com/maps/search/?api=1&query=Tenuta+Savoca+Piazza+Armerina"
 
 const moodboardImages = [
   {
@@ -20,7 +21,7 @@ const moodboardImages = [
     url: "https://i.pinimg.com/736x/4d/16/eb/4d16eb5c845e2260d04e9ac7997c0c94.jpg",
     alt: "Golden floral detail inspiration.",
   },
-];
+]
 
 export const content = {
   it: {
@@ -52,7 +53,8 @@ export const content = {
         "Aeroporto consigliato: Catania (CTA)",
       ],
     },
-    locationDescription: "La tenuta si trova nell'entroterra siciliano, nei pressi di Piazza Armerina. Il posto si trova a circa 600m di altitudine — la sera fa freschino!",
+    locationDescription:
+      "La tenuta si trova nell'entroterra siciliano, nei pressi di Piazza Armerina. Il posto si trova a circa 600m di altitudine — la sera fa freschino!",
     rsvp: {
       title: "RSVP",
       deadline: "Per favore rispondi entro il 1° giugno 2026",
@@ -61,14 +63,20 @@ export const content = {
       attendanceYes: "Ci sarò!",
       attendanceNo: "Non posso",
       dietaryLabel: "Preferenze alimentari",
-      dietaryOptions: ["Mangio tutto", "Vegetariano", "Vegano", "Senza glutine", "Altro (vedi nota)"],
+      dietaryOptions: [
+        "Mangio tutto",
+        "Vegetariano",
+        "Vegano",
+        "Senza glutine",
+        "Altro (vedi nota)",
+      ],
       messageLabel: "Vuoi lasciare una nota? :)",
       submitLabel: "Invia",
       submittingLabel: "Invio…",
       successAttending: "Ci vediamo in Sicilia.",
-      successDecline: "Ci mancherai.",
-      successAttendingBody: "La tua risposta è stata ricevuta. Seguiranno maggiori dettagli.",
-      successDeclineBody: "Grazie per avercelo fatto sapere. Ti penseremo.",
+      successDecline: "Ci mancherai ❤️",
+      successAttendingBody: null,
+      successDeclineBody: null,
       errorMsg: "Qualcosa è andato storto. Riprova o contattaci direttamente.",
       validationName: "Per favore inserisci il tuo nome.",
       validationAttendance: "Per favore facci sapere se ci sarai.",
@@ -76,7 +84,8 @@ export const content = {
     copyIban: "Copia IBAN",
     copiedIban: "Copiato!",
     giftsTitle: "Regali",
-    giftsBody: "Non ci servono cose — la casa è già piena. Il regalo più bello è la vostra presenza. Se volete contribuire al nostro viaggio di nozze, ecco l'IBAN:",
+    giftsBody:
+      "Non ci servono cose — la casa è già piena. Il regalo più bello è la vostra presenza. Se volete contribuire al nostro viaggio di nozze, ecco l'IBAN:",
     faqTitle: "Domande frequenti",
     faqList: [
       {
@@ -137,7 +146,8 @@ export const content = {
         "Recommended airport: Catania (CTA)",
       ],
     },
-    locationDescription: "The estate sits in the Sicilian hinterland, near Piazza Armerina, at around 600m altitude — evenings can be quite chilly!",
+    locationDescription:
+      "The estate sits in the Sicilian hinterland, near Piazza Armerina, at around 600m altitude — evenings can be quite chilly!",
     rsvp: {
       title: "RSVP",
       deadline: "Please respond by June 1, 2026",
@@ -146,22 +156,31 @@ export const content = {
       attendanceYes: "I'll be there",
       attendanceNo: "Can't make it",
       dietaryLabel: "Dietary preferences",
-      dietaryOptions: ["I eat everything", "Vegetarian", "Vegan", "Gluten-free", "Other (see note)"],
+      dietaryOptions: [
+        "I eat everything",
+        "Vegetarian",
+        "Vegan",
+        "Gluten-free",
+        "Other (see note)",
+      ],
       messageLabel: "Want to leave a note? :)",
       submitLabel: "Send",
       submittingLabel: "Sending…",
       successAttending: "See you in Sicily.",
-      successDecline: "We'll miss you.",
-      successAttendingBody: "Your RSVP has been received. More details to follow.",
-      successDeclineBody: "Thank you for letting us know. We'll be thinking of you.",
-      errorMsg: "Something went wrong. Please try again or contact us directly.",
+      successDecline: "We'll miss you ❤️",
+      successAttendingBody:
+        "Your RSVP has been received. More details to follow.",
+      successDeclineBody: "",
+      errorMsg:
+        "Something went wrong. Please try again or contact us directly.",
       validationName: "Please enter your name.",
       validationAttendance: "Please let us know if you'll be joining us.",
     },
     copyIban: "Copy IBAN",
     copiedIban: "Copied!",
     giftsTitle: "Gifts",
-    giftsBody: "We don't need things — the house is already full. Your presence is the greatest gift. If you'd like to contribute to our honeymoon, here's the IBAN:",
+    giftsBody:
+      "We don't need things — the house is already full. Your presence is the greatest gift. If you'd like to contribute to our honeymoon, here's the IBAN:",
     faqTitle: "Frequently asked questions",
     faqList: [
       {
@@ -193,4 +212,4 @@ export const content = {
       },
     ],
   },
-};
+}

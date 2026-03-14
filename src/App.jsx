@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useControls, button } from "leva"
 import RSVPForm from "./components/RSVPForm"
 import SectionDivider from "./components/SectionDivider"
 import FaqSection from "./sections/FaqSection"
@@ -18,6 +19,20 @@ function getInitialLocale() {
 export default function App() {
   const [locale, setLocale] = useState(getInitialLocale)
   const copy = content[locale]
+  const [previewKey, setPreviewKey] = useState(0)
+  const [bodyDelay, setBodyDelay] = useState(2900)
+
+  useControls("RSVP · Success state", {
+    bodyDelay: {
+      value: 2900,
+      min: 0,
+      max: 3000,
+      step: 50,
+      label: "Body fade delay (ms)",
+      onChange: (v) => setBodyDelay(v),
+    },
+    "↺ Replay": button(() => setPreviewKey((k) => k + 1)),
+  })
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, locale)
@@ -33,7 +48,58 @@ export default function App() {
         <FaqSection copy={copy} />
         <SectionDivider className="bg-canvas-100" />
         <GiftsSection copy={copy} />
-        <RSVPForm copy={copy} />
+        <RSVPForm copy={copy} bodyDelay={bodyDelay} />
+
+        {/* DEV PREVIEW — success states */}
+        {[true, false].map((attending) => (
+          <section key={`${attending}-${previewKey}`} className="bg-canvas-50 px-5 py-20 sm:px-8 border-t border-dashed border-ink/20">
+            <p className="mb-4 text-center font-sans text-xs uppercase tracking-widest text-ink/30">
+              Preview: {attending ? "attending" : "not attending"}
+              {!attending && (
+                <button
+                  onClick={() => setPreviewKey((k) => k + 1)}
+                  className="ml-3 rounded-md bg-black/8 px-2 py-0.5 text-ink/40 transition hover:bg-black/12 hover:text-ink/60"
+                >
+                  ↺ reset
+                </button>
+              )}
+            </p>
+            <div className="mx-auto max-w-[600px] text-center py-8">
+              {!attending ? (
+                <div className="mx-auto mb-6 grid h-40 place-items-center" style={{ isolation: "isolate", transform: "translateZ(0)" }}>
+                  <video
+                    autoPlay
+                    muted
+                    playsInline
+                    className="col-start-1 row-start-1 h-40 w-auto"
+                    style={{
+                      mixBlendMode: "multiply",
+                      pointerEvents: "none",
+                      transform: "translateZ(0)",
+                      animation: `fadeOut 400ms ease-in ${bodyDelay - 150}ms both`,
+                    }}
+                  >
+                    <source src="https://media0.giphy.com/media/fAd5mYnTljWXS/giphy.mp4" type="video/mp4" />
+                  </video>
+                  <h2
+                    className="col-start-1 row-start-1 font-display text-5xl font-semibold text-ink"
+                    style={{ animation: `fadeInUp 560ms ease-out ${bodyDelay}ms both` }}
+                  >
+                    {copy.rsvp.successDecline}
+                  </h2>
+                </div>
+              ) : (
+                <h2 className="font-display text-5xl font-semibold text-ink mb-6">
+                  {copy.rsvp.successAttending}
+                </h2>
+              )}
+              <p className="mt-4 text-ink/75">
+                {attending ? copy.rsvp.successAttendingBody : copy.rsvp.successDeclineBody}
+              </p>
+            </div>
+          </section>
+        ))}
+        {/* END DEV PREVIEW */}
       </main>
     </div>
   )
