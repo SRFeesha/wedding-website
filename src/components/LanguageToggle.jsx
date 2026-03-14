@@ -17,9 +17,9 @@ export default function LanguageToggle({ locale, onChange }) {
           <button
             key={item.id}
             type="button"
-            className={`rounded-full px-3.5 py-1.5 font-sans text-base font-medium leading-6 transition outline-none ${
+            className={`rounded-full px-3.5 py-1.5 font-sans text-base font-medium leading-6 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
               active
-                ? "bg-crimson-600 text-white outline outline-1 outline-offset-[-1px] outline-black/25"
+                ? "bg-crimson-600 text-white outline outline-1 outline-offset-[-1px] outline-black/25 outline-none"
                 : "text-ink"
             }`}
             style={active ? { boxShadow: ACTIVE_SHADOW } : undefined}

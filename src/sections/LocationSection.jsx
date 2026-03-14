@@ -37,12 +37,13 @@ export default function LocationSection({ copy }) {
               className="inline-flex items-center gap-1 rounded-full border border-ink/15 bg-white/70 px-2.5 py-1 text-xs font-sans font-medium text-ink/60 transition hover:border-ink/25 hover:text-ink/80"
             >
               {/* Map pin */}
-              <svg width="11" height="14" viewBox="0 0 11 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="11" height="14" viewBox="0 0 11 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path d="M5.5 0C2.462 0 0 2.462 0 5.5c0 3.85 5.5 8.5 5.5 8.5S11 9.35 11 5.5C11 2.462 8.538 0 5.5 0zm0 7.5a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" fill="currentColor"/>
               </svg>
               Maps
+              <span className="sr-only">(opens in new tab)</span>
               {/* External link */}
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path d="M6 1h3v3M9 1 4.5 5.5M4 2H1.5A.5.5 0 0 0 1 2.5v6a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 .5-.5V6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </a>

@@ -11,10 +11,10 @@ function inputClass(hasError) {
   return "w-full rounded-2xl bg-white px-4 py-3 font-ibm text-[18px] text-ink outline outline-2 outline-black/20 focus:outline-ink/40 transition";
 }
 
-function FieldError({ msg }) {
+function FieldError({ id, msg }) {
   if (!msg) return null;
   return (
-    <p className="mt-1.5 flex items-center gap-1.5 text-xs" style={{ color: ERROR }}>
+    <p id={id} className="mt-1.5 flex items-center gap-1.5 text-xs" style={{ color: ERROR }}>
       <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" style={{ flexShrink: 0 }}>
         <path d="M8 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1Zm-.75 3.25a.75.75 0 0 1 1.5 0v3.5a.75.75 0 0 1-1.5 0v-3.5ZM8 11a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
       </svg>
@@ -88,7 +88,7 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
 
   if (status === "success") {
     return (
-      <section className="bg-canvas-50 px-5 py-20 sm:px-8">
+      <section role="status" className="bg-canvas-50 px-5 py-20 sm:px-8">
         <div className="mx-auto max-w-[600px] text-center py-8">
           <div className="mx-auto mb-6 grid h-40 place-items-center" style={{ isolation: "isolate", transform: "translateZ(0)" }}>
             <video
@@ -142,19 +142,25 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
 
           {/* Full name */}
           <div>
-            <label className={labelClass}>{t.namePlaceholder}</label>
+            <label htmlFor="rsvp-name" className={labelClass}>{t.namePlaceholder}</label>
             <input
+              id="rsvp-name"
               className={inputClass(!!errors.name)}
               value={form.name}
               onChange={(e) => handleChange("name", e.target.value)}
+              aria-describedby={errors.name ? "rsvp-name-error" : undefined}
+              aria-invalid={!!errors.name}
             />
-            <FieldError msg={errors.name} />
+            <FieldError id="rsvp-name-error" msg={errors.name} />
           </div>
 
           {/* Attendance — segmented control */}
           <div>
-            <label className={labelClass}>{t.attendanceLabel}</label>
+            <label id="attendance-label" className={labelClass}>{t.attendanceLabel}</label>
             <div
+              role="group"
+              aria-labelledby="attendance-label"
+              aria-describedby={errors.attending ? "rsvp-attending-error" : undefined}
               className={`flex rounded-2xl p-1.5 backdrop-blur-sm outline outline-offset-[-1px] transition ${
                 errors.attending
                   ? "bg-[#FDF5F0] outline-[#B5340F]"
@@ -190,15 +196,16 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
                 );
               })}
             </div>
-            <FieldError msg={errors.attending} />
+            <FieldError id="rsvp-attending-error" msg={errors.attending} />
           </div>
 
           {/* Dietary (conditional) */}
           {form.attending === true && (
             <div>
-              <label className={labelClass}>{t.dietaryLabel}</label>
+              <label htmlFor="rsvp-dietary" className={labelClass}>{t.dietaryLabel}</label>
               <div className="relative">
                 <select
+                  id="rsvp-dietary"
                   className={`${inputClass(false)} appearance-none cursor-pointer pr-8`}
                   value={form.dietary}
                   onChange={(e) => handleChange("dietary", e.target.value)}
@@ -214,8 +221,9 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
 
           {/* Message */}
           <div>
-            <label className={labelClass}>{t.messageLabel}</label>
+            <label htmlFor="rsvp-message" className={labelClass}>{t.messageLabel}</label>
             <textarea
+              id="rsvp-message"
               className={inputClass(false)}
               rows={3}
               value={form.message}
@@ -236,9 +244,9 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
             </button>
           </div>
 
-          {status === "error" && (
-            <FieldError msg={t.errorMsg} />
-          )}
+          <div aria-live="polite" aria-atomic="true">
+            {status === "error" && <FieldError msg={t.errorMsg} />}
+          </div>
 
         </div>
       </div>

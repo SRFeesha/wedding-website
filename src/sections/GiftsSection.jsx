@@ -31,9 +31,12 @@ export default function GiftsSection({ copy }) {
 
           <button
             onClick={handleCopy}
+            aria-label={copied ? copy.copiedIban : copy.copyIban}
             className="inline-flex items-center gap-1 rounded-xl bg-black/10 px-3.5 py-1.5 font-ibm text-base font-medium text-ink/90 transition hover:bg-black/15"
           >
-            {copied ? copy.copiedIban : copy.copyIban}
+            <span aria-live="polite" aria-atomic="true">
+              {copied ? copy.copiedIban : copy.copyIban}
+            </span>
             {copied ? (
               <CircleCheck size={16} strokeWidth={2.5} color="#3A6647" aria-hidden="true" />
             ) : (
