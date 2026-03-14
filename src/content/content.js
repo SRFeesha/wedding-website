@@ -55,7 +55,7 @@ export const content = {
     locationDescription: "La tenuta si trova nell'entroterra siciliano, nei pressi di Piazza Armerina. Il posto si trova a circa 600m di altitudine — la sera fa freschino!",
     rsvp: {
       title: "RSVP",
-      deadline: "Per favore rispondi entro il 1° giugno 2026.",
+      deadline: "Per favore rispondi entro il 1° giugno 2026",
       namePlaceholder: "Nome completo",
       attendanceLabel: "Verrai al matrimonio?",
       attendanceYes: "Ci sarò!",
@@ -140,7 +140,7 @@ export const content = {
     locationDescription: "The estate sits in the Sicilian hinterland, near Piazza Armerina, at around 600m altitude — evenings can be quite chilly!",
     rsvp: {
       title: "RSVP",
-      deadline: "Please respond by June 1, 2026.",
+      deadline: "Please respond by June 1, 2026",
       namePlaceholder: "Full name",
       attendanceLabel: "Will you be joining us?",
       attendanceYes: "I'll be there",

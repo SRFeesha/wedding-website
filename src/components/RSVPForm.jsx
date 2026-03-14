@@ -107,7 +107,7 @@ export default function RSVPForm({ copy }) {
         {/* Header */}
         <div className="text-center">
           <h2 className="font-display text-5xl font-semibold text-ink">{t.title}</h2>
-          <p className="mt-3 font-body text-xl text-ink/75">{t.deadline}</p>
+          <p className="mt-3 font-display text-xl italic text-ink/75">{t.deadline}</p>
         </div>
 
         <div className="mx-auto mt-9 max-w-[600px] space-y-8">
