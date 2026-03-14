@@ -29,6 +29,7 @@ export default {
       },
       fontFamily: {
         sans: ["Instrument Sans", "sans-serif"],
+        ibm: ["IBM Plex Sans", "sans-serif"],
         display: ["Crimson Pro", "serif"],
         body: ["Crimson Text", "serif"],
         script: ["Alex Brush", "cursive"],

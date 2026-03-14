@@ -32,14 +32,14 @@ export default function GiftsSection({ copy }) {
 
           <button
             onClick={handleCopy}
-            className="inline-flex items-center gap-1 rounded-xl bg-black/10 px-3.5 py-1.5 font-sans text-base font-medium text-ink/90 outline outline-1 outline-offset-[-1px] outline-black/15 transition hover:bg-black/15"
+            className="inline-flex items-center gap-1 rounded-xl bg-black/10 px-3.5 py-1.5 font-ibm text-base font-medium text-ink/90 outline outline-1 outline-offset-[-1px] outline-black/15 transition hover:bg-black/15"
             style={{ boxShadow: COPY_SHADOW }}
           >
             {copied ? "Copied!" : "Copy IBAN"}
-            {/* Copy icon — two overlapping squares */}
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect x="5.33" y="5.33" width="8" height="8" rx="1" stroke="currentColor" strokeOpacity="0.5" strokeWidth="1.33"/>
-              <rect x="2" y="2" width="8" height="8" rx="1" stroke="currentColor" strokeOpacity="0.5" strokeWidth="1.33"/>
+            {/* Lucide copy icon */}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeOpacity="0.5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
             </svg>
           </button>
         </div>
