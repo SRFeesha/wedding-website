@@ -73,9 +73,10 @@ export const content = {
       messageLabel: "Vuoi lasciare una nota? :)",
       submitLabel: "Invia",
       submittingLabel: "Invio…",
-      successAttending: "Ci vediamo in Sicilia.",
+      successAttending: "Non vediamo l'ora di vederti in Sicilia!",
       successDecline: "Ci mancherai ❤️",
-      successAttendingBody: null,
+      successAttendingBody:
+        "Abbiamo creato un gruppo WhatsApp con gli altri ospiti — ottimo per organizzare i viaggi, trovare compagnia per il tragitto o semplicemente presentarsi prima del grande giorno. Se hai bisogno di aiuto con l'alloggio o per arrivare, scrivici pure.",
       successDeclineBody: null,
       errorMsg: "Qualcosa è andato storto. Riprova o contattaci direttamente.",
       validationName: "Per favore inserisci il tuo nome.",
@@ -166,10 +167,10 @@ export const content = {
       messageLabel: "Want to leave a note? :)",
       submitLabel: "Send",
       submittingLabel: "Sending…",
-      successAttending: "See you in Sicily.",
+      successAttending: "We can't wait to see you in Sicily!",
       successDecline: "We'll miss you ❤️",
       successAttendingBody:
-        "Your RSVP has been received. More details to follow.",
+        "We've set up a WhatsApp group with the other guests — great for coordinating travel, finding company for the journey, or just saying hello before the big day. If you need any help with accommodation or getting there, don't hesitate to reach out.",
       successDeclineBody: "",
       errorMsg:
         "Something went wrong. Please try again or contact us directly.",

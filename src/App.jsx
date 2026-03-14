@@ -55,44 +55,42 @@ export default function App() {
           <section key={`${attending}-${previewKey}`} className="bg-canvas-50 px-5 py-20 sm:px-8 border-t border-dashed border-ink/20">
             <p className="mb-4 text-center font-sans text-xs uppercase tracking-widest text-ink/30">
               Preview: {attending ? "attending" : "not attending"}
-              {!attending && (
-                <button
-                  onClick={() => setPreviewKey((k) => k + 1)}
-                  className="ml-3 rounded-md bg-black/8 px-2 py-0.5 text-ink/40 transition hover:bg-black/12 hover:text-ink/60"
-                >
-                  ↺ reset
-                </button>
-              )}
+              <button
+                onClick={() => setPreviewKey((k) => k + 1)}
+                className="ml-3 rounded-md bg-black/8 px-2 py-0.5 text-ink/40 transition hover:bg-black/12 hover:text-ink/60"
+              >
+                ↺ reset
+              </button>
             </p>
             <div className="mx-auto max-w-[600px] text-center py-8">
-              {!attending ? (
-                <div className="mx-auto mb-6 grid h-40 place-items-center" style={{ isolation: "isolate", transform: "translateZ(0)" }}>
-                  <video
-                    autoPlay
-                    muted
-                    playsInline
-                    className="col-start-1 row-start-1 h-40 w-auto"
-                    style={{
-                      mixBlendMode: "multiply",
-                      pointerEvents: "none",
-                      transform: "translateZ(0)",
-                      animation: `fadeOut 400ms ease-in ${bodyDelay - 150}ms both`,
-                    }}
-                  >
-                    <source src="https://media0.giphy.com/media/fAd5mYnTljWXS/giphy.mp4" type="video/mp4" />
-                  </video>
-                  <h2
-                    className="col-start-1 row-start-1 font-display text-5xl font-semibold text-ink"
-                    style={{ animation: `fadeInUp 560ms ease-out ${bodyDelay}ms both` }}
-                  >
-                    {copy.rsvp.successDecline}
-                  </h2>
-                </div>
-              ) : (
-                <h2 className="font-display text-5xl font-semibold text-ink mb-6">
-                  {copy.rsvp.successAttending}
+              <div className="mx-auto mb-6 grid h-40 place-items-center" style={{ isolation: "isolate", transform: "translateZ(0)" }}>
+                <video
+                  autoPlay
+                  muted
+                  playsInline
+                  loop={attending}
+                  className="col-start-1 row-start-1 h-40 w-auto"
+                  style={{
+                    mixBlendMode: "multiply",
+                    pointerEvents: "none",
+                    transform: "translateZ(0)",
+                    animation: `fadeOut 400ms ease-in ${bodyDelay - 150}ms both`,
+                  }}
+                >
+                  <source
+                    src={attending
+                      ? "https://media1.giphy.com/media/OfkGZ5H2H3f8Y/giphy.mp4"
+                      : "https://media0.giphy.com/media/fAd5mYnTljWXS/giphy.mp4"}
+                    type="video/mp4"
+                  />
+                </video>
+                <h2
+                  className="col-start-1 row-start-1 font-display text-5xl font-semibold text-ink"
+                  style={{ animation: `fadeInUp 560ms ease-out ${bodyDelay}ms both` }}
+                >
+                  {attending ? copy.rsvp.successAttending : copy.rsvp.successDecline}
                 </h2>
-              )}
+              </div>
               <p className="mt-4 text-ink/75">
                 {attending ? copy.rsvp.successAttendingBody : copy.rsvp.successDeclineBody}
               </p>
