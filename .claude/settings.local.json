@@ -9,7 +9,18 @@
       "Bash(git:*)",
       "Bash(npm install:*)",
       "Bash(node:*)",
-      "Bash(npm:*)"
+      "Bash(npm:*)",
+      "WebFetch(domain:www.figma.com)",
+      "WebSearch",
+      "WebFetch(domain:www.svgrepo.com)",
+      "WebFetch(domain:uxwing.com)",
+      "WebFetch(domain:commons.wikimedia.org)",
+      "WebFetch(domain:icon.horse)",
+      "WebFetch(domain:upload.wikimedia.org)",
+      "WebFetch(domain:api.iconify.design)",
+      "WebFetch(domain:icones.js.org)",
+      "WebFetch(domain:www.logo.wine)",
+      "Bash(grep -rn \"BusNotice\\\\|MapWidget\\\\|MediaStrip\\\\|MoodboardBand\\\\|PlantAccent\\\\|SectionBlock\\\\|WeatherWidget\\\\|weatherAdapter\" src/ --include=\"*.{js,jsx}\")"
     ]
   }
 }
