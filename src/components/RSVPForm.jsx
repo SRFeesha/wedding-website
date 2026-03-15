@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, LayoutGroup } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, LayoutGroup, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   WarningCircleIcon, CircleNotchIcon, CaretDownIcon,
   CheckIcon, XIcon,
@@ -15,7 +15,7 @@ const labelClass =
 function inputClass(hasError) {
   if (hasError)
     return "w-full rounded-2xl bg-white px-4 py-3 font-ibm text-[18px] text-ink outline outline-2 outline-error focus:outline-error transition";
-  return "w-full rounded-2xl bg-white px-4 py-3 font-ibm text-[18px] text-ink outline outline-2 outline-black/20 focus:outline-ink/40 transition";
+  return "w-full rounded-2xl bg-white px-4 py-3 font-ibm text-[18px] text-ink outline outline-2 outline-black/20 focus:outline-crimson-600 transition";
 }
 
 function FieldError({ id, msg }) {
@@ -72,73 +72,31 @@ const SUBMIT_SHADOW =
   "0px 2px 4px 0px rgba(0,0,0,0.30), inset 0px 8px 8px 0px rgba(255,255,255,0.05)";
 
 const bodyDelay = 2000;
-const DISCLOSURE_DURATION = 320;
-const DISCLOSURE_EASING = "cubic-bezier(0.25, 1, 0.5, 1)";
 
-function usePrefersReducedMotion() {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+const OPEN_TRANSITION = { duration: 0.28, ease: [0.25, 1, 0.5, 1] };
+const CLOSE_TRANSITION = { duration: 0.22, ease: [0.5, 0, 0.75, 0] };
+const SPRING = { type: "spring", stiffness: 380, damping: 35 };
 
-  useEffect(() => {
-    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return undefined;
-
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches);
-
-    updatePreference();
-    mediaQuery.addEventListener?.("change", updatePreference);
-
-    return () => mediaQuery.removeEventListener?.("change", updatePreference);
-  }, []);
-
-  return prefersReducedMotion;
-}
-
-function Disclosure({ show, children, className = "", contentClassName = "" }) {
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const [isMounted, setIsMounted] = useState(show);
-
-  useEffect(() => {
-    if (show) setIsMounted(true);
-  }, [show]);
-
-  useEffect(() => {
-    if (show || !isMounted) return undefined;
-
-    const timeout = window.setTimeout(
-      () => setIsMounted(false),
-      prefersReducedMotion ? 1 : DISCLOSURE_DURATION,
-    );
-
-    return () => window.clearTimeout(timeout);
-  }, [show, isMounted, prefersReducedMotion]);
-
-  if (!isMounted) return null;
-
-  const visible = show;
-
+function Disclosure({ show, children, className = "", contentClassName = "", delay = 0 }) {
+  const shouldReduce = useReducedMotion();
+  const enter = shouldReduce ? { duration: 0 } : { ...OPEN_TRANSITION, delay };
+  const exit  = shouldReduce ? { duration: 0 } : CLOSE_TRANSITION;
   return (
-    <div
-      aria-hidden={!visible}
-      className={`overflow-hidden ${className}`.trim()}
-      style={{
-        display: "grid",
-        gridTemplateRows: visible ? "1fr" : "0fr",
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(-6px)",
-        transition: prefersReducedMotion
-          ? "none"
-          : [
-              `grid-template-rows ${DISCLOSURE_DURATION}ms ${DISCLOSURE_EASING}`,
-              `opacity ${DISCLOSURE_DURATION}ms ${DISCLOSURE_EASING}`,
-              `transform ${DISCLOSURE_DURATION}ms ${DISCLOSURE_EASING}`,
-            ].join(", "),
-        pointerEvents: visible ? "auto" : "none",
-      }}
-    >
-      <div className="min-h-0 overflow-hidden">
-        <div className={contentClassName}>{children}</div>
-      </div>
-    </div>
+    <AnimatePresence initial={false}>
+      {show && (
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "auto", opacity: 1 }}
+          exit={{ height: 0, opacity: 0, transition: exit }}
+          transition={{ height: enter, opacity: enter }}
+          className={`overflow-hidden ${className}`.trim()}
+        >
+          <div className="px-[2px] py-[2px]">
+            <div className={contentClassName}>{children}</div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
@@ -345,40 +303,50 @@ export default function RSVPForm({ copy }) {
           </div>
 
           {/* Transport (conditional) */}
-          <Disclosure show={form.attending === true} contentClassName="pb-0.5">
+          <Disclosure show={form.attending === true} contentClassName="pb-0.5" delay={0}>
             <div>
               <label id="transport-label" className={labelClass}>{t.transportLabel}</label>
-              <div role="group" aria-labelledby="transport-label" className="rounded-2xl bg-white/40 p-1.5">
-                {t.transportOptions.map((opt) => {
-                  const active = form.transport === opt.value;
-                  const Icon = TRANSPORT_ICONS[opt.value];
-                  return (
-                    <button
-                      key={opt.value}
-                      type="button"
-                      aria-pressed={active}
-                      onClick={() => handleChange("transport", opt.value)}
-                      className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring ${
-                        active ? "bg-crimson-600 text-white" : "text-ink"
-                      }`}
-                      style={active ? { boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.25), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" } : undefined}
-                    >
-                      <div className="flex items-center gap-3">
-                        {Icon && <Icon size={20} weight={active ? "fill" : "bold"} aria-hidden="true" className="shrink-0" />}
-                        <div>
-                          <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
-                          <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
+              <LayoutGroup>
+                <div role="group" aria-labelledby="transport-label" className="rounded-2xl bg-white/40 p-1.5">
+                  {t.transportOptions.map((opt) => {
+                    const active = form.transport === opt.value;
+                    const Icon = TRANSPORT_ICONS[opt.value];
+                    return (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        aria-pressed={active}
+                        onClick={() => handleChange("transport", opt.value)}
+                        className={`relative w-full rounded-xl px-5 py-3 text-left transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
+                          active ? "text-white" : "text-ink"
+                        }`}
+                      >
+                        {active && (
+                          <motion.span
+                            layoutId="transport-pill"
+                            aria-hidden="true"
+                            className="absolute inset-0 rounded-xl bg-crimson-600"
+                            style={{ boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.25), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" }}
+                            transition={SPRING}
+                          />
+                        )}
+                        <div className="relative z-10 flex items-center gap-3">
+                          {Icon && <Icon size={20} weight={active ? "fill" : "bold"} aria-hidden="true" className="shrink-0" />}
+                          <div>
+                            <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
+                            <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
+                          </div>
                         </div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </LayoutGroup>
             </div>
           </Disclosure>
 
           {/* Dietary (conditional) */}
-          <Disclosure show={form.attending === true} contentClassName="pb-0.5">
+          <Disclosure show={form.attending === true} contentClassName="pb-0.5" delay={0.04}>
             <div>
               <label htmlFor="rsvp-dietary" className={labelClass}>{t.dietaryLabel}</label>
               <div className="relative">
@@ -413,7 +381,7 @@ export default function RSVPForm({ copy }) {
           </Disclosure>
 
           {/* Additional guests */}
-          <Disclosure show={form.attending === true} contentClassName="space-y-8 pb-0.5">
+          <Disclosure show={form.attending === true} contentClassName="space-y-8 pb-0.5" delay={0.08}>
             <div>
               {form.guests.map((guest, i) => (
                 <div key={guest.id} className="space-y-5 rounded-2xl bg-white p-5 outline outline-2 outline-offset-[-2px] outline-black/20" style={{ animation: "fadeInUp 350ms cubic-bezier(0.25, 1, 0.5, 1) both" }}>
@@ -423,7 +391,7 @@ export default function RSVPForm({ copy }) {
                       type="button"
                       aria-label={`${t.removeGuestLabel} ${guest.name || `${t.guestLabel} ${i + 2}`}`}
                       onClick={() => removeGuest(i)}
-                      className="font-ibm text-sm font-medium text-ink/50 rounded-lg border border-transparent px-3 py-1 transition hover:border-ink/20 hover:bg-ink/5 hover:text-ink/80"
+                      className="font-ibm text-sm font-medium text-ink/50 rounded-lg border border-transparent px-3 py-1 transition hover:border-ink/20 hover:bg-ink/5 hover:text-ink/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
                     >
                       {t.removeGuestLabel}
                     </button>
@@ -456,7 +424,7 @@ export default function RSVPForm({ copy }) {
                               type="button"
                               aria-pressed={active}
                               onClick={() => updateGuest(i, "ageGroup", opt.value)}
-                              className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring ${
+                              className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
                                 active ? "bg-crimson-600 text-white" : "text-ink"
                               }`}
                               style={active ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
@@ -483,7 +451,7 @@ export default function RSVPForm({ copy }) {
                                         type="button"
                                         aria-pressed={bActive}
                                         onClick={() => updateGuest(i, "babySeating", bOpt.value)}
-                                        className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring ${
+                                        className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
                                           bActive ? "bg-crimson-600 text-white" : "text-ink"
                                         }`}
                                         style={bActive ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
@@ -546,7 +514,7 @@ export default function RSVPForm({ copy }) {
               <button
                 type="button"
                 onClick={addGuest}
-                className="w-full rounded-2xl border-2 border-dashed border-black/20 bg-white/90 py-3.5 font-ibm text-base font-medium text-ink/70 transition hover:border-ink/40 hover:text-ink/90"
+                className="w-full rounded-2xl border-2 border-dashed border-black/20 bg-white/90 py-3.5 font-ibm text-base font-medium text-ink/70 transition hover:border-ink/40 hover:text-ink/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
               >
                 {t.addGuestLabel}
               </button>
@@ -570,7 +538,7 @@ export default function RSVPForm({ copy }) {
           {/* Submit */}
           <div className="py-2">
             <button
-              className="w-full rounded-2xl bg-crimson-600 px-7 py-3 font-sans text-2xl font-medium text-white outline outline-2 outline-offset-[-2px] outline-black/25 transition hover:bg-crimson-700 disabled:cursor-not-allowed flex items-center justify-center"
+              className="w-full rounded-2xl bg-crimson-600 px-7 py-3 font-sans text-2xl font-medium text-white outline outline-2 outline-offset-[-2px] outline-black/25 transition hover:bg-crimson-700 disabled:cursor-not-allowed flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-saffron-500"
               style={{ boxShadow: SUBMIT_SHADOW }}
               onClick={handleSubmit}
               disabled={status === "loading"}
