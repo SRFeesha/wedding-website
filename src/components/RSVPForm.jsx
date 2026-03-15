@@ -4,7 +4,7 @@ import { useSounds } from "../hooks/useSounds";
 import {
   WarningCircleIcon, CircleNotchIcon, CaretDownIcon,
   CheckIcon, XIcon,
-  BusIcon, CarIcon, QuestionIcon,
+  VanIcon, CarIcon, QuestionIcon,
   BabyIcon, ConfettiIcon, UserIcon,
   ForkKnifeIcon, HeartIcon,
   LeafIcon, CheeseIcon, GrainsSlashIcon,
@@ -74,8 +74,8 @@ const SUBMIT_SHADOW =
 
 const bodyDelay = 2000;
 
-const OPEN_TRANSITION = { duration: 0.22, ease: [0.25, 1, 0.5, 1] };
-const CLOSE_TRANSITION = { duration: 0.18, ease: [0.5, 0, 0.75, 0] };
+const OPEN_TRANSITION = { duration: 0.35, ease: [0.25, 1, 0.5, 1] };
+const CLOSE_TRANSITION = { duration: 0.26, ease: [0.5, 0, 0.75, 0] };
 const SPRING = { type: "spring", stiffness: 460, damping: 32 };
 
 function Disclosure({ show, children, className = "", contentClassName = "", delay = 0 }) {
@@ -418,12 +418,12 @@ export default function RSVPForm({ copy }) {
                         style={{ animation: "fadeInUp 350ms cubic-bezier(0.25, 1, 0.5, 1) both" }}
                       >
                         {/* Header row */}
-                        <div className="relative flex items-center">
+                        <div className="flex items-center">
                           <button
                             type="button"
                             onClick={() => toggleGuestDetails(guest.id)}
                             aria-expanded={isOpen}
-                            className="absolute -left-6 top-1/2 -translate-y-1/2 rounded-md p-1 text-saffron-600 transition-colors hover:bg-saffron-600/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                            className="-ml-6 mr-2 shrink-0 rounded-md p-1 text-saffron-600 transition-colors hover:bg-saffron-600/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
                           >
                             <CaretDownIcon
                               size={16}
