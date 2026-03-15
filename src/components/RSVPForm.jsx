@@ -245,7 +245,7 @@ export default function RSVPForm({ copy }) {
                       <div className="w-px self-stretch bg-black/20" />
                     )}
                     <button
-                      className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3.5 py-1.5 font-ibm text-base font-medium leading-6 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
+                      className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3.5 py-1.5 font-ibm text-base font-medium leading-6 transition-all duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
                         active
                           ? "bg-crimson-600 text-white outline outline-1 outline-offset-[-1px] outline-black/25"
                           : "text-ink"
@@ -282,7 +282,7 @@ export default function RSVPForm({ copy }) {
                       type="button"
                       aria-pressed={active}
                       onClick={() => handleChange("transport", opt.value)}
-                      className={`w-full rounded-xl px-5 py-3 text-left transition ${
+                      className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring ${
                         active ? "bg-crimson-600 text-white" : "text-ink"
                       }`}
                       style={active ? { boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.25), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" } : undefined}
@@ -342,10 +342,10 @@ export default function RSVPForm({ copy }) {
               {form.guests.map((guest, i) => (
                 <div key={guest.id} className="space-y-5 rounded-2xl bg-white p-5 outline outline-2 outline-offset-[-2px] outline-black/20" style={{ animation: "fadeInUp 350ms cubic-bezier(0.25, 1, 0.5, 1) both" }}>
                   <div className="flex items-center justify-between">
-                    <span id={`guest-heading-${i}`} className={labelClass}>{t.ageGroupLabel} — {guest.name || `#${i + 2}`}</span>
+                    <span id={`guest-heading-${i}`} className={labelClass}>{guest.name || `${t.guestLabel} ${i + 2}`}</span>
                     <button
                       type="button"
-                      aria-label={`${t.removeGuestLabel} ${guest.name || `#${i + 2}`}`}
+                      aria-label={`${t.removeGuestLabel} ${guest.name || `${t.guestLabel} ${i + 2}`}`}
                       onClick={() => removeGuest(i)}
                       className="font-ibm text-sm font-medium text-ink/50 rounded-lg border border-transparent px-3 py-1 transition hover:border-ink/20 hover:bg-ink/5 hover:text-ink/80"
                     >
@@ -353,14 +353,17 @@ export default function RSVPForm({ copy }) {
                     </button>
                   </div>
 
-                  <input
-                    id={`guest-name-${i}`}
-                    aria-label={t.namePlaceholder}
-                    className={inputClass(false)}
-                    placeholder={t.namePlaceholder}
-                    value={guest.name}
-                    onChange={(e) => updateGuest(i, "name", e.target.value)}
-                  />
+                  <div>
+                    <span className={labelClass}>{t.nameLabel}</span>
+                    <input
+                      id={`guest-name-${i}`}
+                      aria-label={t.namePlaceholder}
+                      className={`${inputClass(false)} mt-1`}
+                      placeholder={t.namePlaceholder}
+                      value={guest.name}
+                      onChange={(e) => updateGuest(i, "name", e.target.value)}
+                    />
+                  </div>
 
                   <div
                     role="group"
@@ -377,7 +380,7 @@ export default function RSVPForm({ copy }) {
                               type="button"
                               aria-pressed={active}
                               onClick={() => updateGuest(i, "ageGroup", opt.value)}
-                              className={`w-full rounded-xl px-5 py-3 text-left transition ${
+                              className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring ${
                                 active ? "bg-crimson-600 text-white" : "text-ink"
                               }`}
                               style={active ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
@@ -404,7 +407,7 @@ export default function RSVPForm({ copy }) {
                                         type="button"
                                         aria-pressed={bActive}
                                         onClick={() => updateGuest(i, "babySeating", bOpt.value)}
-                                        className={`w-full rounded-xl px-5 py-3 text-left transition ${
+                                        className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring ${
                                           bActive ? "bg-crimson-600 text-white" : "text-ink"
                                         }`}
                                         style={bActive ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}

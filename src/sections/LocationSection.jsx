@@ -1,20 +1,28 @@
 import { MapPinIcon, ArrowSquareOutIcon } from "@phosphor-icons/react"
+import { useInView } from "../hooks/useInView"
+
+const ease = "cubic-bezier(0.25, 1, 0.5, 1)"
 
 export default function LocationSection({ copy }) {
   const photo = { url: "/tenuta-savoca.webp", alt: "Tenuta Savoca" }
+  const [ref, inView] = useInView()
 
   return (
     <section
       id="location"
       className="relative z-10 -mt-8 rounded-t-[2.5rem] bg-canvas-50 px-5 py-16 sm:px-10 sm:py-24"
     >
-      <div className="mx-auto flex max-w-4xl flex-col items-center gap-8 sm:flex-row sm:items-stretch sm:gap-12">
+      <div
+        ref={ref}
+        className="mx-auto flex max-w-4xl flex-col items-center gap-8 sm:flex-row sm:items-stretch sm:gap-12"
+        style={inView ? { animation: `fadeInUp 560ms ${ease} both` } : { opacity: 0 }}
+      >
         {/* Photo */}
-        <div className="w-full flex-shrink-0 sm:w-[44%]">
+        <div className="w-full flex-shrink-0 overflow-hidden rounded-2xl sm:w-[44%]">
           <img
             src={photo.url}
             alt="Tenuta Savoca"
-            className="h-64 w-full rounded-2xl object-cover sm:h-full"
+            className="h-64 w-full object-cover transition-transform duration-500 ease-spring hover:scale-[1.03] sm:h-full"
           />
         </div>
 

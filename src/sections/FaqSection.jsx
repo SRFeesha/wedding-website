@@ -1,8 +1,12 @@
 import { useState } from "react"
 import { CaretDownIcon } from "@phosphor-icons/react"
+import { useInView } from "../hooks/useInView"
+
+const ease = "cubic-bezier(0.25, 1, 0.5, 1)"
 
 export default function FaqSection({ copy }) {
   const [openItems, setOpenItems] = useState(() => new Set(copy.faqList.map((_, i) => i)))
+  const [ref, inView] = useInView()
 
   const toggle = (index) => {
     setOpenItems((prev) => {
@@ -15,7 +19,11 @@ export default function FaqSection({ copy }) {
 
   return (
     <section id="faq" className="bg-canvas-100 px-5 py-16 sm:px-8 sm:py-20">
-      <div className="mx-auto max-w-2xl">
+      <div
+        ref={ref}
+        className="mx-auto max-w-2xl"
+        style={inView ? { animation: `fadeInUp 560ms ${ease} both` } : { opacity: 0 }}
+      >
         <h2 className="text-center font-display text-5xl font-semibold text-ink">
           {copy.faqTitle}
         </h2>
@@ -44,7 +52,7 @@ export default function FaqSection({ copy }) {
                     className="shrink-0 text-saffron-600"
                     style={{
                       transform: isOpen ? "rotate(-180deg)" : "rotate(0deg)",
-                      transition: "transform 280ms cubic-bezier(0.25, 1, 0.5, 1)",
+                      transition: "transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1)",
                     }}
                   />
                 </button>

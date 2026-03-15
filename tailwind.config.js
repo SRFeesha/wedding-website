@@ -52,6 +52,10 @@ export default {
         fadeInUp: "fadeInUp 560ms ease-out both",
         fadeOut: "fadeOut 400ms ease-in both",
       },
+      transitionTimingFunction: {
+        spring: "cubic-bezier(0.25, 1, 0.5, 1)",
+        bounce: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+      },
     },
   },
   plugins: [],
