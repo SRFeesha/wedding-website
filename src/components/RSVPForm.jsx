@@ -73,9 +73,9 @@ const SUBMIT_SHADOW =
 
 const bodyDelay = 2000;
 
-const OPEN_TRANSITION = { duration: 0.28, ease: [0.25, 1, 0.5, 1] };
-const CLOSE_TRANSITION = { duration: 0.22, ease: [0.5, 0, 0.75, 0] };
-const SPRING = { type: "spring", stiffness: 380, damping: 35 };
+const OPEN_TRANSITION = { duration: 0.22, ease: [0.25, 1, 0.5, 1] };
+const CLOSE_TRANSITION = { duration: 0.18, ease: [0.5, 0, 0.75, 0] };
+const SPRING = { type: "spring", stiffness: 460, damping: 32 };
 
 function Disclosure({ show, children, className = "", contentClassName = "", delay = 0 }) {
   const shouldReduce = useReducedMotion();
@@ -120,16 +120,31 @@ export default function RSVPForm({ copy }) {
   };
 
   const guestIdRef = useRef(0);
+  const [expandedGuests, setExpandedGuests] = useState(() => new Set());
+
   const addGuest = () => {
     const id = ++guestIdRef.current;
     setForm((p) => ({
       ...p,
       guests: [...p.guests, { id, name: "", ageGroup: null, dietary: t.dietaryOptions[0], dietaryNote: "", babySeating: null }],
     }));
+    setExpandedGuests((prev) => new Set([...prev, id]));
   };
 
-  const removeGuest = (i) =>
+  const removeGuest = (i) => {
+    const { id } = form.guests[i];
     setForm((p) => ({ ...p, guests: p.guests.filter((_, idx) => idx !== i) }));
+    setExpandedGuests((prev) => { const next = new Set(prev); next.delete(id); return next; });
+  };
+
+  const toggleGuestDetails = (id) => {
+    setExpandedGuests((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
 
   const updateGuest = (i, field, value) =>
     setForm((p) => ({
@@ -302,8 +317,43 @@ export default function RSVPForm({ copy }) {
             <FieldError id="rsvp-attending-error" msg={errors.attending} />
           </div>
 
-          {/* Transport (conditional) */}
+          {/* Dietary (conditional) */}
           <Disclosure show={form.attending === true} contentClassName="pb-0.5" delay={0}>
+            <div>
+              <label htmlFor="rsvp-dietary" className={labelClass}>{t.dietaryLabel}</label>
+              <div className="relative">
+                <DietarySelectIcon value={form.dietary} />
+                <select
+                  id="rsvp-dietary"
+                  className={`${inputClass(false)} appearance-none cursor-pointer pl-9 pr-9`}
+                  value={form.dietary}
+                  onChange={(e) => handleChange("dietary", e.target.value)}
+                >
+                  {t.dietaryOptions.map((o) => (
+                    <option key={o} value={o}>{o}</option>
+                  ))}
+                </select>
+                <Chevron />
+              </div>
+              <Disclosure show={form.dietary === t.dietaryOtherValue} contentClassName="pl-4 pt-3 pb-1">
+                <div>
+                  <label htmlFor="rsvp-dietary-note" className={labelClass}>{t.dietaryNoteLabel}</label>
+                  <textarea
+                    id="rsvp-dietary-note"
+                    className={inputClass(false)}
+                    rows={2}
+                    placeholder={t.dietaryNotePlaceholder}
+                    value={form.dietaryNote}
+                    onChange={(e) => handleChange("dietaryNote", e.target.value)}
+                    style={{ resize: "none", lineHeight: "1.7" }}
+                  />
+                </div>
+              </Disclosure>
+            </div>
+          </Disclosure>
+
+          {/* Transport (conditional) */}
+          <Disclosure show={form.attending === true} contentClassName="pb-0.5" delay={0.04}>
             <div>
               <label id="transport-label" className={labelClass}>{t.transportLabel}</label>
               <LayoutGroup>
@@ -345,171 +395,172 @@ export default function RSVPForm({ copy }) {
             </div>
           </Disclosure>
 
-          {/* Dietary (conditional) */}
-          <Disclosure show={form.attending === true} contentClassName="pb-0.5" delay={0.04}>
-            <div>
-              <label htmlFor="rsvp-dietary" className={labelClass}>{t.dietaryLabel}</label>
-              <div className="relative">
-                <DietarySelectIcon value={form.dietary} />
-                <select
-                  id="rsvp-dietary"
-                  className={`${inputClass(false)} appearance-none cursor-pointer pl-9 pr-9`}
-                  value={form.dietary}
-                  onChange={(e) => handleChange("dietary", e.target.value)}
-                >
-                  {t.dietaryOptions.map((o) => (
-                    <option key={o} value={o}>{o}</option>
-                  ))}
-                </select>
-                <Chevron />
-              </div>
-              <Disclosure show={form.dietary === t.dietaryOtherValue} contentClassName="pl-4 pt-3 pb-1">
-                <div>
-                  <label htmlFor="rsvp-dietary-note" className={labelClass}>{t.dietaryNoteLabel}</label>
-                  <textarea
-                    id="rsvp-dietary-note"
-                    className={inputClass(false)}
-                    rows={2}
-                    placeholder={t.dietaryNotePlaceholder}
-                    value={form.dietaryNote}
-                    onChange={(e) => handleChange("dietaryNote", e.target.value)}
-                    style={{ resize: "none", lineHeight: "1.7" }}
-                  />
-                </div>
-              </Disclosure>
-            </div>
-          </Disclosure>
-
           {/* Additional guests */}
-          <Disclosure show={form.attending === true} contentClassName="space-y-8 pb-0.5" delay={0.08}>
+          <Disclosure show={form.attending === true} contentClassName="pb-0.5" delay={0.08}>
             <div>
-              {form.guests.map((guest, i) => (
-                <div key={guest.id} className="space-y-5 rounded-2xl bg-white p-5 outline outline-2 outline-offset-[-2px] outline-black/20" style={{ animation: "fadeInUp 350ms cubic-bezier(0.25, 1, 0.5, 1) both" }}>
-                  <div className="flex items-center justify-between">
-                    <span id={`guest-heading-${i}`} className={labelClass}>{guest.name || `${t.guestLabel} ${i + 2}`}</span>
-                    <button
-                      type="button"
-                      aria-label={`${t.removeGuestLabel} ${guest.name || `${t.guestLabel} ${i + 2}`}`}
-                      onClick={() => removeGuest(i)}
-                      className="font-ibm text-sm font-medium text-ink/50 rounded-lg border border-transparent px-3 py-1 transition hover:border-ink/20 hover:bg-ink/5 hover:text-ink/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
-                    >
-                      {t.removeGuestLabel}
-                    </button>
-                  </div>
+              {form.guests.length > 0 && (
+                <div className="divide-y divide-[#C9A87A]/25 mb-6">
+                  {form.guests.map((guest, i) => {
+                    const isOpen = expandedGuests.has(guest.id);
+                    const guestTitle = guest.name || `${t.guestLabel} ${i + 2}`;
+                    return (
+                      <div
+                        key={guest.id}
+                        className="py-4 first:pt-0"
+                        style={{ animation: "fadeInUp 350ms cubic-bezier(0.25, 1, 0.5, 1) both" }}
+                      >
+                        {/* Header row */}
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => toggleGuestDetails(guest.id)}
+                            aria-expanded={isOpen}
+                            className="shrink-0 rounded-md p-1 text-saffron-600 transition-colors hover:bg-saffron-600/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                          >
+                            <CaretDownIcon
+                              size={16}
+                              weight="bold"
+                              aria-hidden="true"
+                              style={{
+                                transform: isOpen ? "rotate(0deg)" : "rotate(-90deg)",
+                                transition: "transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1)",
+                              }}
+                            />
+                          </button>
+                          <span
+                            id={`guest-heading-${i}`}
+                            className="font-display text-2xl font-semibold leading-tight text-ink"
+                          >
+                            {guestTitle}
+                          </span>
+                          <button
+                            type="button"
+                            aria-label={`${t.removeGuestLabel} ${guestTitle}`}
+                            onClick={() => removeGuest(i)}
+                            className="ml-auto font-ibm text-sm font-medium text-ink/40 rounded-lg border border-transparent px-2.5 py-1 transition hover:border-ink/20 hover:bg-ink/5 hover:text-ink/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                          >
+                            {t.removeGuestLabel}
+                          </button>
+                        </div>
 
-                  <div>
-                    <span className={labelClass}>{t.nameLabel}</span>
-                    <input
-                      id={`guest-name-${i}`}
-                      aria-label={t.namePlaceholder}
-                      className={`${inputClass(false)} mt-1`}
-                      placeholder={t.namePlaceholder}
-                      value={guest.name}
-                      onChange={(e) => updateGuest(i, "name", e.target.value)}
-                    />
-                  </div>
+                        {/* Collapsible details */}
+                        <Disclosure show={isOpen} contentClassName="pl-7 pt-4">
+                          <div className="space-y-5">
+                            <div>
+                              <span className={labelClass}>{t.nameLabel}</span>
+                              <input
+                                id={`guest-name-${i}`}
+                                aria-label={t.namePlaceholder}
+                                className={`${inputClass(false)} mt-1`}
+                                placeholder={t.namePlaceholder}
+                                value={guest.name}
+                                onChange={(e) => updateGuest(i, "name", e.target.value)}
+                              />
+                            </div>
 
-                  <div
-                    role="group"
-                    aria-labelledby={`guest-age-label-${i}`}
-                  >
-                    <span id={`guest-age-label-${i}`} className={labelClass}>{t.ageGroupLabel}</span>
-                    <div className="mt-1 rounded-2xl bg-white/40 p-1.5">
-                      {t.ageGroupOptions.map((opt) => {
-                        const active = guest.ageGroup === opt.value;
-                        const Icon = AGE_ICONS[opt.value];
-                        return (
-                          <div key={opt.value}>
-                            <button
-                              type="button"
-                              aria-pressed={active}
-                              onClick={() => updateGuest(i, "ageGroup", opt.value)}
-                              className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
-                                active ? "bg-crimson-600 text-white" : "text-ink"
-                              }`}
-                              style={active ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
-                            >
-                              <div className="flex items-center gap-3">
-                                {Icon && <Icon size={20} weight={active ? "fill" : "bold"} aria-hidden="true" className="shrink-0" />}
-                                <div>
-                                  <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
-                                  <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
-                                </div>
-                              </div>
-                            </button>
-
-                            <Disclosure show={opt.value === "baby" && active} contentClassName="pl-4 pt-3 pb-1">
-                              <div role="group" aria-labelledby={`guest-babyseating-label-${i}`}>
-                                <span id={`guest-babyseating-label-${i}`} className={labelClass}>{t.babySeatingLabel}</span>
-                                <div className="mt-1 rounded-2xl bg-white/40 p-1.5">
-                                  {t.babySeatingOptions.map((bOpt) => {
-                                    const bActive = guest.babySeating === bOpt.value;
-                                    const BIcon = BABY_SEATING_ICONS[bOpt.value];
-                                    return (
+                            <div role="group" aria-labelledby={`guest-age-label-${i}`}>
+                              <span id={`guest-age-label-${i}`} className={labelClass}>{t.ageGroupLabel}</span>
+                              <div className="mt-1 rounded-2xl bg-white/40 p-1.5">
+                                {t.ageGroupOptions.map((opt) => {
+                                  const active = guest.ageGroup === opt.value;
+                                  const Icon = AGE_ICONS[opt.value];
+                                  return (
+                                    <div key={opt.value}>
                                       <button
-                                        key={bOpt.value}
                                         type="button"
-                                        aria-pressed={bActive}
-                                        onClick={() => updateGuest(i, "babySeating", bOpt.value)}
+                                        aria-pressed={active}
+                                        onClick={() => updateGuest(i, "ageGroup", opt.value)}
                                         className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
-                                          bActive ? "bg-crimson-600 text-white" : "text-ink"
+                                          active ? "bg-crimson-600 text-white" : "text-ink"
                                         }`}
-                                        style={bActive ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
+                                        style={active ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
                                       >
                                         <div className="flex items-center gap-3">
-                                          {BIcon && <BIcon size={20} weight={bActive ? "fill" : "bold"} aria-hidden="true" className="shrink-0" />}
+                                          {Icon && <Icon size={20} weight={active ? "fill" : "bold"} aria-hidden="true" className="shrink-0" />}
                                           <div>
-                                            <span className="block font-ibm text-base font-semibold leading-snug">{bOpt.label}</span>
-                                            <span className={`block font-ibm text-sm ${bActive ? "text-white/70" : "text-ink/50"}`}>{bOpt.sublabel}</span>
+                                            <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
+                                            <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
                                           </div>
                                         </div>
                                       </button>
-                                    );
-                                  })}
-                                </div>
-                              </div>
-                            </Disclosure>
 
-                            <Disclosure show={opt.value === "adult" && active} contentClassName="pl-4 pt-3 pb-1">
-                              <div>
-                                <label htmlFor={`guest-dietary-${i}`} className={labelClass}>{t.dietaryLabel}</label>
-                                <div className="relative">
-                                  <DietarySelectIcon value={guest.dietary} />
-                                  <select
-                                    id={`guest-dietary-${i}`}
-                                    className={`${inputClass(false)} appearance-none cursor-pointer pl-9 pr-9`}
-                                    value={guest.dietary}
-                                    onChange={(e) => updateGuest(i, "dietary", e.target.value)}
-                                  >
-                                    {t.dietaryOptions.map((o) => (
-                                      <option key={o} value={o}>{o}</option>
-                                    ))}
-                                  </select>
-                                  <Chevron />
-                                </div>
-                                <Disclosure show={guest.dietary === t.dietaryOtherValue} contentClassName="pl-4 pt-3 pb-1">
-                                  <div>
-                                    <label htmlFor={`guest-dietary-note-${i}`} className={labelClass}>{t.dietaryNoteLabel}</label>
-                                    <textarea
-                                      id={`guest-dietary-note-${i}`}
-                                      className={inputClass(false)}
-                                      rows={2}
-                                      placeholder={t.dietaryNotePlaceholder}
-                                      value={guest.dietaryNote || ""}
-                                      onChange={(e) => updateGuest(i, "dietaryNote", e.target.value)}
-                                      style={{ resize: "none", lineHeight: "1.7" }}
-                                    />
-                                  </div>
-                                </Disclosure>
+                                      <Disclosure show={opt.value === "baby" && active} contentClassName="pl-4 pt-3 pb-1">
+                                        <div role="group" aria-labelledby={`guest-babyseating-label-${i}`}>
+                                          <span id={`guest-babyseating-label-${i}`} className={labelClass}>{t.babySeatingLabel}</span>
+                                          <div className="mt-1 rounded-2xl bg-white/40 p-1.5">
+                                            {t.babySeatingOptions.map((bOpt) => {
+                                              const bActive = guest.babySeating === bOpt.value;
+                                              const BIcon = BABY_SEATING_ICONS[bOpt.value];
+                                              return (
+                                                <button
+                                                  key={bOpt.value}
+                                                  type="button"
+                                                  aria-pressed={bActive}
+                                                  onClick={() => updateGuest(i, "babySeating", bOpt.value)}
+                                                  className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
+                                                    bActive ? "bg-crimson-600 text-white" : "text-ink"
+                                                  }`}
+                                                  style={bActive ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
+                                                >
+                                                  <div className="flex items-center gap-3">
+                                                    {BIcon && <BIcon size={20} weight={bActive ? "fill" : "bold"} aria-hidden="true" className="shrink-0" />}
+                                                    <div>
+                                                      <span className="block font-ibm text-base font-semibold leading-snug">{bOpt.label}</span>
+                                                      <span className={`block font-ibm text-sm ${bActive ? "text-white/70" : "text-ink/50"}`}>{bOpt.sublabel}</span>
+                                                    </div>
+                                                  </div>
+                                                </button>
+                                              );
+                                            })}
+                                          </div>
+                                        </div>
+                                      </Disclosure>
+
+                                      <Disclosure show={opt.value === "adult" && active} contentClassName="pl-4 pt-3 pb-1">
+                                        <div>
+                                          <label htmlFor={`guest-dietary-${i}`} className={labelClass}>{t.dietaryLabel}</label>
+                                          <div className="relative">
+                                            <DietarySelectIcon value={guest.dietary} />
+                                            <select
+                                              id={`guest-dietary-${i}`}
+                                              className={`${inputClass(false)} appearance-none cursor-pointer pl-9 pr-9`}
+                                              value={guest.dietary}
+                                              onChange={(e) => updateGuest(i, "dietary", e.target.value)}
+                                            >
+                                              {t.dietaryOptions.map((o) => (
+                                                <option key={o} value={o}>{o}</option>
+                                              ))}
+                                            </select>
+                                            <Chevron />
+                                          </div>
+                                          <Disclosure show={guest.dietary === t.dietaryOtherValue} contentClassName="pl-4 pt-3 pb-1">
+                                            <div>
+                                              <label htmlFor={`guest-dietary-note-${i}`} className={labelClass}>{t.dietaryNoteLabel}</label>
+                                              <textarea
+                                                id={`guest-dietary-note-${i}`}
+                                                className={inputClass(false)}
+                                                rows={2}
+                                                placeholder={t.dietaryNotePlaceholder}
+                                                value={guest.dietaryNote || ""}
+                                                onChange={(e) => updateGuest(i, "dietaryNote", e.target.value)}
+                                                style={{ resize: "none", lineHeight: "1.7" }}
+                                              />
+                                            </div>
+                                          </Disclosure>
+                                        </div>
+                                      </Disclosure>
+                                    </div>
+                                  );
+                                })}
                               </div>
-                            </Disclosure>
+                            </div>
                           </div>
-                        );
-                      })}
-                    </div>
-                  </div>
+                        </Disclosure>
+                      </div>
+                    );
+                  })}
                 </div>
-              ))}
+              )}
 
               <button
                 type="button"
