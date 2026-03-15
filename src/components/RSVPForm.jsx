@@ -1,17 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion, LayoutGroup, AnimatePresence, useReducedMotion } from "framer-motion";
-import { useSounds } from "../hooks/useSounds";
 import {
   WarningCircleIcon, CircleNotchIcon, CaretDownIcon,
-  CheckIcon, XIcon,
-  VanIcon, CarIcon, QuestionIcon,
-  BabyIcon, ConfettiIcon, UserIcon,
+  CheckIcon, XIcon, PlusIcon,
+  BusIcon, CarIcon, QuestionIcon,
+  BabyIcon, ConfettiIcon, CheersIcon,
   ForkKnifeIcon, HeartIcon,
   LeafIcon, CheeseIcon, GrainsSlashIcon,
 } from "@phosphor-icons/react";
 
 const labelClass =
-  "block font-ibm text-base font-semibold uppercase tracking-tight text-ink/70 px-1.5 pb-1";
+  "block font-ibm text-base font-semibold text-ink/70 px-1.5 pb-1";
 
 function inputClass(hasError) {
   if (hasError)
@@ -66,7 +65,7 @@ function DietarySelectIcon({ value }) {
 }
 
 const TRANSPORT_ICONS = { bus: BusIcon, car: CarIcon, unsure: QuestionIcon };
-const AGE_ICONS       = { baby: BabyIcon, kid: ConfettiIcon, adult: UserIcon };
+const AGE_ICONS       = { baby: BabyIcon, kid: ConfettiIcon, adult: CheersIcon };
 const BABY_SEATING_ICONS = { table: ForkKnifeIcon, nanny: HeartIcon };
 
 const SUBMIT_SHADOW =
@@ -114,12 +113,6 @@ export default function RSVPForm({ copy }) {
   });
   const [status, setStatus] = useState("idle");
   const [errors, setErrors] = useState({});
-  const { playClick, playChime, playPop, playSuccess } = useSounds();
-
-  useEffect(() => {
-    if (status === "success") playSuccess();
-  }, [status, playSuccess]);
-
   const handleChange = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: "" }));
@@ -129,7 +122,6 @@ export default function RSVPForm({ copy }) {
   const [expandedGuests, setExpandedGuests] = useState(() => new Set());
 
   const addGuest = () => {
-    playPop();
     const id = ++guestIdRef.current;
     setForm((p) => ({
       ...p,
@@ -139,7 +131,6 @@ export default function RSVPForm({ copy }) {
   };
 
   const removeGuest = (i) => {
-    playClick({ playbackRate: 0.8 });
     const { id } = form.guests[i];
     setForm((p) => ({ ...p, guests: p.guests.filter((_, idx) => idx !== i) }));
     setExpandedGuests((prev) => { const next = new Set(prev); next.delete(id); return next; });
@@ -164,9 +155,18 @@ export default function RSVPForm({ copy }) {
     const newErrors = {};
     if (!form.name) newErrors.name = t.validationName;
     if (form.attending === null) newErrors.attending = t.validationAttendance;
+    form.guests.forEach((g) => {
+      if (!g.name.trim()) newErrors[`guest_name_${g.id}`] = t.validationGuestName;
+    });
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      // Expand any guest cards that have errors so the field is visible
+      setExpandedGuests((prev) => {
+        const next = new Set(prev);
+        form.guests.forEach((g) => { if (!g.name.trim()) next.add(g.id); });
+        return next;
+      });
       return;
     }
 
@@ -301,7 +301,7 @@ export default function RSVPForm({ copy }) {
                           active ? "text-white" : "text-ink"
                         }`}
                         aria-pressed={active}
-                        onClick={() => { handleChange("attending", opt.value); opt.value ? playChime() : playChime({ playbackRate: 0.72 }); }}
+                        onClick={() => handleChange("attending", opt.value)}
                       >
                         {active && (
                           <motion.span
@@ -360,54 +360,11 @@ export default function RSVPForm({ copy }) {
             </div>
           </Disclosure>
 
-          {/* Transport (conditional) */}
-          <Disclosure show={form.attending === true} contentClassName="pb-0.5" delay={0.04}>
-            <div>
-              <label id="transport-label" className={labelClass}>{t.transportLabel}</label>
-              <LayoutGroup>
-                <div role="group" aria-labelledby="transport-label" className="rounded-2xl bg-white/40 p-1.5">
-                  {t.transportOptions.map((opt) => {
-                    const active = form.transport === opt.value;
-                    const Icon = TRANSPORT_ICONS[opt.value];
-                    return (
-                      <button
-                        key={opt.value}
-                        type="button"
-                        aria-pressed={active}
-                        onClick={() => { handleChange("transport", opt.value); playClick(); }}
-                        className={`relative w-full rounded-xl px-5 py-3 text-left transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
-                          active ? "text-white" : "text-ink"
-                        }`}
-                      >
-                        {active && (
-                          <motion.span
-                            layoutId="transport-pill"
-                            aria-hidden="true"
-                            className="absolute inset-0 rounded-xl bg-crimson-600"
-                            style={{ boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.25), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" }}
-                            transition={SPRING}
-                          />
-                        )}
-                        <div className="relative z-10 flex items-center gap-3">
-                          {Icon && <Icon size={20} weight={active ? "fill" : "bold"} aria-hidden="true" className="shrink-0" />}
-                          <div>
-                            <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
-                            <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
-                          </div>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </LayoutGroup>
-            </div>
-          </Disclosure>
-
           {/* Additional guests */}
           <Disclosure show={form.attending === true} contentClassName="pb-0.5" delay={0.08}>
             <div>
               {form.guests.length > 0 && (
-                <div className="divide-y divide-[#C9A87A]/25 mb-6">
+                <div className="divide-y divide-[#C9A87A]/25 mb-6 pl-6">
                   {form.guests.map((guest, i) => {
                     const isOpen = expandedGuests.has(guest.id);
                     const guestTitle = guest.name || `${t.guestLabel} ${i + 2}`;
@@ -418,12 +375,12 @@ export default function RSVPForm({ copy }) {
                         style={{ animation: "fadeInUp 350ms cubic-bezier(0.25, 1, 0.5, 1) both" }}
                       >
                         {/* Header row */}
-                        <div className="flex items-center">
+                        <div className="flex items-center gap-2">
                           <button
                             type="button"
                             onClick={() => toggleGuestDetails(guest.id)}
                             aria-expanded={isOpen}
-                            className="-ml-6 mr-2 shrink-0 rounded-md p-1 text-saffron-600 transition-colors hover:bg-saffron-600/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                            className="-ml-6 shrink-0 rounded-md p-1 text-saffron-600 transition-colors hover:bg-saffron-600/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
                           >
                             <CaretDownIcon
                               size={16}
@@ -459,11 +416,15 @@ export default function RSVPForm({ copy }) {
                               <input
                                 id={`guest-name-${i}`}
                                 aria-label={t.namePlaceholder}
-                                className={`${inputClass(false)} mt-1`}
-                                placeholder={t.namePlaceholder}
+                                aria-describedby={errors[`guest_name_${guest.id}`] ? `guest-name-error-${i}` : undefined}
+                                className={`${inputClass(!!errors[`guest_name_${guest.id}`])} mt-1`}
                                 value={guest.name}
-                                onChange={(e) => updateGuest(i, "name", e.target.value)}
+                                onChange={(e) => {
+                                  updateGuest(i, "name", e.target.value);
+                                  setErrors((prev) => ({ ...prev, [`guest_name_${guest.id}`]: "" }));
+                                }}
                               />
+                              <FieldError id={`guest-name-error-${i}`} msg={errors[`guest_name_${guest.id}`]} />
                             </div>
 
                             <div role="group" aria-labelledby={`guest-age-label-${i}`}>
@@ -477,7 +438,7 @@ export default function RSVPForm({ copy }) {
                                       <button
                                         type="button"
                                         aria-pressed={active}
-                                        onClick={() => { updateGuest(i, "ageGroup", opt.value); playClick(); }}
+                                        onClick={() => updateGuest(i, "ageGroup", opt.value)}
                                         className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
                                           active ? "bg-crimson-600 text-white" : "text-ink"
                                         }`}
@@ -504,7 +465,7 @@ export default function RSVPForm({ copy }) {
                                                   key={bOpt.value}
                                                   type="button"
                                                   aria-pressed={bActive}
-                                                  onClick={() => { updateGuest(i, "babySeating", bOpt.value); playClick(); }}
+                                                  onClick={() => updateGuest(i, "babySeating", bOpt.value)}
                                                   className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
                                                     bActive ? "bg-crimson-600 text-white" : "text-ink"
                                                   }`}
@@ -573,10 +534,54 @@ export default function RSVPForm({ copy }) {
               <button
                 type="button"
                 onClick={addGuest}
-                className="w-full rounded-2xl border-2 border-dashed border-black/20 bg-white/90 py-3.5 font-ibm text-base font-medium text-ink/70 transition hover:border-ink/40 hover:text-ink/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-black/10 px-3.5 py-1.5 font-ibm text-base font-medium text-ink/90 transition-all duration-200 ease-spring hover:bg-black/15 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
               >
+                <PlusIcon size={16} weight="bold" aria-hidden="true" />
                 {t.addGuestLabel}
               </button>
+            </div>
+          </Disclosure>
+
+          {/* Transport (conditional) */}
+          <Disclosure show={form.attending === true} contentClassName="pb-0.5" delay={0}>
+            <div>
+              <label id="transport-label" className={labelClass}>{t.transportLabel}</label>
+              <LayoutGroup>
+                <div role="group" aria-labelledby="transport-label" className="rounded-2xl bg-white/40 p-1.5">
+                  {t.transportOptions.map((opt) => {
+                    const active = form.transport === opt.value;
+                    const Icon = TRANSPORT_ICONS[opt.value];
+                    return (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        aria-pressed={active}
+                        onClick={() => handleChange("transport", opt.value)}
+                        className={`relative w-full rounded-xl px-5 py-3 text-left transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
+                          active ? "text-white" : "text-ink"
+                        }`}
+                      >
+                        {active && (
+                          <motion.span
+                            layoutId="transport-pill"
+                            aria-hidden="true"
+                            className="absolute inset-0 rounded-xl bg-crimson-600"
+                            style={{ boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.25), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" }}
+                            transition={SPRING}
+                          />
+                        )}
+                        <div className="relative z-10 flex items-center gap-3">
+                          {Icon && <Icon size={20} weight={active ? "fill" : "bold"} aria-hidden="true" className="shrink-0" />}
+                          <div>
+                            <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
+                            <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </LayoutGroup>
             </div>
           </Disclosure>
 
