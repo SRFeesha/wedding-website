@@ -21,7 +21,9 @@
       "WebFetch(domain:icones.js.org)",
       "WebFetch(domain:www.logo.wine)",
       "Bash(grep -rn \"BusNotice\\\\|MapWidget\\\\|MediaStrip\\\\|MoodboardBand\\\\|PlantAccent\\\\|SectionBlock\\\\|WeatherWidget\\\\|weatherAdapter\" src/ --include=\"*.{js,jsx}\")",
-      "Bash(npx playwright:*)"
+      "Bash(npx playwright:*)",
+      "WebFetch(domain:iconic.app)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }

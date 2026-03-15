@@ -1,4 +1,10 @@
 import { useState } from "react";
+import {
+  WarningCircleIcon, CircleNotchIcon, CaretDownIcon,
+  BusIcon, CarIcon, QuestionIcon,
+  BabyIcon, ConfettiIcon, UserIcon,
+  ForkKnifeIcon, HeartIcon,
+} from "@phosphor-icons/react";
 
 const ERROR = "#B5340F";
 
@@ -14,46 +20,36 @@ function inputClass(hasError) {
 function FieldError({ id, msg }) {
   if (!msg) return null;
   return (
-    <p id={id} className="mt-1.5 flex items-center gap-1.5 text-xs" style={{ color: ERROR }}>
-      <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" style={{ flexShrink: 0 }}>
-        <path d="M8 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1Zm-.75 3.25a.75.75 0 0 1 1.5 0v3.5a.75.75 0 0 1-1.5 0v-3.5ZM8 11a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
-      </svg>
+    <p id={id} className="mt-1.5 flex items-center gap-2 font-sans text-[17px] leading-snug" style={{ color: ERROR }}>
+      <WarningCircleIcon size={18} weight="fill" aria-hidden="true" style={{ flexShrink: 0 }} />
       {msg}
     </p>
   );
 }
 
 function Spinner() {
-  return (
-    <svg
-      className="animate-spin h-6 w-6"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-    >
-      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
-      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-    </svg>
-  );
+  return <CircleNotchIcon className="animate-spin h-6 w-6" aria-hidden="true" />;
 }
 
 function Chevron() {
   return (
-    <svg
+    <CaretDownIcon
+      size={13}
+      weight="bold"
       className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink/40"
-      width="13" height="13" viewBox="0 0 24 24"
-      fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"
-    >
-      <polyline points="6 9 12 15 18 9" />
-    </svg>
+      aria-hidden="true"
+    />
   );
 }
+
+const TRANSPORT_ICONS = { bus: BusIcon, car: CarIcon, unsure: QuestionIcon };
+const AGE_ICONS       = { baby: BabyIcon, kid: ConfettiIcon, adult: UserIcon };
+const BABY_SEATING_ICONS = { table: ForkKnifeIcon, nanny: HeartIcon };
 
 const SUBMIT_SHADOW =
   "0px 2px 4px 0px rgba(0,0,0,0.30), inset 0px 8px 8px 0px rgba(255,255,255,0.05)";
 
-const bodyDelay = 1000;
+const bodyDelay = 2000;
 
 export default function RSVPForm({ copy }) {
   const t = copy.rsvp;
@@ -76,7 +72,7 @@ export default function RSVPForm({ copy }) {
   const addGuest = () =>
     setForm((p) => ({
       ...p,
-      guests: [...p.guests, { name: "", ageGroup: null, dietary: t.dietaryOptions[0] }],
+      guests: [...p.guests, { name: "", ageGroup: null, dietary: t.dietaryOptions[0], babySeating: null }],
     }));
 
   const removeGuest = (i) =>
@@ -115,6 +111,7 @@ export default function RSVPForm({ copy }) {
             name: g.name,
             ageGroup: g.ageGroup ?? "",
             dietary: g.ageGroup === "baby" ? "" : (g.dietary || t.dietaryOptions[0]),
+            babySeating: g.babySeating ?? "",
           })),
         }),
       });
@@ -205,7 +202,7 @@ export default function RSVPForm({ copy }) {
               className={`flex rounded-2xl p-1.5 backdrop-blur-sm outline outline-offset-[-1px] transition ${
                 errors.attending
                   ? "bg-[#FDF5F0] outline-[#B5340F]"
-                  : "bg-canvas-50/60 outline-black/20"
+                  : "bg-white/90 outline-black/20"
               }`}
             >
               {[
@@ -248,6 +245,7 @@ export default function RSVPForm({ copy }) {
               <div role="group" aria-labelledby="transport-label" className="space-y-2.5">
                 {t.transportOptions.map((opt) => {
                   const active = form.transport === opt.value;
+                  const Icon = TRANSPORT_ICONS[opt.value];
                   return (
                     <button
                       key={opt.value}
@@ -261,8 +259,13 @@ export default function RSVPForm({ copy }) {
                       }`}
                       style={active ? { boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.25), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" } : undefined}
                     >
-                      <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
-                      <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
+                      <div className="flex items-center gap-3">
+                        {Icon && <Icon size={20} aria-hidden="true" className="shrink-0" />}
+                        <div>
+                          <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
+                          <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
+                        </div>
+                      </div>
                     </button>
                   );
                 })}
@@ -324,52 +327,93 @@ export default function RSVPForm({ copy }) {
                     <div className="mt-1 space-y-2.5">
                       {t.ageGroupOptions.map((opt) => {
                         const active = guest.ageGroup === opt.value;
+                        const Icon = AGE_ICONS[opt.value];
                         return (
-                          <button
-                            key={opt.value}
-                            type="button"
-                            aria-pressed={active}
-                            onClick={() => updateGuest(i, "ageGroup", opt.value)}
-                            className={`w-full rounded-2xl px-5 py-3.5 text-left outline outline-2 outline-offset-[-2px] transition ${
-                              active
-                                ? "bg-crimson-600 text-white outline-black/25"
-                                : "bg-white text-ink outline-black/20 hover:outline-ink/40"
-                            }`}
-                            style={active ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
-                          >
-                            <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
-                            <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
-                          </button>
+                          <div key={opt.value}>
+                            <button
+                              type="button"
+                              aria-pressed={active}
+                              onClick={() => updateGuest(i, "ageGroup", opt.value)}
+                              className={`w-full rounded-2xl px-5 py-3.5 text-left outline outline-2 outline-offset-[-2px] transition ${
+                                active
+                                  ? "bg-crimson-600 text-white outline-black/25"
+                                  : "bg-white text-ink outline-black/20 hover:outline-ink/40"
+                              }`}
+                              style={active ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
+                            >
+                              <div className="flex items-center gap-3">
+                                {Icon && <Icon size={20} aria-hidden="true" className="shrink-0" />}
+                                <div>
+                                  <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
+                                  <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
+                                </div>
+                              </div>
+                            </button>
+
+                            {opt.value === "baby" && active && (
+                              <div className="pl-4 pt-3 pb-1" role="group" aria-labelledby={`guest-babyseating-label-${i}`}>
+                                <span id={`guest-babyseating-label-${i}`} className={labelClass}>{t.babySeatingLabel}</span>
+                                <div className="mt-1 space-y-2.5">
+                                  {t.babySeatingOptions.map((bOpt) => {
+                                    const bActive = guest.babySeating === bOpt.value;
+                                    const BIcon = BABY_SEATING_ICONS[bOpt.value];
+                                    return (
+                                      <button
+                                        key={bOpt.value}
+                                        type="button"
+                                        aria-pressed={bActive}
+                                        onClick={() => updateGuest(i, "babySeating", bOpt.value)}
+                                        className={`w-full rounded-2xl px-5 py-3.5 text-left outline outline-2 outline-offset-[-2px] transition ${
+                                          bActive
+                                            ? "bg-crimson-600 text-white outline-black/25"
+                                            : "bg-white text-ink outline-black/20 hover:outline-ink/40"
+                                        }`}
+                                        style={bActive ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
+                                      >
+                                        <div className="flex items-center gap-3">
+                                          {BIcon && <BIcon size={20} aria-hidden="true" className="shrink-0" />}
+                                          <div>
+                                            <span className="block font-ibm text-base font-semibold leading-snug">{bOpt.label}</span>
+                                            <span className={`block font-ibm text-sm ${bActive ? "text-white/70" : "text-ink/50"}`}>{bOpt.sublabel}</span>
+                                          </div>
+                                        </div>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            )}
+
+                            {opt.value === "adult" && active && (
+                              <div className="pl-4 pt-3 pb-1">
+                                <label htmlFor={`guest-dietary-${i}`} className={labelClass}>{t.dietaryLabel}</label>
+                                <div className="relative">
+                                  <select
+                                    id={`guest-dietary-${i}`}
+                                    className={`${inputClass(false)} appearance-none cursor-pointer pr-8`}
+                                    value={guest.dietary}
+                                    onChange={(e) => updateGuest(i, "dietary", e.target.value)}
+                                  >
+                                    {t.dietaryOptions.map((o) => (
+                                      <option key={o} value={o}>{o}</option>
+                                    ))}
+                                  </select>
+                                  <Chevron />
+                                </div>
+                              </div>
+                            )}
+                          </div>
                         );
                       })}
                     </div>
                   </div>
-
-                  {guest.ageGroup === "adult" && (
-                    <div>
-                      <label htmlFor={`guest-dietary-${i}`} className={labelClass}>{t.dietaryLabel}</label>
-                      <div className="relative">
-                        <select
-                          id={`guest-dietary-${i}`}
-                          className={`${inputClass(false)} appearance-none cursor-pointer pr-8`}
-                          value={guest.dietary}
-                          onChange={(e) => updateGuest(i, "dietary", e.target.value)}
-                        >
-                          {t.dietaryOptions.map((o) => (
-                            <option key={o} value={o}>{o}</option>
-                          ))}
-                        </select>
-                        <Chevron />
-                      </div>
-                    </div>
-                  )}
                 </div>
               ))}
 
               <button
                 type="button"
                 onClick={addGuest}
-                className="w-full rounded-2xl border-2 border-dashed border-black/20 py-3.5 font-ibm text-base font-medium text-ink/50 transition hover:border-ink/40 hover:text-ink/70"
+                className="w-full rounded-2xl border-2 border-dashed border-black/20 bg-white/90 py-3.5 font-ibm text-base font-medium text-ink/70 transition hover:border-ink/40 hover:text-ink/90"
               >
                 {t.addGuestLabel}
               </button>

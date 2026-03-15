@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Copy, CircleCheck } from "lucide-react"
+import { CopyIcon, CheckCircleIcon } from "@phosphor-icons/react"
 
 const IBAN = "DE71 1001 0178 1814 7799 50"
 
@@ -38,9 +38,9 @@ export default function GiftsSection({ copy }) {
               {copied ? copy.copiedIban : copy.copyIban}
             </span>
             {copied ? (
-              <CircleCheck size={16} strokeWidth={2.5} color="#3A6647" aria-hidden="true" />
+              <CheckCircleIcon size={16} weight="bold" color="#3A6647" aria-hidden="true" />
             ) : (
-              <Copy size={16} strokeWidth={2.5} style={{ opacity: 0.5 }} aria-hidden="true" />
+              <CopyIcon size={16} style={{ opacity: 0.5 }} aria-hidden="true" />
             )}
           </button>
         </div>

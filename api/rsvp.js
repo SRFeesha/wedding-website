@@ -7,6 +7,7 @@
 //   Age group     → Select      (adult / kid / baby)
 //   Dietary       → Multi-select
 //   Transport     → Select      (bus / car / unsure)
+//   Baby seating  → Select      (table / nanny)
 //   Message       → Rich Text
 //   Comes with    → Rich Text   (primary guest's name — groups a party together)
 //   Submitted at  → Date
@@ -14,7 +15,7 @@
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID;
 
-export function buildProperties({ name, attending, ageGroup, dietary, transport, message, comesWith }) {
+export function buildProperties({ name, attending, ageGroup, dietary, transport, babySeating, message, comesWith }) {
   const props = {
     Name: {
       title: [{ text: { content: name } }],
@@ -42,6 +43,9 @@ export function buildProperties({ name, attending, ageGroup, dietary, transport,
   }
   if (ageGroup) {
     props["Age group"] = { select: { name: ageGroup } };
+  }
+  if (babySeating) {
+    props["Baby seating"] = { select: { name: babySeating } };
   }
 
   return props;
@@ -85,10 +89,10 @@ export default async function handler(req, res) {
       name,
       attending,
       ageGroup: "adult",
-      dietary,
-      transport,
+      dietary: attending === "Yes" ? dietary : "",
+      transport: attending === "Yes" ? transport : "",
       message,
-      comesWith: name,
+      comesWith: attending === "Yes" ? name : "",
     }));
 
     // Additional guests — inherit transport from primary
@@ -100,6 +104,7 @@ export default async function handler(req, res) {
         ageGroup: g.ageGroup || "",
         dietary: g.ageGroup === "kid" ? "Kid" : g.ageGroup === "baby" ? "Baby" : (g.dietary || ""),
         transport,
+        babySeating: g.babySeating || "",
         message: "",
         comesWith: name,
       }));

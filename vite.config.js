@@ -8,6 +8,9 @@ export default defineConfig(({ mode }) => {
 
   return {
     server: { port: 7777 },
+    optimizeDeps: {
+      include: ["@phosphor-icons/react"],
+    },
     test: {
       environment: "jsdom",
       globals: true,
