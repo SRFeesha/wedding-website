@@ -20,7 +20,8 @@
       "WebFetch(domain:api.iconify.design)",
       "WebFetch(domain:icones.js.org)",
       "WebFetch(domain:www.logo.wine)",
-      "Bash(grep -rn \"BusNotice\\\\|MapWidget\\\\|MediaStrip\\\\|MoodboardBand\\\\|PlantAccent\\\\|SectionBlock\\\\|WeatherWidget\\\\|weatherAdapter\" src/ --include=\"*.{js,jsx}\")"
+      "Bash(grep -rn \"BusNotice\\\\|MapWidget\\\\|MediaStrip\\\\|MoodboardBand\\\\|PlantAccent\\\\|SectionBlock\\\\|WeatherWidget\\\\|weatherAdapter\" src/ --include=\"*.{js,jsx}\")",
+      "Bash(npx playwright:*)"
     ]
   }
 }

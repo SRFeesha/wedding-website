@@ -1,0 +1,111 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e4]:
+    - region "Hero" [ref=e5]:
+      - generic [ref=e7]:
+        - generic [ref=e9]: Domenica 27 settembre 2026
+        - heading "Sara&Ben" [level=1] [ref=e10]:
+          - generic [ref=e11]: Sara&
+          - text: Ben
+        - group "Language selector" [ref=e13]:
+          - button "Italiano" [pressed] [ref=e14] [cursor=pointer]
+          - button "English" [ref=e15] [cursor=pointer]
+    - generic [ref=e17]:
+      - img "Tenuta Savoca" [ref=e19]
+      - generic [ref=e20]:
+        - paragraph [ref=e21]: Location
+        - heading "Tenuta Savoca" [level=2] [ref=e22]
+        - generic [ref=e23]:
+          - generic [ref=e24]: Vicino a Piazza Armerina
+          - link "Maps (opens in new tab)" [ref=e25] [cursor=pointer]:
+            - /url: https://www.google.com/maps/search/?api=1&query=Tenuta+Savoca+Piazza+Armerina
+            - img [ref=e26]
+            - text: Maps
+            - generic [ref=e28]: (opens in new tab)
+            - img [ref=e29]
+        - paragraph [ref=e31]: La tenuta si trova nell'entroterra siciliano, nei pressi di Piazza Armerina. Il posto si trova a circa 600m di altitudine — la sera fa freschino!
+    - img [ref=e33]
+    - generic [ref=e39]:
+      - heading "Domande frequenti" [level=2] [ref=e40]
+      - list [ref=e41]:
+        - listitem [ref=e42]:
+          - heading "Come arrivare alla location" [level=3] [ref=e43]
+          - generic [ref=e44]:
+            - paragraph [ref=e45]: "Se arrivate in macchina, nessun problema: trovate il link di Google Maps qui sotto e lui vi guiderà fino a noi (1.30h)."
+            - paragraph [ref=e46]: Se invece preferite godervi la giornata senza pensare alla guida, stiamo organizzando un bus che partirà da Catania la domenica mattina per portarvi alla location. Stiamo valutando di organizzare il rientro il lunedì da Piazza Armerina, invece che la notte stessa dell'evento, così da poter festeggiare tutti con più tranquillità. Aggiorneremo presto questa sezione.
+        - listitem [ref=e47]:
+          - heading "Programma della serata" [level=3] [ref=e48]
+          - paragraph [ref=e49]: Sarà a cena! Inizio stimato per le 15. Seguiranno maggiori dettagli.
+        - listitem [ref=e50]:
+          - heading "Dresscode?" [level=3] [ref=e51]
+          - generic [ref=e52]:
+            - paragraph [ref=e53]: Eleganti, stare comodi, sentirvi voi stessi.
+            - paragraph [ref=e54]: Occhio ai tacchi a spillo.
+            - paragraph [ref=e55]: Portare una giacchettina per la sera che potrebbe fare freschetto.
+            - paragraph [ref=e56]: Per ispirazione, ecco una moodboard.
+        - listitem [ref=e57]:
+          - heading "Dove dormire" [level=3] [ref=e58]
+          - generic [ref=e59]:
+            - paragraph [ref=e60]: Purtroppo non possiamo offrire il soggiorno.
+            - paragraph [ref=e61]: Vi consigliamo di pernottare la notte prima a Catania e la notte delle nozze invece a Piazza Armerina. Siamo in contatto con alcuni hotel per prezzi favorevoli. Seguiranno aggiornamenti.
+    - img [ref=e63]
+    - generic [ref=e69]:
+      - heading "Regali" [level=2] [ref=e70]
+      - paragraph [ref=e71]: "Non ci servono cose — la casa è già piena. Il regalo più bello è la vostra presenza. Se volete contribuire al nostro viaggio di nozze, ecco l'IBAN:"
+      - generic [ref=e72]:
+        - paragraph [ref=e73]: DE71 1001 0178 1814 7799 50
+        - button "Copia IBAN" [ref=e74] [cursor=pointer]:
+          - generic [ref=e75]: Copia IBAN
+          - img [ref=e76]
+    - generic [ref=e80]:
+      - generic [ref=e81]:
+        - heading "RSVP" [level=2] [ref=e82]
+        - paragraph [ref=e83]: Per favore rispondi entro il 1° giugno 2026
+      - generic [ref=e84]:
+        - generic [ref=e85]:
+          - generic [ref=e86]: Nome completo
+          - textbox "Nome completo" [ref=e87]
+        - generic [ref=e88]:
+          - generic [ref=e89]: Verrai al matrimonio?
+          - group "Verrai al matrimonio?" [ref=e90]:
+            - button "Ci sarò!" [ref=e92] [cursor=pointer]
+            - button "Non posso" [ref=e95] [cursor=pointer]
+        - generic [ref=e96]:
+          - generic [ref=e97]: Note
+          - textbox "Note" [ref=e98]:
+            - /placeholder: Lascia un messaggio per la sala 😊
+        - button "Invia" [ref=e100] [cursor=pointer]
+    - generic [ref=e101]:
+      - paragraph [ref=e102]:
+        - text: "Preview: attending"
+        - button "↺ reset" [ref=e103] [cursor=pointer]
+      - generic [ref=e104]:
+        - heading "Non vediamo l'ora di vederti in Sicilia!" [level=2] [ref=e106]
+        - paragraph [ref=e107]: Abbiamo creato un gruppo WhatsApp con gli altri ospiti — ottimo per organizzare i viaggi, trovare compagnia per il tragitto o semplicemente presentarsi prima del grande giorno. Se hai bisogno di aiuto con l'alloggio o per arrivare, scrivici pure.
+    - generic [ref=e108]:
+      - paragraph [ref=e109]:
+        - text: "Preview: not attending"
+        - button "↺ reset" [ref=e110] [cursor=pointer]
+      - generic [ref=e111]:
+        - heading "Ci mancherai ❤️" [level=2] [ref=e113]
+        - paragraph
+  - generic [ref=e114]:
+    - generic [ref=e115]:
+      - img [ref=e117] [cursor=pointer]
+      - img [ref=e120]
+      - img [ref=e128] [cursor=pointer]
+    - textbox "[Open filter with CMD+SHIFT+L]" [ref=e131]
+    - generic [ref=e134]:
+      - generic [ref=e135] [cursor=pointer]:
+        - img [ref=e136]
+        - generic [ref=e138]: RSVP · Success state
+      - generic [ref=e140]:
+        - generic [ref=e142]:
+          - generic [ref=e143]:
+            - generic "Body fade delay (ms)" [ref=e144]
+            - generic "Click to copy Body fade delay (ms) value"
+          - textbox "Body fade delay (ms)" [ref=e151]: "1000"
+        - button "↺ Replay" [ref=e153] [cursor=pointer]
+```
