@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { motion, LayoutGroup } from "framer-motion";
 import {
   WarningCircleIcon, CircleNotchIcon, CaretDownIcon,
   CheckIcon, XIcon,
@@ -293,47 +294,53 @@ export default function RSVPForm({ copy }) {
           {/* Attendance — segmented control */}
           <div>
             <label id="attendance-label" className={labelClass}>{t.attendanceLabel}</label>
-            <div
-              role="group"
-              aria-labelledby="attendance-label"
-              aria-describedby={errors.attending ? "rsvp-attending-error" : undefined}
-              className={`flex rounded-2xl p-1.5 backdrop-blur-sm outline outline-offset-[-1px] transition ${
-                errors.attending
-                  ? "bg-error/8 outline-error"
-                  : "bg-white/90 outline-black/20"
-              }`}
-            >
-              {[
-                { value: true,  label: t.attendanceYes, Icon: CheckIcon, activeWeight: "bold" },
-                { value: false, label: t.attendanceNo,  Icon: XIcon,    activeWeight: "bold" },
-              ].map((opt, i) => {
-                const active = form.attending === opt.value;
-                return (
-                  <div key={i} className="flex flex-1 items-stretch">
-                    {i > 0 && form.attending === null && (
-                      <div className="w-px self-stretch bg-black/20" />
-                    )}
-                    <button
-                      className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3.5 py-1.5 font-ibm text-base font-medium leading-6 transition-all duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
-                        active
-                          ? "bg-crimson-600 text-white outline outline-1 outline-offset-[-1px] outline-black/25"
-                          : "text-ink"
-                      }`}
-                      style={
-                        active
-                          ? { boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.30), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" }
-                          : undefined
-                      }
-                      aria-pressed={active}
-                      onClick={() => handleChange("attending", opt.value)}
-                    >
-                      <opt.Icon size={16} weight={active ? opt.activeWeight : "bold"} aria-hidden="true" />
-                      {opt.label}
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
+            <LayoutGroup>
+              <div
+                role="group"
+                aria-labelledby="attendance-label"
+                aria-describedby={errors.attending ? "rsvp-attending-error" : undefined}
+                className={`flex rounded-2xl p-1.5 backdrop-blur-sm outline outline-offset-[-1px] transition-colors ${
+                  errors.attending
+                    ? "bg-error/8 outline-error"
+                    : "bg-white/90 outline-black/20"
+                }`}
+              >
+                {[
+                  { value: true,  label: t.attendanceYes, Icon: CheckIcon, activeWeight: "bold" },
+                  { value: false, label: t.attendanceNo,  Icon: XIcon,    activeWeight: "bold" },
+                ].map((opt, i) => {
+                  const active = form.attending === opt.value;
+                  return (
+                    <div key={i} className="flex flex-1 items-stretch">
+                      {i > 0 && form.attending === null && (
+                        <div className="w-px self-stretch bg-black/20" />
+                      )}
+                      <button
+                        className={`relative flex flex-1 items-center justify-center gap-2 rounded-xl px-3.5 py-1.5 font-ibm text-base font-medium leading-6 transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
+                          active ? "text-white" : "text-ink"
+                        }`}
+                        aria-pressed={active}
+                        onClick={() => handleChange("attending", opt.value)}
+                      >
+                        {active && (
+                          <motion.span
+                            layoutId="attendance-pill"
+                            aria-hidden="true"
+                            className="absolute inset-0 rounded-xl bg-crimson-600"
+                            style={{ boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.30), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" }}
+                            transition={{ type: "spring", stiffness: 380, damping: 35 }}
+                          />
+                        )}
+                        <span className="relative z-10 flex items-center gap-2">
+                          <opt.Icon size={16} weight={active ? opt.activeWeight : "bold"} aria-hidden="true" />
+                          {opt.label}
+                        </span>
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </LayoutGroup>
             <FieldError id="rsvp-attending-error" msg={errors.attending} />
           </div>
 
