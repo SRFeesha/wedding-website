@@ -2,7 +2,7 @@ import { useState } from "react"
 import { CaretDownIcon } from "@phosphor-icons/react"
 
 export default function FaqSection({ copy }) {
-  const [openItems, setOpenItems] = useState(new Set())
+  const [openItems, setOpenItems] = useState(() => new Set(copy.faqList.map((_, i) => i)))
 
   const toggle = (index) => {
     setOpenItems((prev) => {

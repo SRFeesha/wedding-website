@@ -338,7 +338,7 @@ export default function RSVPForm({ copy }) {
 
           {/* Additional guests */}
           {form.attending === true && (
-            <>
+            <div style={{ animation: "fadeInUp 380ms cubic-bezier(0.25, 1, 0.5, 1) 120ms both" }} className="space-y-8">
               {form.guests.map((guest, i) => (
                 <div key={guest.id} className="space-y-5 rounded-2xl bg-white p-5 outline outline-2 outline-offset-[-2px] outline-black/20" style={{ animation: "fadeInUp 350ms cubic-bezier(0.25, 1, 0.5, 1) both" }}>
                   <div className="flex items-center justify-between">
@@ -475,7 +475,7 @@ export default function RSVPForm({ copy }) {
               >
                 {t.addGuestLabel}
               </button>
-            </>
+            </div>
           )}
 
           {/* Message */}
