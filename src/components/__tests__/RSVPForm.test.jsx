@@ -53,9 +53,11 @@ describe("RSVPForm — rendering", () => {
     renderForm();
     await user.click(screen.getByText(copy.rsvp.attendanceYes));
     await user.click(screen.getByText(copy.rsvp.attendanceNo));
-    expect(screen.queryByText(copy.rsvp.transportLabel)).not.toBeInTheDocument();
-    expect(screen.queryByText(copy.rsvp.dietaryLabel)).not.toBeInTheDocument();
-    expect(screen.queryByText(copy.rsvp.addGuestLabel)).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByText(copy.rsvp.transportLabel)).not.toBeInTheDocument();
+      expect(screen.queryByText(copy.rsvp.dietaryLabel)).not.toBeInTheDocument();
+      expect(screen.queryByText(copy.rsvp.addGuestLabel)).not.toBeInTheDocument();
+    });
   });
 });
 
@@ -147,6 +149,17 @@ describe("RSVPForm — guest management", () => {
     await user.click(screen.getByText(adultOpt.label));
     const dietaryLabels = screen.getAllByText(copy.rsvp.dietaryLabel);
     expect(dietaryLabels).toHaveLength(2); // primary + adult guest
+  });
+
+  it("animates the dietary note in and out when the note option changes", async () => {
+    const user = await setupAttending();
+    await user.selectOptions(screen.getByLabelText(copy.rsvp.dietaryLabel), copy.rsvp.dietaryOtherValue);
+    expect(screen.getByLabelText(copy.rsvp.dietaryNoteLabel)).toBeInTheDocument();
+
+    await user.selectOptions(screen.getByLabelText(copy.rsvp.dietaryLabel), copy.rsvp.dietaryOptions[0]);
+    await waitFor(() => {
+      expect(screen.queryByLabelText(copy.rsvp.dietaryNoteLabel)).not.toBeInTheDocument();
+    });
   });
 
   it("removes the guest card after clicking Remove", async () => {

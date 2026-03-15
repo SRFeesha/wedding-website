@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   WarningCircleIcon, CircleNotchIcon, CaretDownIcon,
   CheckIcon, XIcon,
@@ -71,6 +71,75 @@ const SUBMIT_SHADOW =
   "0px 2px 4px 0px rgba(0,0,0,0.30), inset 0px 8px 8px 0px rgba(255,255,255,0.05)";
 
 const bodyDelay = 2000;
+const DISCLOSURE_DURATION = 320;
+const DISCLOSURE_EASING = "cubic-bezier(0.25, 1, 0.5, 1)";
+
+function usePrefersReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return undefined;
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    updatePreference();
+    mediaQuery.addEventListener?.("change", updatePreference);
+
+    return () => mediaQuery.removeEventListener?.("change", updatePreference);
+  }, []);
+
+  return prefersReducedMotion;
+}
+
+function Disclosure({ show, children, className = "", contentClassName = "" }) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [isMounted, setIsMounted] = useState(show);
+
+  useEffect(() => {
+    if (show) setIsMounted(true);
+  }, [show]);
+
+  useEffect(() => {
+    if (show || !isMounted) return undefined;
+
+    const timeout = window.setTimeout(
+      () => setIsMounted(false),
+      prefersReducedMotion ? 1 : DISCLOSURE_DURATION,
+    );
+
+    return () => window.clearTimeout(timeout);
+  }, [show, isMounted, prefersReducedMotion]);
+
+  if (!isMounted) return null;
+
+  const visible = show;
+
+  return (
+    <div
+      aria-hidden={!visible}
+      className={`overflow-hidden ${className}`.trim()}
+      style={{
+        display: "grid",
+        gridTemplateRows: visible ? "1fr" : "0fr",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(-6px)",
+        transition: prefersReducedMotion
+          ? "none"
+          : [
+              `grid-template-rows ${DISCLOSURE_DURATION}ms ${DISCLOSURE_EASING}`,
+              `opacity ${DISCLOSURE_DURATION}ms ${DISCLOSURE_EASING}`,
+              `transform ${DISCLOSURE_DURATION}ms ${DISCLOSURE_EASING}`,
+            ].join(", "),
+        pointerEvents: visible ? "auto" : "none",
+      }}
+    >
+      <div className="min-h-0 overflow-hidden">
+        <div className={contentClassName}>{children}</div>
+      </div>
+    </div>
+  );
+}
 
 export default function RSVPForm({ copy }) {
   const t = copy.rsvp;
@@ -236,7 +305,7 @@ export default function RSVPForm({ copy }) {
             >
               {[
                 { value: true,  label: t.attendanceYes, Icon: CheckIcon, activeWeight: "bold" },
-                { value: false, label: t.attendanceNo,  Icon: XIcon,    activeWeight: "fill" },
+                { value: false, label: t.attendanceNo,  Icon: XIcon,    activeWeight: "bold" },
               ].map((opt, i) => {
                 const active = form.attending === opt.value;
                 return (
@@ -269,8 +338,8 @@ export default function RSVPForm({ copy }) {
           </div>
 
           {/* Transport (conditional) */}
-          {form.attending === true && (
-            <div style={{ animation: "fadeInUp 380ms cubic-bezier(0.25, 1, 0.5, 1) both" }}>
+          <Disclosure show={form.attending === true} contentClassName="pb-0.5">
+            <div>
               <label id="transport-label" className={labelClass}>{t.transportLabel}</label>
               <div role="group" aria-labelledby="transport-label" className="rounded-2xl bg-white/40 p-1.5">
                 {t.transportOptions.map((opt) => {
@@ -299,11 +368,11 @@ export default function RSVPForm({ copy }) {
                 })}
               </div>
             </div>
-          )}
+          </Disclosure>
 
           {/* Dietary (conditional) */}
-          {form.attending === true && (
-            <div style={{ animation: "fadeInUp 380ms cubic-bezier(0.25, 1, 0.5, 1) 60ms both" }}>
+          <Disclosure show={form.attending === true} contentClassName="pb-0.5">
+            <div>
               <label htmlFor="rsvp-dietary" className={labelClass}>{t.dietaryLabel}</label>
               <div className="relative">
                 <DietarySelectIcon value={form.dietary} />
@@ -319,8 +388,8 @@ export default function RSVPForm({ copy }) {
                 </select>
                 <Chevron />
               </div>
-              {form.dietary === t.dietaryOtherValue && (
-                <div className="pl-4 pt-3 pb-1">
+              <Disclosure show={form.dietary === t.dietaryOtherValue} contentClassName="pl-4 pt-3 pb-1">
+                <div>
                   <label htmlFor="rsvp-dietary-note" className={labelClass}>{t.dietaryNoteLabel}</label>
                   <textarea
                     id="rsvp-dietary-note"
@@ -332,13 +401,13 @@ export default function RSVPForm({ copy }) {
                     style={{ resize: "none", lineHeight: "1.7" }}
                   />
                 </div>
-              )}
+              </Disclosure>
             </div>
-          )}
+          </Disclosure>
 
           {/* Additional guests */}
-          {form.attending === true && (
-            <div style={{ animation: "fadeInUp 380ms cubic-bezier(0.25, 1, 0.5, 1) 120ms both" }} className="space-y-8">
+          <Disclosure show={form.attending === true} contentClassName="space-y-8 pb-0.5">
+            <div>
               {form.guests.map((guest, i) => (
                 <div key={guest.id} className="space-y-5 rounded-2xl bg-white p-5 outline outline-2 outline-offset-[-2px] outline-black/20" style={{ animation: "fadeInUp 350ms cubic-bezier(0.25, 1, 0.5, 1) both" }}>
                   <div className="flex items-center justify-between">
@@ -394,8 +463,8 @@ export default function RSVPForm({ copy }) {
                               </div>
                             </button>
 
-                            {opt.value === "baby" && active && (
-                              <div className="pl-4 pt-3 pb-1" role="group" aria-labelledby={`guest-babyseating-label-${i}`}>
+                            <Disclosure show={opt.value === "baby" && active} contentClassName="pl-4 pt-3 pb-1">
+                              <div role="group" aria-labelledby={`guest-babyseating-label-${i}`}>
                                 <span id={`guest-babyseating-label-${i}`} className={labelClass}>{t.babySeatingLabel}</span>
                                 <div className="mt-1 rounded-2xl bg-white/40 p-1.5">
                                   {t.babySeatingOptions.map((bOpt) => {
@@ -424,10 +493,10 @@ export default function RSVPForm({ copy }) {
                                   })}
                                 </div>
                               </div>
-                            )}
+                            </Disclosure>
 
-                            {opt.value === "adult" && active && (
-                              <div className="pl-4 pt-3 pb-1">
+                            <Disclosure show={opt.value === "adult" && active} contentClassName="pl-4 pt-3 pb-1">
+                              <div>
                                 <label htmlFor={`guest-dietary-${i}`} className={labelClass}>{t.dietaryLabel}</label>
                                 <div className="relative">
                                   <DietarySelectIcon value={guest.dietary} />
@@ -443,8 +512,8 @@ export default function RSVPForm({ copy }) {
                                   </select>
                                   <Chevron />
                                 </div>
-                                {guest.dietary === t.dietaryOtherValue && (
-                                  <div className="pl-4 pt-3 pb-1">
+                                <Disclosure show={guest.dietary === t.dietaryOtherValue} contentClassName="pl-4 pt-3 pb-1">
+                                  <div>
                                     <label htmlFor={`guest-dietary-note-${i}`} className={labelClass}>{t.dietaryNoteLabel}</label>
                                     <textarea
                                       id={`guest-dietary-note-${i}`}
@@ -456,9 +525,9 @@ export default function RSVPForm({ copy }) {
                                       style={{ resize: "none", lineHeight: "1.7" }}
                                     />
                                   </div>
-                                )}
+                                </Disclosure>
                               </div>
-                            )}
+                            </Disclosure>
                           </div>
                         );
                       })}
@@ -475,7 +544,7 @@ export default function RSVPForm({ copy }) {
                 {t.addGuestLabel}
               </button>
             </div>
-          )}
+          </Disclosure>
 
           {/* Message */}
           <div>
