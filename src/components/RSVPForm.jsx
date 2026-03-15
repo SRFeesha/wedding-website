@@ -53,7 +53,9 @@ function Chevron() {
 const SUBMIT_SHADOW =
   "0px 2px 4px 0px rgba(0,0,0,0.30), inset 0px 8px 8px 0px rgba(255,255,255,0.05)";
 
-export default function RSVPForm({ copy, bodyDelay = 1000 }) {
+const bodyDelay = 1000;
+
+export default function RSVPForm({ copy }) {
   const t = copy.rsvp;
   const [form, setForm] = useState({
     name: "",
@@ -125,6 +127,7 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
   };
 
   if (status === "success") {
+    const delay = form.attending ? bodyDelay : 2500;
     return (
       <section role="status" className="bg-canvas-50 px-5 py-20 sm:px-8">
         <div className="mx-auto max-w-[600px] text-center py-8">
@@ -133,13 +136,13 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
               autoPlay
               muted
               playsInline
-              loop={!!form.attending}
+              loop
               className="col-start-1 row-start-1 h-40 w-auto"
               style={{
                 mixBlendMode: "multiply",
                 pointerEvents: "none",
                 transform: "translateZ(0)",
-                animation: `fadeOut 400ms ease-in ${bodyDelay - 400}ms both`,
+                animation: `fadeOut 400ms ease-in ${delay - 400}ms both`,
               }}
             >
               <source
@@ -151,14 +154,14 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
             </video>
             <h2
               className="col-start-1 row-start-1 font-display text-5xl font-semibold text-ink"
-              style={{ animation: `fadeInUp 560ms ease-out ${bodyDelay}ms both` }}
+              style={{ animation: `fadeInUp 560ms ease-out ${delay}ms both` }}
             >
               {form.attending ? t.successAttending : t.successDecline}
             </h2>
           </div>
           <p
             className="mt-4 font-display text-ink/75"
-            style={{ animation: `fadeInUp 560ms ease-out ${bodyDelay + 200}ms both` }}
+            style={{ animation: `fadeInUp 560ms ease-out ${delay + 200}ms both` }}
           >
             {form.attending ? t.successAttendingBody : t.successDeclineBody}
           </p>
