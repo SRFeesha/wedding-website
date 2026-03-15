@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, LayoutGroup, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useSounds } from "../hooks/useSounds";
 import {
   WarningCircleIcon, CircleNotchIcon, CaretDownIcon,
   CheckIcon, XIcon,
@@ -113,6 +114,11 @@ export default function RSVPForm({ copy }) {
   });
   const [status, setStatus] = useState("idle");
   const [errors, setErrors] = useState({});
+  const { playClick, playChime, playPop, playSuccess } = useSounds();
+
+  useEffect(() => {
+    if (status === "success") playSuccess();
+  }, [status, playSuccess]);
 
   const handleChange = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -123,6 +129,7 @@ export default function RSVPForm({ copy }) {
   const [expandedGuests, setExpandedGuests] = useState(() => new Set());
 
   const addGuest = () => {
+    playPop();
     const id = ++guestIdRef.current;
     setForm((p) => ({
       ...p,
@@ -132,6 +139,7 @@ export default function RSVPForm({ copy }) {
   };
 
   const removeGuest = (i) => {
+    playClick({ playbackRate: 0.8 });
     const { id } = form.guests[i];
     setForm((p) => ({ ...p, guests: p.guests.filter((_, idx) => idx !== i) }));
     setExpandedGuests((prev) => { const next = new Set(prev); next.delete(id); return next; });
@@ -293,7 +301,7 @@ export default function RSVPForm({ copy }) {
                           active ? "text-white" : "text-ink"
                         }`}
                         aria-pressed={active}
-                        onClick={() => handleChange("attending", opt.value)}
+                        onClick={() => { handleChange("attending", opt.value); opt.value ? playChime() : playChime({ playbackRate: 0.72 }); }}
                       >
                         {active && (
                           <motion.span
@@ -366,7 +374,7 @@ export default function RSVPForm({ copy }) {
                         key={opt.value}
                         type="button"
                         aria-pressed={active}
-                        onClick={() => handleChange("transport", opt.value)}
+                        onClick={() => { handleChange("transport", opt.value); playClick(); }}
                         className={`relative w-full rounded-xl px-5 py-3 text-left transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
                           active ? "text-white" : "text-ink"
                         }`}
@@ -410,12 +418,12 @@ export default function RSVPForm({ copy }) {
                         style={{ animation: "fadeInUp 350ms cubic-bezier(0.25, 1, 0.5, 1) both" }}
                       >
                         {/* Header row */}
-                        <div className="flex items-center gap-2">
+                        <div className="relative flex items-center">
                           <button
                             type="button"
                             onClick={() => toggleGuestDetails(guest.id)}
                             aria-expanded={isOpen}
-                            className="shrink-0 rounded-md p-1 text-saffron-600 transition-colors hover:bg-saffron-600/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                            className="absolute -left-6 top-1/2 -translate-y-1/2 rounded-md p-1 text-saffron-600 transition-colors hover:bg-saffron-600/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
                           >
                             <CaretDownIcon
                               size={16}
@@ -444,7 +452,7 @@ export default function RSVPForm({ copy }) {
                         </div>
 
                         {/* Collapsible details */}
-                        <Disclosure show={isOpen} contentClassName="pl-7 pt-4">
+                        <Disclosure show={isOpen} contentClassName="pt-4">
                           <div className="space-y-5">
                             <div>
                               <span className={labelClass}>{t.nameLabel}</span>
@@ -469,7 +477,7 @@ export default function RSVPForm({ copy }) {
                                       <button
                                         type="button"
                                         aria-pressed={active}
-                                        onClick={() => updateGuest(i, "ageGroup", opt.value)}
+                                        onClick={() => { updateGuest(i, "ageGroup", opt.value); playClick(); }}
                                         className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
                                           active ? "bg-crimson-600 text-white" : "text-ink"
                                         }`}
@@ -496,7 +504,7 @@ export default function RSVPForm({ copy }) {
                                                   key={bOpt.value}
                                                   type="button"
                                                   aria-pressed={bActive}
-                                                  onClick={() => updateGuest(i, "babySeating", bOpt.value)}
+                                                  onClick={() => { updateGuest(i, "babySeating", bOpt.value); playClick(); }}
                                                   className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
                                                     bActive ? "bg-crimson-600 text-white" : "text-ink"
                                                   }`}
