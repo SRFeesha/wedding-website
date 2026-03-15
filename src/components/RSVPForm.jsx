@@ -216,7 +216,7 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
                       <div className="w-px self-stretch bg-black/20" />
                     )}
                     <button
-                      className={`flex-1 rounded-xl px-3.5 py-1.5 font-ibm text-base font-medium leading-6 transition outline-none ${
+                      className={`flex-1 rounded-xl px-3.5 py-1.5 font-ibm text-base font-medium leading-6 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
                         active
                           ? "bg-crimson-600 text-white outline outline-1 outline-offset-[-1px] outline-black/25"
                           : "text-ink"
@@ -226,6 +226,7 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
                           ? { boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.30), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" }
                           : undefined
                       }
+                      aria-pressed={active}
                       onClick={() => handleChange("attending", opt.value)}
                     >
                       {opt.label}
@@ -248,6 +249,7 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
                     <button
                       key={opt.value}
                       type="button"
+                      aria-pressed={active}
                       onClick={() => handleChange("transport", opt.value)}
                       className={`w-full rounded-2xl px-5 py-3.5 text-left outline outline-2 outline-offset-[-2px] transition ${
                         active
@@ -291,9 +293,10 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
               {form.guests.map((guest, i) => (
                 <div key={i} className="space-y-5 rounded-2xl bg-white p-5 outline outline-2 outline-offset-[-2px] outline-black/20">
                   <div className="flex items-center justify-between">
-                    <span className={labelClass}>{t.ageGroupLabel} — {guest.name || `#${i + 2}`}</span>
+                    <span id={`guest-heading-${i}`} className={labelClass}>{t.ageGroupLabel} — {guest.name || `#${i + 2}`}</span>
                     <button
                       type="button"
+                      aria-label={`${t.removeGuestLabel} ${guest.name || `#${i + 2}`}`}
                       onClick={() => removeGuest(i)}
                       className="font-ibm text-sm text-ink/50 transition hover:text-ink/80"
                     >
@@ -302,21 +305,27 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
                   </div>
 
                   <input
+                    id={`guest-name-${i}`}
+                    aria-label={t.namePlaceholder}
                     className={inputClass(false)}
                     placeholder={t.namePlaceholder}
                     value={guest.name}
                     onChange={(e) => updateGuest(i, "name", e.target.value)}
                   />
 
-                  <div>
-                    <label className={labelClass}>{t.ageGroupLabel}</label>
-                    <div className="space-y-2.5">
+                  <div
+                    role="group"
+                    aria-labelledby={`guest-age-label-${i}`}
+                  >
+                    <span id={`guest-age-label-${i}`} className={labelClass}>{t.ageGroupLabel}</span>
+                    <div className="mt-1 space-y-2.5">
                       {t.ageGroupOptions.map((opt) => {
                         const active = guest.ageGroup === opt.value;
                         return (
                           <button
                             key={opt.value}
                             type="button"
+                            aria-pressed={active}
                             onClick={() => updateGuest(i, "ageGroup", opt.value)}
                             className={`w-full rounded-2xl px-5 py-3.5 text-left outline outline-2 outline-offset-[-2px] transition ${
                               active
@@ -335,9 +344,10 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
 
                   {guest.ageGroup === "adult" && (
                     <div>
-                      <label className={labelClass}>{t.dietaryLabel}</label>
+                      <label htmlFor={`guest-dietary-${i}`} className={labelClass}>{t.dietaryLabel}</label>
                       <div className="relative">
                         <select
+                          id={`guest-dietary-${i}`}
                           className={`${inputClass(false)} appearance-none cursor-pointer pr-8`}
                           value={guest.dietary}
                           onChange={(e) => updateGuest(i, "dietary", e.target.value)}
@@ -384,6 +394,7 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
               style={{ boxShadow: SUBMIT_SHADOW }}
               onClick={handleSubmit}
               disabled={status === "loading"}
+              aria-label={status === "loading" ? t.submittingLabel : undefined}
             >
               {status === "loading" ? <Spinner /> : t.submitLabel}
             </button>

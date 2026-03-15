@@ -198,7 +198,7 @@ describe("RSVPForm — submission", () => {
     await user.type(screen.getByLabelText(copy.rsvp.namePlaceholder), "Alice");
     await user.click(screen.getByText(copy.rsvp.attendanceYes));
     await user.click(screen.getByText(copy.rsvp.submitLabel));
-    expect(screen.getByText(copy.rsvp.submittingLabel)).toBeDisabled();
+    expect(screen.getByRole("button", { name: copy.rsvp.submittingLabel })).toBeDisabled();
   });
 
   it("shows the success screen after a successful submission", async () => {
