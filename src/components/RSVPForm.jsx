@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import {
   WarningCircleIcon, CircleNotchIcon, CaretDownIcon,
+  CheckIcon, XIcon,
   BusIcon, CarIcon, QuestionIcon,
   BabyIcon, ConfettiIcon, UserIcon,
   ForkKnifeIcon, HeartIcon,
@@ -234,8 +235,8 @@ export default function RSVPForm({ copy }) {
               }`}
             >
               {[
-                { value: true, label: t.attendanceYes },
-                { value: false, label: t.attendanceNo },
+                { value: true,  label: t.attendanceYes, Icon: CheckIcon },
+                { value: false, label: t.attendanceNo,  Icon: XIcon },
               ].map((opt, i) => {
                 const active = form.attending === opt.value;
                 return (
@@ -244,7 +245,7 @@ export default function RSVPForm({ copy }) {
                       <div className="w-px self-stretch bg-black/20" />
                     )}
                     <button
-                      className={`flex-1 rounded-xl px-3.5 py-1.5 font-ibm text-base font-medium leading-6 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
+                      className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3.5 py-1.5 font-ibm text-base font-medium leading-6 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
                         active
                           ? "bg-crimson-600 text-white outline outline-1 outline-offset-[-1px] outline-black/25"
                           : "text-ink"
@@ -257,6 +258,7 @@ export default function RSVPForm({ copy }) {
                       aria-pressed={active}
                       onClick={() => handleChange("attending", opt.value)}
                     >
+                      <opt.Icon size={16} weight={active ? "fill" : "bold"} aria-hidden="true" />
                       {opt.label}
                     </button>
                   </div>
@@ -283,7 +285,7 @@ export default function RSVPForm({ copy }) {
                       className={`w-full rounded-2xl px-5 py-3.5 text-left outline outline-2 outline-offset-[-2px] transition ${
                         active
                           ? "bg-crimson-600 text-white outline-black/25"
-                          : "bg-white text-ink outline-black/20 hover:outline-ink/40"
+                          : "text-ink outline-black/20 hover:outline-ink/40"
                       }`}
                       style={active ? { boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.25), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" } : undefined}
                     >
@@ -380,7 +382,7 @@ export default function RSVPForm({ copy }) {
                               className={`w-full rounded-2xl px-5 py-3.5 text-left outline outline-2 outline-offset-[-2px] transition ${
                                 active
                                   ? "bg-crimson-600 text-white outline-black/25"
-                                  : "bg-white text-ink outline-black/20 hover:outline-ink/40"
+                                  : "text-ink outline-black/20 hover:outline-ink/40"
                               }`}
                               style={active ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
                             >
@@ -409,7 +411,7 @@ export default function RSVPForm({ copy }) {
                                         className={`w-full rounded-2xl px-5 py-3.5 text-left outline outline-2 outline-offset-[-2px] transition ${
                                           bActive
                                             ? "bg-crimson-600 text-white outline-black/25"
-                                            : "bg-white text-ink outline-black/20 hover:outline-ink/40"
+                                            : "text-ink outline-black/20 hover:outline-ink/40"
                                         }`}
                                         style={bActive ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
                                       >
