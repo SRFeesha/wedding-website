@@ -111,8 +111,8 @@ describe("RSVPForm — guest management", () => {
   it("shows a guest card after clicking add", async () => {
     const user = await setupAttending();
     await user.click(screen.getByText(copy.rsvp.addGuestLabel));
-    // Two name inputs now: primary (no placeholder) + guest (with placeholder)
-    expect(screen.getByPlaceholderText(copy.rsvp.namePlaceholder)).toBeInTheDocument();
+    // Primary name input + guest name input (both labelled with namePlaceholder)
+    expect(screen.getAllByLabelText(copy.rsvp.namePlaceholder)).toHaveLength(2);
   });
 
   it("shows age group buttons inside the guest card", async () => {
