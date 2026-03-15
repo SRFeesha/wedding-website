@@ -1,4 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
+
+// Prevent Resend from making real fetch calls during tests
+vi.mock("resend", () => ({
+  Resend: vi.fn().mockImplementation(() => ({
+    emails: { send: vi.fn().mockResolvedValue({ id: "test-email-id" }) },
+  })),
+}));
+
 import { buildProperties } from "../rsvp.js";
 import handler from "../rsvp.js";
 

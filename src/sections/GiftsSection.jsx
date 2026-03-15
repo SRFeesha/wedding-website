@@ -38,7 +38,7 @@ export default function GiftsSection({ copy }) {
               {copied ? copy.copiedIban : copy.copyIban}
             </span>
             {copied ? (
-              <CheckCircleIcon size={16} weight="bold" color="#3A6647" aria-hidden="true" />
+              <CheckCircleIcon size={16} weight="bold" className="text-forest-700" aria-hidden="true" />
             ) : (
               <CopyIcon size={16} weight="bold" style={{ opacity: 0.5 }} aria-hidden="true" />
             )}

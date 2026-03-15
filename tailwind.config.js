@@ -19,8 +19,8 @@ export default {
         amber: {
           500: "#6B2230",  // dried merlot
         },
+        error: "#B5340F",     // burnt orange — validation errors
         forest: {
-          500: "#8A9E84",  // dusty sage
           700: "#3A6647",  // deep forest — accessible success green
         },
         dusty: {

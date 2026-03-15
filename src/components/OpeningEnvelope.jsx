@@ -114,11 +114,8 @@ export default function OpeningEnvelope({ phase, onOpen, locale, onChangeLocale,
         </div>
 
         <p className="mt-4 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-ink/45 sm:text-xs">
-          Click to break the seal
+          {locale === "it" ? "Clicca per aprire il sigillo" : "Click to break the seal"}
         </p>
-        <div className="mt-2 flex justify-center">
-          <LanguageToggle locale={locale} onChange={onChangeLocale} />
-        </div>
       </div>
     </div>
   );

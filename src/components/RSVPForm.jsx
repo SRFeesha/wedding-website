@@ -1,27 +1,25 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   WarningCircleIcon, CircleNotchIcon, CaretDownIcon,
   BusIcon, CarIcon, QuestionIcon,
   BabyIcon, ConfettiIcon, UserIcon,
   ForkKnifeIcon, HeartIcon,
-  LeafIcon, PlantIcon, GrainsSlashIcon,
+  LeafIcon, CheeseIcon, GrainsSlashIcon,
 } from "@phosphor-icons/react";
-
-const ERROR = "#B5340F";
 
 const labelClass =
   "block font-ibm text-base font-semibold uppercase tracking-tight text-ink/70 px-1.5 pb-1";
 
 function inputClass(hasError) {
   if (hasError)
-    return "w-full rounded-2xl bg-white px-4 py-3 font-ibm text-[18px] text-ink outline outline-2 outline-[#B5340F] focus:outline-[#B5340F] transition";
+    return "w-full rounded-2xl bg-white px-4 py-3 font-ibm text-[18px] text-ink outline outline-2 outline-error focus:outline-error transition";
   return "w-full rounded-2xl bg-white px-4 py-3 font-ibm text-[18px] text-ink outline outline-2 outline-black/20 focus:outline-ink/40 transition";
 }
 
 function FieldError({ id, msg }) {
   if (!msg) return null;
   return (
-    <p id={id} className="mt-1.5 flex items-center gap-2 font-sans text-[17px] leading-snug" style={{ color: ERROR }}>
+    <p id={id} className="mt-1.5 flex items-center gap-2 font-sans text-[17px] leading-snug text-error">
       <WarningCircleIcon size={18} weight="fill" aria-hidden="true" style={{ flexShrink: 0 }} />
       {msg}
     </p>
@@ -45,11 +43,23 @@ function Chevron() {
 
 function getDietaryIcon(value) {
   const v = (value || "").toLowerCase();
-  if (v.includes("vegan") || v.includes("vegano")) return PlantIcon;
-  if (v.includes("vegetar")) return LeafIcon;
+  if (v.includes("vegan") || v.includes("vegano")) return LeafIcon;
+  if (v.includes("vegetar")) return CheeseIcon;
   if (v.includes("gluten") || v.includes("glutine")) return GrainsSlashIcon;
   if (v.includes("altro") || v.includes("other")) return QuestionIcon;
   return ForkKnifeIcon;
+}
+
+function DietarySelectIcon({ value }) {
+  const Icon = getDietaryIcon(value);
+  return (
+    <Icon
+      size={18}
+      weight="bold"
+      className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-saffron-600"
+      aria-hidden="true"
+    />
+  );
 }
 
 const TRANSPORT_ICONS = { bus: BusIcon, car: CarIcon, unsure: QuestionIcon };
@@ -80,11 +90,14 @@ export default function RSVPForm({ copy }) {
     setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
-  const addGuest = () =>
+  const guestIdRef = useRef(0);
+  const addGuest = () => {
+    const id = ++guestIdRef.current;
     setForm((p) => ({
       ...p,
-      guests: [...p.guests, { name: "", ageGroup: null, dietary: t.dietaryOptions[0], dietaryNote: "", babySeating: null }],
+      guests: [...p.guests, { id, name: "", ageGroup: null, dietary: t.dietaryOptions[0], dietaryNote: "", babySeating: null }],
     }));
+  };
 
   const removeGuest = (i) =>
     setForm((p) => ({ ...p, guests: p.guests.filter((_, idx) => idx !== i) }));
@@ -117,13 +130,13 @@ export default function RSVPForm({ copy }) {
           attending: form.attending ? "Yes" : "No",
           transport: form.transport ?? "",
           dietary: form.dietary || t.dietaryOptions[0],
-          dietaryNote: form.dietary === t.dietaryOptions.at(-1) ? form.dietaryNote : "",
+          dietaryNote: form.dietary === t.dietaryOtherValue ? form.dietaryNote : "",
           message: form.message,
           guests: form.guests.map((g) => ({
             name: g.name,
             ageGroup: g.ageGroup ?? "",
             dietary: g.ageGroup === "baby" ? "" : (g.dietary || t.dietaryOptions[0]),
-            dietaryNote: g.ageGroup === "adult" && g.dietary === t.dietaryOptions.at(-1) ? (g.dietaryNote || "") : "",
+            dietaryNote: g.ageGroup === "adult" && g.dietary === t.dietaryOtherValue ? (g.dietaryNote || "") : "",
             babySeating: g.babySeating ?? "",
           })),
         }),
@@ -196,6 +209,8 @@ export default function RSVPForm({ copy }) {
             <label htmlFor="rsvp-name" className={labelClass}>{t.namePlaceholder}</label>
             <input
               id="rsvp-name"
+              type="text"
+              autoComplete="name"
               className={inputClass(!!errors.name)}
               value={form.name}
               onChange={(e) => handleChange("name", e.target.value)}
@@ -214,7 +229,7 @@ export default function RSVPForm({ copy }) {
               aria-describedby={errors.attending ? "rsvp-attending-error" : undefined}
               className={`flex rounded-2xl p-1.5 backdrop-blur-sm outline outline-offset-[-1px] transition ${
                 errors.attending
-                  ? "bg-[#FDF5F0] outline-[#B5340F]"
+                  ? "bg-error/8 outline-error"
                   : "bg-white/90 outline-black/20"
               }`}
             >
@@ -253,7 +268,7 @@ export default function RSVPForm({ copy }) {
 
           {/* Transport (conditional) */}
           {form.attending === true && (
-            <div>
+            <div style={{ animation: "fadeInUp 380ms cubic-bezier(0.25, 1, 0.5, 1) both" }}>
               <label id="transport-label" className={labelClass}>{t.transportLabel}</label>
               <div role="group" aria-labelledby="transport-label" className="space-y-2.5">
                 {t.transportOptions.map((opt) => {
@@ -288,10 +303,10 @@ export default function RSVPForm({ copy }) {
 
           {/* Dietary (conditional) */}
           {form.attending === true && (
-            <div>
+            <div style={{ animation: "fadeInUp 380ms cubic-bezier(0.25, 1, 0.5, 1) 60ms both" }}>
               <label htmlFor="rsvp-dietary" className={labelClass}>{t.dietaryLabel}</label>
               <div className="relative">
-                {(() => { const DIcon = getDietaryIcon(form.dietary); return <DIcon size={18} weight="bold" className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-saffron-600" aria-hidden="true" />; })()}
+                <DietarySelectIcon value={form.dietary} />
                 <select
                   id="rsvp-dietary"
                   className={`${inputClass(false)} appearance-none cursor-pointer pl-9 pr-9`}
@@ -304,7 +319,7 @@ export default function RSVPForm({ copy }) {
                 </select>
                 <Chevron />
               </div>
-              {form.dietary === t.dietaryOptions.at(-1) && (
+              {form.dietary === t.dietaryOtherValue && (
                 <div className="pl-4 pt-3 pb-1">
                   <label htmlFor="rsvp-dietary-note" className={labelClass}>{t.dietaryNoteLabel}</label>
                   <textarea
@@ -325,14 +340,14 @@ export default function RSVPForm({ copy }) {
           {form.attending === true && (
             <>
               {form.guests.map((guest, i) => (
-                <div key={i} className="space-y-5 rounded-2xl bg-white p-5 outline outline-2 outline-offset-[-2px] outline-black/20">
+                <div key={guest.id} className="space-y-5 rounded-2xl bg-white p-5 outline outline-2 outline-offset-[-2px] outline-black/20" style={{ animation: "fadeInUp 350ms cubic-bezier(0.25, 1, 0.5, 1) both" }}>
                   <div className="flex items-center justify-between">
                     <span id={`guest-heading-${i}`} className={labelClass}>{t.ageGroupLabel} — {guest.name || `#${i + 2}`}</span>
                     <button
                       type="button"
                       aria-label={`${t.removeGuestLabel} ${guest.name || `#${i + 2}`}`}
                       onClick={() => removeGuest(i)}
-                      className="font-ibm text-sm text-ink/50 transition hover:text-ink/80"
+                      className="font-ibm text-sm font-medium text-ink/50 rounded-lg border border-transparent px-3 py-1 transition hover:border-ink/20 hover:bg-ink/5 hover:text-ink/80"
                     >
                       {t.removeGuestLabel}
                     </button>
@@ -416,7 +431,7 @@ export default function RSVPForm({ copy }) {
                               <div className="pl-4 pt-3 pb-1">
                                 <label htmlFor={`guest-dietary-${i}`} className={labelClass}>{t.dietaryLabel}</label>
                                 <div className="relative">
-                                  {(() => { const DIcon = getDietaryIcon(guest.dietary); return <DIcon size={18} weight="bold" className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-saffron-600" aria-hidden="true" />; })()}
+                                  <DietarySelectIcon value={guest.dietary} />
                                   <select
                                     id={`guest-dietary-${i}`}
                                     className={`${inputClass(false)} appearance-none cursor-pointer pl-9 pr-9`}
@@ -429,7 +444,7 @@ export default function RSVPForm({ copy }) {
                                   </select>
                                   <Chevron />
                                 </div>
-                                {guest.dietary === t.dietaryOptions.at(-1) && (
+                                {guest.dietary === t.dietaryOtherValue && (
                                   <div className="pl-4 pt-3 pb-1">
                                     <label htmlFor={`guest-dietary-note-${i}`} className={labelClass}>{t.dietaryNoteLabel}</label>
                                     <textarea
