@@ -7,6 +7,13 @@ export default defineConfig(({ mode }) => {
   Object.assign(process.env, env);
 
   return {
+    server: { port: 7777 },
+    test: {
+      environment: "jsdom",
+      globals: true,
+      setupFiles: ["./src/test/setup.js"],
+      exclude: ["e2e/**", "node_modules/**"],
+    },
     plugins: [
       react(),
       {

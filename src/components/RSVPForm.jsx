@@ -23,6 +23,21 @@ function FieldError({ id, msg }) {
   );
 }
 
+function Spinner() {
+  return (
+    <svg
+      className="animate-spin h-6 w-6"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+    </svg>
+  );
+}
+
 function Chevron() {
   return (
     <svg
@@ -43,8 +58,10 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
   const [form, setForm] = useState({
     name: "",
     attending: null,
+    transport: null,
     dietary: t.dietaryOptions[0],
     message: "",
+    guests: [],
   });
   const [status, setStatus] = useState("idle");
   const [errors, setErrors] = useState({});
@@ -53,6 +70,21 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
     setForm((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: "" }));
   };
+
+  const addGuest = () =>
+    setForm((p) => ({
+      ...p,
+      guests: [...p.guests, { name: "", ageGroup: null, dietary: t.dietaryOptions[0] }],
+    }));
+
+  const removeGuest = (i) =>
+    setForm((p) => ({ ...p, guests: p.guests.filter((_, idx) => idx !== i) }));
+
+  const updateGuest = (i, field, value) =>
+    setForm((p) => ({
+      ...p,
+      guests: p.guests.map((g, idx) => (idx === i ? { ...g, [field]: value } : g)),
+    }));
 
   const handleSubmit = async () => {
     const newErrors = {};
@@ -74,8 +106,14 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
         body: JSON.stringify({
           name: form.name,
           attending: form.attending ? "Yes" : "No",
+          transport: form.transport ?? "",
           dietary: form.dietary || t.dietaryOptions[0],
           message: form.message,
+          guests: form.guests.map((g) => ({
+            name: g.name,
+            ageGroup: g.ageGroup ?? "",
+            dietary: g.ageGroup === "baby" ? "" : (g.dietary || t.dietaryOptions[0]),
+          })),
         }),
       });
 
@@ -199,6 +237,34 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
             <FieldError id="rsvp-attending-error" msg={errors.attending} />
           </div>
 
+          {/* Transport (conditional) */}
+          {form.attending === true && (
+            <div>
+              <label id="transport-label" className={labelClass}>{t.transportLabel}</label>
+              <div role="group" aria-labelledby="transport-label" className="space-y-2.5">
+                {t.transportOptions.map((opt) => {
+                  const active = form.transport === opt.value;
+                  return (
+                    <button
+                      key={opt.value}
+                      type="button"
+                      onClick={() => handleChange("transport", opt.value)}
+                      className={`w-full rounded-2xl px-5 py-3.5 text-left outline outline-2 outline-offset-[-2px] transition ${
+                        active
+                          ? "bg-crimson-600 text-white outline-black/25"
+                          : "bg-white text-ink outline-black/20 hover:outline-ink/40"
+                      }`}
+                      style={active ? { boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.25), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" } : undefined}
+                    >
+                      <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
+                      <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           {/* Dietary (conditional) */}
           {form.attending === true && (
             <div>
@@ -219,6 +285,84 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
             </div>
           )}
 
+          {/* Additional guests */}
+          {form.attending === true && (
+            <>
+              {form.guests.map((guest, i) => (
+                <div key={i} className="space-y-5 rounded-2xl bg-white p-5 outline outline-2 outline-offset-[-2px] outline-black/20">
+                  <div className="flex items-center justify-between">
+                    <span className={labelClass}>{t.ageGroupLabel} — {guest.name || `#${i + 2}`}</span>
+                    <button
+                      type="button"
+                      onClick={() => removeGuest(i)}
+                      className="font-ibm text-sm text-ink/50 transition hover:text-ink/80"
+                    >
+                      {t.removeGuestLabel}
+                    </button>
+                  </div>
+
+                  <input
+                    className={inputClass(false)}
+                    placeholder={t.namePlaceholder}
+                    value={guest.name}
+                    onChange={(e) => updateGuest(i, "name", e.target.value)}
+                  />
+
+                  <div>
+                    <label className={labelClass}>{t.ageGroupLabel}</label>
+                    <div className="space-y-2.5">
+                      {t.ageGroupOptions.map((opt) => {
+                        const active = guest.ageGroup === opt.value;
+                        return (
+                          <button
+                            key={opt.value}
+                            type="button"
+                            onClick={() => updateGuest(i, "ageGroup", opt.value)}
+                            className={`w-full rounded-2xl px-5 py-3.5 text-left outline outline-2 outline-offset-[-2px] transition ${
+                              active
+                                ? "bg-crimson-600 text-white outline-black/25"
+                                : "bg-white text-ink outline-black/20 hover:outline-ink/40"
+                            }`}
+                            style={active ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
+                          >
+                            <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
+                            <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {guest.ageGroup === "adult" && (
+                    <div>
+                      <label className={labelClass}>{t.dietaryLabel}</label>
+                      <div className="relative">
+                        <select
+                          className={`${inputClass(false)} appearance-none cursor-pointer pr-8`}
+                          value={guest.dietary}
+                          onChange={(e) => updateGuest(i, "dietary", e.target.value)}
+                        >
+                          {t.dietaryOptions.map((o) => (
+                            <option key={o} value={o}>{o}</option>
+                          ))}
+                        </select>
+                        <Chevron />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              <button
+                type="button"
+                onClick={addGuest}
+                className="w-full rounded-2xl border-2 border-dashed border-black/20 py-3.5 font-ibm text-base font-medium text-ink/50 transition hover:border-ink/40 hover:text-ink/70"
+              >
+                {t.addGuestLabel}
+              </button>
+            </>
+          )}
+
           {/* Message */}
           <div>
             <label htmlFor="rsvp-message" className={labelClass}>{t.messageLabel}</label>
@@ -226,6 +370,7 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
               id="rsvp-message"
               className={inputClass(false)}
               rows={3}
+              placeholder={t.messagePlaceholder}
               value={form.message}
               onChange={(e) => handleChange("message", e.target.value)}
               style={{ resize: "none", lineHeight: "1.7" }}
@@ -235,12 +380,12 @@ export default function RSVPForm({ copy, bodyDelay = 1000 }) {
           {/* Submit */}
           <div className="py-2">
             <button
-              className="w-full rounded-2xl bg-crimson-600 px-7 py-3 font-sans text-2xl font-medium text-white outline outline-2 outline-offset-[-2px] outline-black/25 transition hover:bg-crimson-700 disabled:cursor-not-allowed disabled:opacity-50"
+              className="w-full rounded-2xl bg-crimson-600 px-7 py-3 font-sans text-2xl font-medium text-white outline outline-2 outline-offset-[-2px] outline-black/25 transition hover:bg-crimson-700 disabled:cursor-not-allowed flex items-center justify-center"
               style={{ boxShadow: SUBMIT_SHADOW }}
               onClick={handleSubmit}
               disabled={status === "loading"}
             >
-              {status === "loading" ? t.submittingLabel : t.submitLabel}
+              {status === "loading" ? <Spinner /> : t.submitLabel}
             </button>
           </div>
 
