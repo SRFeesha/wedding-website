@@ -272,7 +272,7 @@ export default function RSVPForm({ copy }) {
           {form.attending === true && (
             <div style={{ animation: "fadeInUp 380ms cubic-bezier(0.25, 1, 0.5, 1) both" }}>
               <label id="transport-label" className={labelClass}>{t.transportLabel}</label>
-              <div role="group" aria-labelledby="transport-label" className="space-y-0">
+              <div role="group" aria-labelledby="transport-label" className="rounded-2xl bg-white/40 p-1.5">
                 {t.transportOptions.map((opt) => {
                   const active = form.transport === opt.value;
                   const Icon = TRANSPORT_ICONS[opt.value];
@@ -282,10 +282,8 @@ export default function RSVPForm({ copy }) {
                       type="button"
                       aria-pressed={active}
                       onClick={() => handleChange("transport", opt.value)}
-                      className={`w-full rounded-2xl px-5 py-3.5 text-left outline outline-1 outline-offset-[-1px] transition ${
-                        active
-                          ? "bg-crimson-600 text-white outline-black/20"
-                          : "text-ink outline-black/10 hover:outline-black/20"
+                      className={`w-full rounded-xl px-5 py-3 text-left transition ${
+                        active ? "bg-crimson-600 text-white" : "text-ink"
                       }`}
                       style={active ? { boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.25), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" } : undefined}
                     >
@@ -369,7 +367,7 @@ export default function RSVPForm({ copy }) {
                     aria-labelledby={`guest-age-label-${i}`}
                   >
                     <span id={`guest-age-label-${i}`} className={labelClass}>{t.ageGroupLabel}</span>
-                    <div className="mt-1 space-y-0">
+                    <div className="mt-1 rounded-2xl bg-white/40 p-1.5">
                       {t.ageGroupOptions.map((opt) => {
                         const active = guest.ageGroup === opt.value;
                         const Icon = AGE_ICONS[opt.value];
@@ -379,10 +377,8 @@ export default function RSVPForm({ copy }) {
                               type="button"
                               aria-pressed={active}
                               onClick={() => updateGuest(i, "ageGroup", opt.value)}
-                              className={`w-full rounded-2xl px-5 py-3.5 text-left outline outline-2 outline-offset-[-2px] transition ${
-                                active
-                                  ? "bg-crimson-600 text-white outline-black/25"
-                                  : "text-ink outline-black/20 hover:outline-ink/40"
+                              className={`w-full rounded-xl px-5 py-3 text-left transition ${
+                                active ? "bg-crimson-600 text-white" : "text-ink"
                               }`}
                               style={active ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
                             >
@@ -398,7 +394,7 @@ export default function RSVPForm({ copy }) {
                             {opt.value === "baby" && active && (
                               <div className="pl-4 pt-3 pb-1" role="group" aria-labelledby={`guest-babyseating-label-${i}`}>
                                 <span id={`guest-babyseating-label-${i}`} className={labelClass}>{t.babySeatingLabel}</span>
-                                <div className="mt-1 space-y-0">
+                                <div className="mt-1 rounded-2xl bg-white/40 p-1.5">
                                   {t.babySeatingOptions.map((bOpt) => {
                                     const bActive = guest.babySeating === bOpt.value;
                                     const BIcon = BABY_SEATING_ICONS[bOpt.value];
@@ -408,10 +404,8 @@ export default function RSVPForm({ copy }) {
                                         type="button"
                                         aria-pressed={bActive}
                                         onClick={() => updateGuest(i, "babySeating", bOpt.value)}
-                                        className={`w-full rounded-2xl px-5 py-3.5 text-left outline outline-2 outline-offset-[-2px] transition ${
-                                          bActive
-                                            ? "bg-crimson-600 text-white outline-black/25"
-                                            : "text-ink outline-black/20 hover:outline-ink/40"
+                                        className={`w-full rounded-xl px-5 py-3 text-left transition ${
+                                          bActive ? "bg-crimson-600 text-white" : "text-ink"
                                         }`}
                                         style={bActive ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
                                       >
