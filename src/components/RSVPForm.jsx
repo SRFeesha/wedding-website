@@ -4,6 +4,7 @@ import {
   BusIcon, CarIcon, QuestionIcon,
   BabyIcon, ConfettiIcon, UserIcon,
   ForkKnifeIcon, HeartIcon,
+  LeafIcon, PlantIcon, GrainsSlashIcon,
 } from "@phosphor-icons/react";
 
 const ERROR = "#B5340F";
@@ -28,18 +29,27 @@ function FieldError({ id, msg }) {
 }
 
 function Spinner() {
-  return <CircleNotchIcon className="animate-spin h-6 w-6" aria-hidden="true" />;
+  return <CircleNotchIcon weight="bold" className="animate-spin h-6 w-6" aria-hidden="true" />;
 }
 
 function Chevron() {
   return (
     <CaretDownIcon
-      size={13}
+      size={16}
       weight="bold"
       className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink/40"
       aria-hidden="true"
     />
   );
+}
+
+function getDietaryIcon(value) {
+  const v = (value || "").toLowerCase();
+  if (v.includes("vegan") || v.includes("vegano")) return PlantIcon;
+  if (v.includes("vegetar")) return LeafIcon;
+  if (v.includes("gluten") || v.includes("glutine")) return GrainsSlashIcon;
+  if (v.includes("altro") || v.includes("other")) return QuestionIcon;
+  return ForkKnifeIcon;
 }
 
 const TRANSPORT_ICONS = { bus: BusIcon, car: CarIcon, unsure: QuestionIcon };
@@ -58,6 +68,7 @@ export default function RSVPForm({ copy }) {
     attending: null,
     transport: null,
     dietary: t.dietaryOptions[0],
+    dietaryNote: "",
     message: "",
     guests: [],
   });
@@ -72,7 +83,7 @@ export default function RSVPForm({ copy }) {
   const addGuest = () =>
     setForm((p) => ({
       ...p,
-      guests: [...p.guests, { name: "", ageGroup: null, dietary: t.dietaryOptions[0], babySeating: null }],
+      guests: [...p.guests, { name: "", ageGroup: null, dietary: t.dietaryOptions[0], dietaryNote: "", babySeating: null }],
     }));
 
   const removeGuest = (i) =>
@@ -106,11 +117,13 @@ export default function RSVPForm({ copy }) {
           attending: form.attending ? "Yes" : "No",
           transport: form.transport ?? "",
           dietary: form.dietary || t.dietaryOptions[0],
+          dietaryNote: form.dietary === t.dietaryOptions.at(-1) ? form.dietaryNote : "",
           message: form.message,
           guests: form.guests.map((g) => ({
             name: g.name,
             ageGroup: g.ageGroup ?? "",
             dietary: g.ageGroup === "baby" ? "" : (g.dietary || t.dietaryOptions[0]),
+            dietaryNote: g.ageGroup === "adult" && g.dietary === t.dietaryOptions.at(-1) ? (g.dietaryNote || "") : "",
             babySeating: g.babySeating ?? "",
           })),
         }),
@@ -260,7 +273,7 @@ export default function RSVPForm({ copy }) {
                       style={active ? { boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.25), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" } : undefined}
                     >
                       <div className="flex items-center gap-3">
-                        {Icon && <Icon size={20} aria-hidden="true" className="shrink-0" />}
+                        {Icon && <Icon size={20} weight={active ? "fill" : "bold"} aria-hidden="true" className="shrink-0" />}
                         <div>
                           <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
                           <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
@@ -278,9 +291,10 @@ export default function RSVPForm({ copy }) {
             <div>
               <label htmlFor="rsvp-dietary" className={labelClass}>{t.dietaryLabel}</label>
               <div className="relative">
+                {(() => { const DIcon = getDietaryIcon(form.dietary); return <DIcon size={18} weight="bold" className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-saffron-600" aria-hidden="true" />; })()}
                 <select
                   id="rsvp-dietary"
-                  className={`${inputClass(false)} appearance-none cursor-pointer pr-8`}
+                  className={`${inputClass(false)} appearance-none cursor-pointer pl-9 pr-9`}
                   value={form.dietary}
                   onChange={(e) => handleChange("dietary", e.target.value)}
                 >
@@ -290,6 +304,20 @@ export default function RSVPForm({ copy }) {
                 </select>
                 <Chevron />
               </div>
+              {form.dietary === t.dietaryOptions.at(-1) && (
+                <div className="pl-4 pt-3 pb-1">
+                  <label htmlFor="rsvp-dietary-note" className={labelClass}>{t.dietaryNoteLabel}</label>
+                  <textarea
+                    id="rsvp-dietary-note"
+                    className={inputClass(false)}
+                    rows={2}
+                    placeholder={t.dietaryNotePlaceholder}
+                    value={form.dietaryNote}
+                    onChange={(e) => handleChange("dietaryNote", e.target.value)}
+                    style={{ resize: "none", lineHeight: "1.7" }}
+                  />
+                </div>
+              )}
             </div>
           )}
 
@@ -342,7 +370,7 @@ export default function RSVPForm({ copy }) {
                               style={active ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
                             >
                               <div className="flex items-center gap-3">
-                                {Icon && <Icon size={20} aria-hidden="true" className="shrink-0" />}
+                                {Icon && <Icon size={20} weight={active ? "fill" : "bold"} aria-hidden="true" className="shrink-0" />}
                                 <div>
                                   <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
                                   <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
@@ -371,7 +399,7 @@ export default function RSVPForm({ copy }) {
                                         style={bActive ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
                                       >
                                         <div className="flex items-center gap-3">
-                                          {BIcon && <BIcon size={20} aria-hidden="true" className="shrink-0" />}
+                                          {BIcon && <BIcon size={20} weight={bActive ? "fill" : "bold"} aria-hidden="true" className="shrink-0" />}
                                           <div>
                                             <span className="block font-ibm text-base font-semibold leading-snug">{bOpt.label}</span>
                                             <span className={`block font-ibm text-sm ${bActive ? "text-white/70" : "text-ink/50"}`}>{bOpt.sublabel}</span>
@@ -388,9 +416,10 @@ export default function RSVPForm({ copy }) {
                               <div className="pl-4 pt-3 pb-1">
                                 <label htmlFor={`guest-dietary-${i}`} className={labelClass}>{t.dietaryLabel}</label>
                                 <div className="relative">
+                                  {(() => { const DIcon = getDietaryIcon(guest.dietary); return <DIcon size={18} weight="bold" className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-saffron-600" aria-hidden="true" />; })()}
                                   <select
                                     id={`guest-dietary-${i}`}
-                                    className={`${inputClass(false)} appearance-none cursor-pointer pr-8`}
+                                    className={`${inputClass(false)} appearance-none cursor-pointer pl-9 pr-9`}
                                     value={guest.dietary}
                                     onChange={(e) => updateGuest(i, "dietary", e.target.value)}
                                   >
@@ -400,6 +429,20 @@ export default function RSVPForm({ copy }) {
                                   </select>
                                   <Chevron />
                                 </div>
+                                {guest.dietary === t.dietaryOptions.at(-1) && (
+                                  <div className="pl-4 pt-3 pb-1">
+                                    <label htmlFor={`guest-dietary-note-${i}`} className={labelClass}>{t.dietaryNoteLabel}</label>
+                                    <textarea
+                                      id={`guest-dietary-note-${i}`}
+                                      className={inputClass(false)}
+                                      rows={2}
+                                      placeholder={t.dietaryNotePlaceholder}
+                                      value={guest.dietaryNote || ""}
+                                      onChange={(e) => updateGuest(i, "dietaryNote", e.target.value)}
+                                      style={{ resize: "none", lineHeight: "1.7" }}
+                                    />
+                                  </div>
+                                )}
                               </div>
                             )}
                           </div>

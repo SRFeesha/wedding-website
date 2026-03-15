@@ -68,8 +68,10 @@ export const content = {
         "Vegetariano",
         "Vegano",
         "Senza glutine",
-        "Altro (Specifica nella nota)",
+        "Allergie / intolleranze / altro (specifica)",
       ],
+      dietaryNoteLabel: "Lascia una nota (allergie, intolleranze, altro)",
+      dietaryNotePlaceholder: "Es. intolleranza al lattosio, allergia alle noci…",
       transportLabel: "Come pensi di arrivare?",
       transportOptions: [
         { value: "bus",   label: "Con il bus",     sublabel: "Partenza da Catania la domenica mattina" },
@@ -182,8 +184,10 @@ export const content = {
         "Vegetarian",
         "Vegan",
         "Gluten-free",
-        "Other (Specify in the note)",
+        "Allergies / intolerances / other (specify)",
       ],
+      dietaryNoteLabel: "Leave a note (allergies, intolerances, other)",
+      dietaryNotePlaceholder: "E.g. lactose intolerant, nut allergy…",
       transportLabel: "How are you planning to get there?",
       transportOptions: [
         { value: "bus",   label: "By bus",      sublabel: "Departing from Catania on Sunday morning" },

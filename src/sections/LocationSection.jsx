@@ -38,10 +38,10 @@ export default function LocationSection({ copy }) {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 rounded-full border border-ink/15 bg-white/70 px-2.5 py-1 text-xs font-sans font-medium text-ink/60 transition hover:border-ink/25 hover:text-ink/80"
             >
-              <MapPinIcon size={12} aria-hidden="true" />
+              <MapPinIcon size={12} weight="bold" aria-hidden="true" />
               Maps
               <span className="sr-only">(opens in new tab)</span>
-              <ArrowSquareOutIcon size={11} aria-hidden="true" />
+              <ArrowSquareOutIcon size={11} weight="bold" aria-hidden="true" />
             </a>
           </div>
 
