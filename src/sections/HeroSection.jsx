@@ -3,8 +3,6 @@ import LanguageToggle from "../components/LanguageToggle"
 const ease = "cubic-bezier(0.25, 1, 0.5, 1)"
 
 export default function HeroSection({ copy, locale, onChangeLocale }) {
-  const heroImage = copy.moodImages[3]
-
   return (
     <section
       id="hero"
@@ -12,38 +10,46 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
       aria-label="Hero"
     >
       <img
-        src={heroImage.url}
+        src="/tenuta-savoca.webp"
         alt=""
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/35 to-ink/70" />
+      <div className="absolute inset-0 bg-gradient-to-b from-ink/50 via-ink/30 to-ink/65" />
 
-      <div className="relative mt-auto px-5 pb-16 text-center sm:px-10 sm:pb-20">
-        <div
-          className="flex justify-center mb-6"
+      <div className="relative mt-auto flex flex-col items-center gap-5 px-5 pb-16 text-center sm:px-10 sm:pb-20">
+        <h1
+          className="relative inline-flex w-72 items-start justify-center gap-12 sm:w-96 sm:gap-14"
           style={{ animation: `fadeInUp 560ms ${ease} 200ms both` }}
         >
-          <span className="font-sans rounded-full border border-white/30 bg-white/15 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm">
-            {copy.dateLabel}
+          <span className="sr-only">Sara &amp; Ben</span>
+          <span
+            aria-hidden="true"
+            className="flex-1 text-right font-dm text-5xl font-normal leading-none text-white sm:text-6xl"
+          >
+            Sara
           </span>
-        </div>
-        <h1
-          className="font-display text-5xl font-bold leading-[0.94] text-white sm:text-7xl md:text-8xl"
-          style={{ animation: `fadeInUp 560ms ${ease} 380ms both` }}
-        >
-          {copy.siteTitle.split(" & ").map((part, i, arr) => (
-            <span key={i}>
-              {part}
-              {i < arr.length - 1 && (
-                <span className="font-script mx-1">&amp;</span>
-              )}
-            </span>
-          ))}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -rotate-[6deg] font-script text-8xl font-normal leading-none text-white/90 sm:text-9xl"
+          >
+            &amp;
+          </span>
+          <span
+            aria-hidden="true"
+            className="flex-1 font-dm text-5xl font-normal leading-none text-white sm:text-6xl"
+          >
+            Ben
+          </span>
         </h1>
-        <div
-          className="flex justify-center mt-6"
-          style={{ animation: `fadeInUp 560ms ${ease} 540ms both` }}
+
+        <p
+          className="font-condensed text-base font-medium text-white sm:text-lg"
+          style={{ animation: `fadeInUp 560ms ${ease} 360ms both` }}
         >
+          {copy.dateLabel}
+        </p>
+
+        <div style={{ animation: `fadeInUp 560ms ${ease} 520ms both` }}>
           <LanguageToggle locale={locale} onChange={onChangeLocale} />
         </div>
       </div>

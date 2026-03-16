@@ -34,6 +34,8 @@ export default {
         display: ["Crimson Pro", "serif"],
         body: ["Crimson Text", "serif"],
         script: ["Alex Brush", "cursive"],
+        dm: ["DM Serif Display", "serif"],
+        condensed: ["IBM Plex Sans Condensed", "sans-serif"],
       },
       boxShadow: {
         card: "0 12px 36px rgba(44, 26, 22, 0.09)",

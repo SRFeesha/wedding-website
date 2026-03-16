@@ -123,7 +123,8 @@ export const content = {
         },
       ],
       messageLabel: "Note",
-      messagePlaceholder: "Hai qualcosa da dire a Sarai e Ben? Questo è il posto giusto.",
+      messagePlaceholder:
+        "Hai qualcosa da dire a Sarai e Ben? Questo è il posto giusto.",
       dietaryOtherValue: "Lascia una nota (allergie, intolleranze, altro)",
       submitLabel: "Invia",
       submittingLabel: "Invio…",
@@ -223,7 +224,7 @@ export const content = {
       ],
       dietaryNoteLabel: "Note",
       dietaryNotePlaceholder: "E.g. lactose intolerant, nut allergy…",
-      transportLabel: "How are you planning to get there?",
+      transportLabel: "How are you planning to get to the wedding location?",
       transportOptions: [
         {
           value: "bus",
@@ -271,7 +272,8 @@ export const content = {
         },
       ],
       messageLabel: "Notes",
-      messagePlaceholder: "Got something to tell Sarai & Ben? This is the place.",
+      messagePlaceholder:
+        "Got something to tell Sarai & Ben? This is the place.",
       dietaryOtherValue: "Leave a note (allergies, intolerances, other)",
       submitLabel: "Send",
       submittingLabel: "Sending…",
