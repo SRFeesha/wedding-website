@@ -45,7 +45,7 @@ export default function LocationSection({ copy }) {
             Location
           </p>
           <h2
-            className="font-display mt-1.5 text-4xl text-ink sm:text-5xl [text-wrap:balance]"
+            className="font-display mt-1.5 text-4xl text-dusty-500 sm:text-5xl [text-wrap:balance]"
           >
             Tenuta Savoca
           </h2>
