@@ -1,4 +1,4 @@
-export default function SectionDivider({ className = "bg-canvas-50" }) {
+export default function SectionDivider({ className = "bg-linen-50" }) {
   return (
     <div
       aria-hidden="true"
@@ -16,7 +16,7 @@ export default function SectionDivider({ className = "bg-canvas-50" }) {
           y1="12"
           x2="140"
           y2="12"
-          stroke="#C9A87A"
+          stroke="#C9A96E"
           strokeOpacity="0.5"
           strokeWidth="2"
         />
@@ -25,14 +25,14 @@ export default function SectionDivider({ className = "bg-canvas-50" }) {
           y1="12"
           x2="320"
           y2="12"
-          stroke="#C9A87A"
+          stroke="#C9A96E"
           strokeOpacity="0.5"
           strokeWidth="2"
         />
         {/* small botanical sprig */}
         <g
           transform="translate(160,12)"
-          stroke="#C9A87A"
+          stroke="#C9A96E"
           strokeOpacity="0.7"
           strokeWidth="2.5"
           fill="none"

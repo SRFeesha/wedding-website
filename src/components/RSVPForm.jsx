@@ -15,7 +15,7 @@ const labelClass =
 function inputClass(hasError) {
   if (hasError)
     return "w-full rounded-2xl bg-white px-4 py-3 font-ibm text-[18px] text-ink outline outline-2 outline-error focus:outline-error transition";
-  return "w-full rounded-2xl bg-white px-4 py-3 font-ibm text-[18px] text-ink outline outline-2 outline-black/20 focus:outline-crimson-600 transition";
+  return "w-full rounded-2xl bg-white px-4 py-3 font-ibm text-[18px] text-ink outline outline-2 outline-black/20 focus:outline-sienna-600 transition";
 }
 
 function FieldError({ id, msg }) {
@@ -58,7 +58,7 @@ function DietarySelectIcon({ value }) {
     <Icon
       size={18}
       weight="bold"
-      className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-saffron-600"
+      className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-gold-600"
       aria-hidden="true"
     />
   );
@@ -149,8 +149,8 @@ function OptionGroup({
           type="button"
           aria-pressed={active}
           onClick={() => onChange(opt.value)}
-          className={`relative w-full rounded-xl px-5 py-3 text-left transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
-            active ? (layoutId ? "text-white" : "bg-crimson-600/90 text-white") : "text-ink"
+          className={`relative w-full rounded-xl px-5 py-3 text-left transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sienna-600 ${
+            active ? (layoutId ? "text-white" : "bg-sienna-600/90 text-white") : "text-ink"
           }`}
           style={active && !layoutId ? { boxShadow: ACTIVE_PILL_SHADOW } : undefined}
         >
@@ -158,7 +158,7 @@ function OptionGroup({
             <motion.span
               layoutId={layoutId}
               aria-hidden="true"
-              className="absolute inset-0 rounded-xl bg-crimson-600/90"
+              className="absolute inset-0 rounded-xl bg-sienna-600/90"
               style={{ boxShadow: ACTIVE_PILL_SHADOW }}
               transition={SPRING}
             />
@@ -301,7 +301,7 @@ export default function RSVPForm({ copy }) {
   if (status === "success") {
     const delay = form.attending ? bodyDelay : 2500;
     return (
-      <section role="status" className="bg-canvas-50 px-5 py-20 sm:px-8">
+      <section role="status" className="bg-linen-50 px-5 py-20 sm:px-8">
         <div className="mx-auto max-w-[600px] text-center py-8">
           <div className="mx-auto mb-6 grid h-40 place-items-center" style={{ isolation: "isolate", transform: "translateZ(0)" }}>
             <video
@@ -352,9 +352,9 @@ export default function RSVPForm({ copy }) {
   ];
 
   return (
-    <section id="rsvp" className="bg-canvas-100 px-3 pt-20 sm:px-8">
+    <section id="rsvp" className="bg-linen-100 px-3 pt-20 sm:px-8">
       <div
-        className="mx-auto max-w-2xl rounded-t-3xl bg-canvas-50 px-5 pt-24 pb-12 sm:px-12 sm:pt-24 sm:pb-12"
+        className="mx-auto max-w-2xl rounded-t-3xl bg-linen-50 px-5 pt-24 pb-12 sm:px-12 sm:pt-24 sm:pb-12"
         style={{ border: "1px solid rgba(196,168,122,0.40)", boxShadow: "0 2px 20px rgba(44,22,16,0.07)" }}
       >
         {/* Header */}
@@ -434,7 +434,7 @@ export default function RSVPForm({ copy }) {
                         <div className="w-px self-stretch bg-black/20" />
                       )}
                       <button
-                        className={`relative flex flex-1 items-center justify-center gap-2 rounded-[14px] px-3.5 py-3 font-ibm text-base font-semibold leading-6 transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
+                        className={`relative flex flex-1 items-center justify-center gap-2 rounded-[14px] px-3.5 py-3 font-ibm text-base font-semibold leading-6 transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sienna-600 ${
                           active ? "text-white" : "text-ink"
                         }`}
                         aria-pressed={active}
@@ -444,7 +444,7 @@ export default function RSVPForm({ copy }) {
                           <motion.span
                             layoutId="attendance-pill"
                             aria-hidden="true"
-                            className="absolute inset-0 rounded-[14px] bg-crimson-600/90"
+                            className="absolute inset-0 rounded-[14px] bg-sienna-600/90"
                             style={{ boxShadow: ACTIVE_PILL_SHADOW }}
                             transition={{ type: "spring", stiffness: 380, damping: 35 }}
                           />
@@ -518,7 +518,7 @@ export default function RSVPForm({ copy }) {
                         transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
                       >
                         {/* Header row */}
-                        <div className="flex items-center gap-2 border-b border-[#C9A87A]/30 pb-2">
+                        <div className="flex items-center gap-2 border-b border-gold-500/30 pb-2">
                           <span
                             id={`guest-heading-${i}`}
                             className="font-display text-2xl font-semibold leading-tight text-ink"
@@ -529,7 +529,7 @@ export default function RSVPForm({ copy }) {
                             type="button"
                             onClick={() => toggleGuestDetails(guest.id)}
                             aria-expanded={isOpen}
-                            className="relative shrink-0 rounded-md p-3 text-saffron-600 transition-colors hover:bg-saffron-600/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                            className="relative shrink-0 rounded-md p-3 text-gold-600 transition-colors hover:bg-gold-600/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sienna-600"
                           >
                             <CaretDownIcon
                               size={16}
@@ -545,7 +545,7 @@ export default function RSVPForm({ copy }) {
                             type="button"
                             aria-label={`${t.removeGuestLabel} ${guestTitle}`}
                             onClick={() => removeGuest(i)}
-                            className="ml-auto font-ibm text-sm font-medium text-ink/40 rounded-lg border border-transparent px-2.5 py-2.5 transition hover:border-ink/20 hover:bg-ink/5 hover:text-ink/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                            className="ml-auto font-ibm text-sm font-medium text-ink/40 rounded-lg border border-transparent px-2.5 py-2.5 transition hover:border-ink/20 hover:bg-ink/5 hover:text-ink/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sienna-600"
                           >
                             {t.removeGuestLabel}
                           </button>
@@ -651,7 +651,7 @@ export default function RSVPForm({ copy }) {
               <button
                 type="button"
                 onClick={addGuest}
-                className="flex w-full items-center justify-center gap-1.5 rounded-2xl bg-white/80 px-3.5 py-3 font-ibm text-base font-medium text-ink outline outline-1 outline-black/10 transition duration-200 ease-spring hover:outline-black/20 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                className="flex w-full items-center justify-center gap-1.5 rounded-2xl bg-white/80 px-3.5 py-3 font-ibm text-base font-medium text-ink outline outline-1 outline-black/10 transition duration-200 ease-spring hover:outline-black/20 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sienna-600"
                 style={{ boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.30), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" }}
               >
                 <PlusIcon size={16} weight="bold" aria-hidden="true" />
@@ -693,7 +693,7 @@ export default function RSVPForm({ copy }) {
           {/* Submit */}
           <div className="py-2">
             <button
-              className="group w-full rounded-2xl bg-crimson-600/95 px-7 py-3 font-sans text-2xl font-medium text-white outline outline-2 outline-offset-[-2px] outline-black/15 transition hover:bg-crimson-600 active:scale-[0.97] disabled:active:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-saffron-500"
+              className="group w-full rounded-2xl bg-sienna-600/95 px-7 py-3 font-sans text-2xl font-medium text-white outline outline-2 outline-offset-[-2px] outline-black/15 transition hover:bg-sienna-600 active:scale-[0.97] disabled:active:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500"
               style={{ boxShadow: SUBMIT_SHADOW }}
               onClick={handleSubmit}
               disabled={status === "loading"}

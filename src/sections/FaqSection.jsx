@@ -25,7 +25,7 @@ export default function FaqSection({ copy }) {
   }
 
   return (
-    <section id="faq" className="bg-canvas-100 px-5 py-16 sm:px-8 sm:py-20">
+    <section id="faq" className="bg-linen-100 px-5 py-16 sm:px-8 sm:py-20">
       <div
         ref={ref}
         className="mx-auto max-w-2xl"
@@ -34,7 +34,7 @@ export default function FaqSection({ copy }) {
         <h2 className="text-center font-display text-5xl font-semibold text-ink [text-wrap:balance]">
           {copy.faqTitle}
         </h2>
-        <ul className="mt-8 divide-y divide-saffron-500/35">
+        <ul className="mt-8 divide-y divide-gold-500/35">
           {copy.faqList.map((item, index) => {
             const isOpen = openItems.has(index)
             return (
@@ -54,7 +54,7 @@ export default function FaqSection({ copy }) {
                     size={20}
                     weight="bold"
                     aria-hidden="true"
-                    className="shrink-0 text-saffron-600"
+                    className="shrink-0 text-gold-600"
                     style={{
                       transform: isOpen ? "rotate(-180deg)" : "rotate(0deg)",
                       transition: "transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1)",
@@ -91,7 +91,7 @@ export default function FaqSection({ copy }) {
                           href={item.cta.url}
                           target={item.cta.url !== "#" ? "_blank" : undefined}
                           rel={item.cta.url !== "#" ? "noopener noreferrer" : undefined}
-                          className="mt-3 inline-flex items-center font-sans text-base font-medium text-crimson-700 underline underline-offset-2 hover:text-crimson-600 transition-colors"
+                          className="mt-3 inline-flex items-center font-sans text-base font-medium text-sienna-700 underline underline-offset-2 hover:text-sienna-600 transition-colors"
                         >
                           {item.cta.label}
                         </a>
@@ -113,7 +113,7 @@ export default function FaqSection({ copy }) {
                               <CheckCircleIcon
                                 size={16}
                                 weight="bold"
-                                className="text-forest-700"
+                                className="text-sage-500"
                                 aria-hidden="true"
                                 style={{ animation: "scaleIn 200ms cubic-bezier(0.34, 1.56, 0.64, 1) both" }}
                               />
@@ -127,7 +127,7 @@ export default function FaqSection({ copy }) {
                         <ul className="space-y-3">
                           {item.items.map((line) => (
                             <li key={line} className="flex items-start gap-3">
-                              <span className="mt-[0.45em] h-1.5 w-1.5 shrink-0 rounded-full bg-saffron-600" aria-hidden="true" />
+                              <span className="mt-[0.45em] h-1.5 w-1.5 shrink-0 rounded-full bg-gold-600" aria-hidden="true" />
                               <p className="font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]">{line}</p>
                             </li>
                           ))}

@@ -7,12 +7,12 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
   return (
     <section
       id="hero"
-      className="flex flex-col items-center bg-canvas-50 pb-24 pt-[15vh] sm:pb-32"
+      className="flex flex-col items-center bg-linen-50 pb-24 pt-[15vh] sm:pb-32"
       aria-label="Hero"
     >
       <div className="flex flex-col items-center gap-5 px-5 text-center sm:px-10">
         <p
-          className="text-base font-bold uppercase tracking-widest text-crimson-700/60"
+          className="text-base font-bold uppercase tracking-widest text-merlot-600/70"
           style={{ fontFamily: 'sans-serif', animation: `fadeInUp 560ms ${ease} 80ms both` }}
         >
           {copy.heroEyebrow}
@@ -43,7 +43,7 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
         </h1>
 
         <div
-          className="flex items-center gap-2"
+          className="flex items-center"
           style={{ animation: `fadeInUp 560ms ${ease} 320ms both` }}
         >
           <p className="font-condensed text-xl font-medium text-ink/80 sm:text-2xl">

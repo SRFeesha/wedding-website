@@ -15,7 +15,7 @@ export default function GiftsSection({ copy }) {
   }
 
   return (
-    <section id="gifts" className="bg-canvas-100 px-5 py-20 sm:px-8">
+    <section id="gifts" className="bg-linen-100 px-5 py-20 sm:px-8">
       <div
         ref={ref}
         className="mx-auto flex max-w-2xl flex-col items-center gap-5 text-center"
@@ -46,7 +46,7 @@ export default function GiftsSection({ copy }) {
               <CheckCircleIcon
                 size={16}
                 weight="bold"
-                className="text-forest-700"
+                className="text-sage-500"
                 aria-hidden="true"
                 style={{ animation: "scaleIn 200ms cubic-bezier(0.34, 1.56, 0.64, 1) both" }}
               />

@@ -9,7 +9,7 @@ export default function LocationSection({ copy }) {
   return (
     <section
       id="location"
-      className="relative z-10 -mt-8 bg-canvas-50"
+      className="relative z-10 -mt-8 bg-linen-50"
     >
       <div className="relative h-[100vh] w-full">
 
@@ -25,11 +25,11 @@ export default function LocationSection({ copy }) {
           aria-label={photo.alt}
         />
 
-        {/* Bottom fade — canvas-50 wins at the edge */}
+        {/* Bottom fade — linen-50 wins at the edge */}
         <div
           className="absolute inset-x-0 bottom-0 h-40 pointer-events-none"
           style={{
-            background: "linear-gradient(to top, #E6D3B8 0%, transparent 100%)",
+            background: "linear-gradient(to top, #E8DFD0 0%, transparent 100%)",
           }}
         />
 
@@ -40,12 +40,12 @@ export default function LocationSection({ copy }) {
           style={inView ? { animation: `fadeInUp 560ms ${ease} both` } : { opacity: 0 }}
         >
           <p
-            className="font-sans text-base font-bold uppercase tracking-widest text-crimson-700/60"
+            className="font-sans text-base font-bold uppercase tracking-widest text-merlot-600/70"
           >
             {copy.locationEyebrow}
           </p>
           <h2
-            className="font-display mt-1.5 text-4xl text-dusty-500 sm:text-5xl [text-wrap:balance]"
+            className="font-display mt-1.5 text-4xl text-umber-500 sm:text-5xl [text-wrap:balance]"
           >
             Tenuta Savoca
           </h2>

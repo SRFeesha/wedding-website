@@ -36,7 +36,8 @@
       "Bash(gh run:*)",
       "Bash(vercel ls:*)",
       "Bash(vercel inspect:*)",
-      "Bash(sed:*)"
+      "Bash(sed:*)",
+      "Bash(\\\\ for:*)"
     ]
   }
 }

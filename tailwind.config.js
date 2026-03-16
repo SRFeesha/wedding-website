@@ -4,29 +4,29 @@ export default {
   theme: {
     extend: {
       colors: {
-        canvas: {
-          50: "#F5EBD8",   // aged linen — light
-          100: "#E6D3B8",  // aged linen — mid
+        linen: {
+          50:  "#F4F0EB",  // aged linen — card/hero bg
+          100: "#E8DFD0",  // aged linen — section bg
         },
-        saffron: {
-          500: "#C9A96E",  // wheat gold
-          600: "#A67D42",  // wheat gold — deep
+        sienna: {
+          600: "#B5541A",  // burnt sienna — primary interactive accent
+          700: "#8C3F12",  // burnt sienna — deep hover
         },
-        crimson: {
-          600: "#B5541A",  // burnt sienna
-          700: "#8C3F12",  // burnt sienna — deep
+        gold: {
+          500: "#C9A96E",  // wheat gold — dividers, borders
+          600: "#A67D42",  // wheat gold — icons, text accents
         },
-        amber: {
-          500: "#6B2230",  // dried merlot
+        merlot: {
+          600: "#6B2230",  // dried merlot — typographic accent
         },
-        error: "#B5340F",     // burnt orange — validation errors
-        forest: {
-          700: "#3A6647",  // deep forest — accessible success green
+        sage: {
+          500: "#8A9E84",  // dusty sage — success states
         },
-        dusty: {
-          500: "#7C5635",  // raw umber
+        umber: {
+          500: "#7C5635",  // raw umber — tertiary earthy
         },
-        ink: "#2C1610",    // warm dark — toward raw umber
+        ink:   "#2C1610",  // warm dark — primary text
+        error: "#B5340F",  // validation errors
       },
       fontFamily: {
         sans: ["Instrument Sans", "sans-serif"],

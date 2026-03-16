@@ -47,7 +47,7 @@ export default function App({ locale }) {
         <LocationSection copy={copy} />
         <FaqSection copy={copy} />
         <RSVPForm copy={copy} />
-        <hr className="border-t border-saffron-500/30 bg-canvas-100" />
+        <hr className="border-t border-gold-500/30 bg-linen-100" />
       </main>
     </div>
   )

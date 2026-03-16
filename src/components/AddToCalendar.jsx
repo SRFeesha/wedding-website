@@ -46,14 +46,14 @@ export default function AddToCalendar({ copy }) {
         type="button"
         onClick={() => downloadICS(event)}
         aria-label={copy.addToCalendarLabel}
-        className="inline-flex items-center justify-center rounded-xl border border-ink/20 p-3 text-ink/90 transition duration-200 ease-spring hover:bg-black/10 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+        className="inline-flex items-center justify-center rounded-xl p-3 text-ink/70 transition duration-200 ease-spring hover:bg-black/10 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sienna-600"
       >
-        <CalendarPlusIcon size={20} />
+        <CalendarPlusIcon size={20} weight="bold" />
       </button>
 
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-lg bg-ink px-2.5 py-1 font-sans text-xs font-medium text-canvas-50 opacity-0 transition-all duration-150 ease-out group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:transition-none"
+        className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-lg bg-ink px-2.5 py-1 font-sans text-sm font-semibold text-linen-50 opacity-0 transition-all duration-150 ease-out group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:transition-none"
       >
         {copy.addToCalendarLabel}
       </span>

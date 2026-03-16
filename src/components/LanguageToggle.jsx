@@ -14,7 +14,7 @@ export default function LanguageToggle({ locale, onChange }) {
   return (
     <LayoutGroup>
       <div
-        className="inline-flex h-12 items-center rounded-full p-1.5 outline outline-1 outline-offset-[-1px] outline-black/20 backdrop-blur-sm bg-canvas-50/60"
+        className="inline-flex h-12 items-center rounded-full p-1.5 outline outline-1 outline-offset-[-1px] outline-black/20 backdrop-blur-sm bg-linen-50/60"
         role="group"
         aria-label="Language selector"
       >
@@ -24,7 +24,7 @@ export default function LanguageToggle({ locale, onChange }) {
             <button
               key={item.id}
               type="button"
-              className={`relative rounded-full px-3.5 py-1.5 font-sans text-base font-medium leading-6 transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
+              className={`relative rounded-full px-3.5 py-1.5 font-sans text-base font-medium leading-6 transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sienna-600 ${
                 active ? "text-white" : "text-ink"
               }`}
               aria-pressed={active}
@@ -34,7 +34,7 @@ export default function LanguageToggle({ locale, onChange }) {
                 <motion.span
                   layoutId="lang-pill"
                   aria-hidden="true"
-                  className="absolute inset-0 rounded-full bg-crimson-600"
+                  className="absolute inset-0 rounded-full bg-sienna-600"
                   style={{ boxShadow: ACTIVE_SHADOW }}
                   transition={SPRING}
                 />
