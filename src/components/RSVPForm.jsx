@@ -303,15 +303,13 @@ export default function RSVPForm({ copy }) {
                 role="group"
                 aria-labelledby="attendance-label"
                 aria-describedby={errors.attending ? "rsvp-attending-error" : undefined}
-                className={`flex rounded-[18px] p-1.5 backdrop-blur-sm outline outline-offset-[-1px] transition-colors ${
-                  errors.attending
-                    ? "bg-error/8 outline-error"
-                    : "bg-white/90 outline-black/20"
+                className={`flex rounded-2xl bg-white p-[2px] outline outline-2 transition-colors ${
+                  errors.attending ? "outline-error" : "outline-black/20"
                 }`}
               >
                 {[
-                  { value: true,  label: t.attendanceYes, Icon: CheckIcon, activeWeight: "bold" },
-                  { value: false, label: t.attendanceNo,  Icon: XIcon,    activeWeight: "bold" },
+                  { value: true,  label: t.attendanceYes, Icon: CheckIcon },
+                  { value: false, label: t.attendanceNo,  Icon: XIcon },
                 ].map((opt, i) => {
                   const active = form.attending === opt.value;
                   return (
@@ -320,7 +318,7 @@ export default function RSVPForm({ copy }) {
                         <div className="w-px self-stretch bg-black/20" />
                       )}
                       <button
-                        className={`relative flex flex-1 items-center justify-center gap-2 rounded-xl px-3.5 py-1.5 font-ibm text-base font-medium leading-6 transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
+                        className={`relative flex flex-1 items-center justify-center gap-2 rounded-xl px-3.5 py-3 font-ibm text-base font-semibold leading-6 transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
                           active ? "text-white" : "text-ink"
                         }`}
                         aria-pressed={active}
@@ -336,7 +334,7 @@ export default function RSVPForm({ copy }) {
                           />
                         )}
                         <span className="relative z-10 flex items-center gap-2">
-                          <CrossfadeIcon Icon={opt.Icon} active={active} size={16} />
+                          <opt.Icon size={16} weight="fill" aria-hidden="true" />
                           {opt.label}
                         </span>
                       </button>
