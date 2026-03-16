@@ -1,64 +1,102 @@
-import { MapPinIcon, ArrowSquareOutIcon } from "@phosphor-icons/react"
 import { useInView } from "../hooks/useInView"
 
 const ease = "cubic-bezier(0.25, 1, 0.5, 1)"
 
 export default function LocationSection({ copy }) {
-  const photo = { url: "/tenuta-savoca.webp", alt: "Tenuta Savoca" }
+  const photo = { url: "/tenuta-savoca-v2.png", alt: "Tenuta Savoca" }
   const [ref, inView] = useInView()
 
   return (
     <section
       id="location"
-      className="relative z-10 -mt-8 rounded-t-[2.5rem] bg-canvas-50 px-5 py-16 sm:px-10 sm:py-24"
+      className="relative z-10 -mt-8 bg-canvas-50"
     >
       <div
-        ref={ref}
-        className="mx-auto flex max-w-4xl flex-col items-center gap-8 sm:flex-row sm:items-stretch sm:gap-12"
-        style={inView ? { animation: `fadeInUp 560ms ${ease} both` } : { opacity: 0 }}
+        className="relative h-[90vh] w-full"
+        style={{
+          backgroundImage: `url('${photo.url}')`,
+          backgroundSize: "cover",
+          backgroundPosition: "top center",
+          backgroundRepeat: "no-repeat",
+        }}
+        role="img"
+        aria-label={photo.alt}
       >
-        {/* Photo */}
+        {/* Top fade — blends into hero's dark bottom */}
         <div
-          className="w-full flex-shrink-0 overflow-hidden rounded-2xl sm:w-[44%]"
-          style={{ boxShadow: "0 2px 8px rgba(44,22,16,0.10), 0 1px 2px rgba(44,22,16,0.08), 0 0 0 1px rgba(0,0,0,0.07)" }}
-        >
-          <img
-            src={photo.url}
-            alt="Tenuta Savoca"
-            className="h-64 w-full object-cover transition-transform duration-500 ease-spring hover:scale-[1.03] sm:h-full"
-          />
-        </div>
+          className="absolute inset-x-0 top-0 h-32 pointer-events-none"
+          style={{
+            background: "linear-gradient(to bottom, #2C1610 0%, transparent 100%)",
+          }}
+        />
 
-        {/* Text */}
-        <div className="flex flex-col justify-center">
-          <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-ink/45">
+        {/* Bottom-pool radial gradient for text legibility — larger on mobile */}
+        <div
+          className="absolute inset-0 pointer-events-none sm:hidden"
+          style={{
+            background:
+              "radial-gradient(60% 70% at 50% 96.17%, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 pointer-events-none hidden sm:block"
+          style={{
+            background:
+              "radial-gradient(27.15% 47.92% at 50% 96.17%, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 100%)",
+          }}
+        />
+
+        {/* Bottom fade — above radial so canvas-50 wins at the edge */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-40 pointer-events-none"
+          style={{
+            background: "linear-gradient(to top, #E6D3B8 0%, transparent 100%)",
+          }}
+        />
+
+        {/* Text overlay — bottom-centered */}
+        <div
+          ref={ref}
+          className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-16 text-center sm:pb-20"
+          style={inView ? { animation: `fadeInUp 560ms ${ease} both` } : { opacity: 0 }}
+        >
+          <p
+            className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-canvas-50/80"
+            style={{ textShadow: "0px 2px 8px rgba(0,0,0,0.25)" }}
+          >
             Location
           </p>
-          <h2 className="font-display mt-2 text-4xl text-ink sm:text-5xl [text-wrap:balance]">
+          <h2
+            className="font-display mt-1.5 text-5xl text-canvas-50 sm:text-6xl [text-wrap:balance]"
+            style={{ textShadow: "0px 2px 8px rgba(0,0,0,0.25)" }}
+          >
             Tenuta Savoca
           </h2>
-
-          {/* Location line with Maps chip */}
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span className="font-body text-lg text-ink/70">
-              Vicino a Piazza Armerina
+          <div className="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+            <span
+              className="font-body text-2xl text-canvas-50/90"
+              style={{ textShadow: "0px 2px 8px rgba(0,0,0,0.25)" }}
+            >
+              Piazza Armerina
+            </span>
+            <span
+              className="font-body text-2xl text-canvas-50/60"
+              aria-hidden="true"
+              style={{ textShadow: "0px 2px 8px rgba(0,0,0,0.25)" }}
+            >
+              ·
             </span>
             <a
               href={copy.mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded-full border border-ink/15 bg-white/70 px-2.5 py-1 text-xs font-sans font-medium text-ink/60 transition hover:border-ink/25 hover:text-ink/80"
+              className="font-body text-2xl text-canvas-50/90 underline underline-offset-4 transition hover:text-canvas-50"
+              style={{ textShadow: "0px 2px 8px rgba(0,0,0,0.25)" }}
             >
-              <MapPinIcon size={12} weight="bold" aria-hidden="true" />
-              Maps
+              Google maps
               <span className="sr-only">(opens in new tab)</span>
-              <ArrowSquareOutIcon size={11} weight="bold" aria-hidden="true" />
             </a>
           </div>
-
-          <p className="font-body mt-4 text-lg leading-relaxed text-ink/70">
-            {copy.locationDescription}
-          </p>
         </div>
       </div>
     </section>

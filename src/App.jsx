@@ -47,7 +47,6 @@ export default function App({ locale }) {
           onChangeLocale={(id) => navigate(`/${id}`)}
         />
         <LocationSection copy={copy} />
-        <SectionDivider />
         <FaqSection copy={copy} />
         <SectionDivider className="bg-canvas-100" />
         <GiftsSection copy={copy} />
