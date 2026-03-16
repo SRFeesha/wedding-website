@@ -40,7 +40,7 @@ export default function LocationSection({ copy }) {
           style={inView ? { animation: `fadeInUp 560ms ${ease} both` } : { opacity: 0 }}
         >
           <p
-            className="font-sans text-base font-bold uppercase tracking-widest text-merlot-600/70"
+            className="font-ibm text-base font-bold uppercase tracking-widest text-sienna-700/60"
           >
             {copy.locationEyebrow}
           </p>
