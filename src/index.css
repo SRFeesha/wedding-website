@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Alex+Brush&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=IBM+Plex+Sans:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Lovers+Quarrel&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alex+Brush&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Lovers+Quarrel&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -22,6 +22,8 @@ body,
 
 body {
   line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .open-flap {

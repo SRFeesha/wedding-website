@@ -68,6 +68,29 @@ const TRANSPORT_ICONS = { bus: BusIcon, car: CarIcon, unsure: QuestionIcon };
 const AGE_ICONS       = { baby: BabyIcon, kid: ConfettiIcon, adult: CheersIcon };
 const BABY_SEATING_ICONS = { table: ForkKnifeIcon, nanny: HeartIcon };
 
+function CrossfadeIcon({ Icon, active, size = 16 }) {
+  return (
+    <span className="relative inline-flex" style={{ width: size, height: size }}>
+      <motion.span
+        className="absolute inset-0 flex items-center justify-center"
+        initial={false}
+        animate={{ opacity: active ? 0 : 1, scale: active ? 0.25 : 1, filter: active ? "blur(4px)" : "blur(0px)" }}
+        transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+      >
+        <Icon size={size} weight="bold" aria-hidden="true" />
+      </motion.span>
+      <motion.span
+        className="absolute inset-0 flex items-center justify-center"
+        initial={false}
+        animate={{ opacity: active ? 1 : 0, scale: active ? 1 : 0.25, filter: active ? "blur(0px)" : "blur(4px)" }}
+        transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+      >
+        <Icon size={size} weight="fill" aria-hidden="true" />
+      </motion.span>
+    </span>
+  );
+}
+
 const SUBMIT_SHADOW =
   "0px 2px 4px 0px rgba(0,0,0,0.30), inset 0px 8px 8px 0px rgba(255,255,255,0.05)";
 
@@ -250,7 +273,7 @@ export default function RSVPForm({ copy }) {
       <div className="mx-auto max-w-2xl">
         {/* Header */}
         <div className="text-center">
-          <h2 className="font-display text-5xl font-semibold text-ink">{t.title}</h2>
+          <h2 className="font-display text-5xl font-semibold text-ink [text-wrap:balance]">{t.title}</h2>
           <p className="mt-3 font-display text-xl italic text-ink/75">{t.deadline}</p>
         </div>
 
@@ -280,7 +303,7 @@ export default function RSVPForm({ copy }) {
                 role="group"
                 aria-labelledby="attendance-label"
                 aria-describedby={errors.attending ? "rsvp-attending-error" : undefined}
-                className={`flex rounded-2xl p-1.5 backdrop-blur-sm outline outline-offset-[-1px] transition-colors ${
+                className={`flex rounded-[18px] p-1.5 backdrop-blur-sm outline outline-offset-[-1px] transition-colors ${
                   errors.attending
                     ? "bg-error/8 outline-error"
                     : "bg-white/90 outline-black/20"
@@ -313,7 +336,7 @@ export default function RSVPForm({ copy }) {
                           />
                         )}
                         <span className="relative z-10 flex items-center gap-2">
-                          <opt.Icon size={16} weight={active ? opt.activeWeight : "bold"} aria-hidden="true" />
+                          <CrossfadeIcon Icon={opt.Icon} active={active} size={16} />
                           {opt.label}
                         </span>
                       </button>
@@ -365,14 +388,18 @@ export default function RSVPForm({ copy }) {
             <div>
               {form.guests.length > 0 && (
                 <div className="divide-y divide-[#C9A87A]/25 mb-6 pl-6">
+                  <AnimatePresence initial={false}>
                   {form.guests.map((guest, i) => {
                     const isOpen = expandedGuests.has(guest.id);
                     const guestTitle = guest.name || `${t.guestLabel} ${i + 2}`;
                     return (
-                      <div
+                      <motion.div
                         key={guest.id}
                         className="py-4 first:pt-0"
-                        style={{ animation: "fadeInUp 350ms cubic-bezier(0.25, 1, 0.5, 1) both" }}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -4, transition: { duration: 0.2, ease: [0.5, 0, 0.75, 0] } }}
+                        transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
                       >
                         {/* Header row */}
                         <div className="flex items-center gap-2">
@@ -380,7 +407,7 @@ export default function RSVPForm({ copy }) {
                             type="button"
                             onClick={() => toggleGuestDetails(guest.id)}
                             aria-expanded={isOpen}
-                            className="-ml-6 shrink-0 rounded-md p-1 text-saffron-600 transition-colors hover:bg-saffron-600/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                            className="relative -ml-[32px] shrink-0 rounded-md p-3 text-saffron-600 transition-colors hover:bg-saffron-600/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
                           >
                             <CaretDownIcon
                               size={16}
@@ -429,7 +456,7 @@ export default function RSVPForm({ copy }) {
 
                             <div role="group" aria-labelledby={`guest-age-label-${i}`}>
                               <span id={`guest-age-label-${i}`} className={labelClass}>{t.ageGroupLabel}</span>
-                              <div className="mt-1 rounded-2xl bg-white/40 p-1.5">
+                              <div className="mt-1 rounded-[18px] bg-white/40 p-1.5" style={{ boxShadow: "0 1px 3px rgba(44,22,16,0.06), 0 0 0 1px rgba(196,168,122,0.20)" }}>
                                 {t.ageGroupOptions.map((opt) => {
                                   const active = guest.ageGroup === opt.value;
                                   const Icon = AGE_ICONS[opt.value];
@@ -439,13 +466,13 @@ export default function RSVPForm({ copy }) {
                                         type="button"
                                         aria-pressed={active}
                                         onClick={() => updateGuest(i, "ageGroup", opt.value)}
-                                        className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
+                                        className={`w-full rounded-xl px-5 py-3 text-left transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
                                           active ? "bg-crimson-600 text-white" : "text-ink"
                                         }`}
                                         style={active ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
                                       >
                                         <div className="flex items-center gap-3">
-                                          {Icon && <Icon size={20} weight={active ? "fill" : "bold"} aria-hidden="true" className="shrink-0" />}
+                                          {Icon && <CrossfadeIcon Icon={Icon} active={active} size={20} />}
                                           <div>
                                             <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
                                             <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
@@ -456,7 +483,7 @@ export default function RSVPForm({ copy }) {
                                       <Disclosure show={opt.value === "baby" && active} contentClassName="pl-4 pt-3 pb-1">
                                         <div role="group" aria-labelledby={`guest-babyseating-label-${i}`}>
                                           <span id={`guest-babyseating-label-${i}`} className={labelClass}>{t.babySeatingLabel}</span>
-                                          <div className="mt-1 rounded-2xl bg-white/40 p-1.5">
+                                          <div className="mt-1 rounded-[18px] bg-white/40 p-1.5" style={{ boxShadow: "0 1px 3px rgba(44,22,16,0.06), 0 0 0 1px rgba(196,168,122,0.20)" }}>
                                             {t.babySeatingOptions.map((bOpt) => {
                                               const bActive = guest.babySeating === bOpt.value;
                                               const BIcon = BABY_SEATING_ICONS[bOpt.value];
@@ -466,13 +493,13 @@ export default function RSVPForm({ copy }) {
                                                   type="button"
                                                   aria-pressed={bActive}
                                                   onClick={() => updateGuest(i, "babySeating", bOpt.value)}
-                                                  className={`w-full rounded-xl px-5 py-3 text-left transition-all duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
+                                                  className={`w-full rounded-xl px-5 py-3 text-left transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
                                                     bActive ? "bg-crimson-600 text-white" : "text-ink"
                                                   }`}
                                                   style={bActive ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
                                                 >
                                                   <div className="flex items-center gap-3">
-                                                    {BIcon && <BIcon size={20} weight={bActive ? "fill" : "bold"} aria-hidden="true" className="shrink-0" />}
+                                                    {BIcon && <CrossfadeIcon Icon={BIcon} active={bActive} size={20} />}
                                                     <div>
                                                       <span className="block font-ibm text-base font-semibold leading-snug">{bOpt.label}</span>
                                                       <span className={`block font-ibm text-sm ${bActive ? "text-white/70" : "text-ink/50"}`}>{bOpt.sublabel}</span>
@@ -525,16 +552,17 @@ export default function RSVPForm({ copy }) {
                             </div>
                           </div>
                         </Disclosure>
-                      </div>
+                      </motion.div>
                     );
                   })}
+                  </AnimatePresence>
                 </div>
               )}
 
               <button
                 type="button"
                 onClick={addGuest}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-black/10 px-3.5 py-1.5 font-ibm text-base font-medium text-ink/90 transition-all duration-200 ease-spring hover:bg-black/15 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-black/10 px-3.5 py-1.5 font-ibm text-base font-medium text-ink/90 transition duration-200 ease-spring hover:bg-black/15 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
               >
                 <PlusIcon size={16} weight="bold" aria-hidden="true" />
                 {t.addGuestLabel}
@@ -547,7 +575,7 @@ export default function RSVPForm({ copy }) {
             <div>
               <label id="transport-label" className={labelClass}>{t.transportLabel}</label>
               <LayoutGroup>
-                <div role="group" aria-labelledby="transport-label" className="rounded-2xl bg-white/40 p-1.5">
+                <div role="group" aria-labelledby="transport-label" className="rounded-[18px] bg-white/40 p-1.5" style={{ boxShadow: "0 1px 3px rgba(44,22,16,0.06), 0 0 0 1px rgba(196,168,122,0.20)" }}>
                   {t.transportOptions.map((opt) => {
                     const active = form.transport === opt.value;
                     const Icon = TRANSPORT_ICONS[opt.value];
@@ -571,7 +599,7 @@ export default function RSVPForm({ copy }) {
                           />
                         )}
                         <div className="relative z-10 flex items-center gap-3">
-                          {Icon && <Icon size={20} weight={active ? "fill" : "bold"} aria-hidden="true" className="shrink-0" />}
+                          {Icon && <CrossfadeIcon Icon={Icon} active={active} size={20} />}
                           <div>
                             <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
                             <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
@@ -602,7 +630,7 @@ export default function RSVPForm({ copy }) {
           {/* Submit */}
           <div className="py-2">
             <button
-              className="w-full rounded-2xl bg-crimson-600 px-7 py-3 font-sans text-2xl font-medium text-white outline outline-2 outline-offset-[-2px] outline-black/25 transition hover:bg-crimson-700 disabled:cursor-not-allowed flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-saffron-500"
+              className="w-full rounded-2xl bg-crimson-600 px-7 py-3 font-sans text-2xl font-medium text-white outline outline-2 outline-offset-[-2px] outline-black/25 transition hover:bg-crimson-700 active:scale-[0.97] disabled:active:scale-100 disabled:cursor-not-allowed flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-saffron-500"
               style={{ boxShadow: SUBMIT_SHADOW }}
               onClick={handleSubmit}
               disabled={status === "loading"}

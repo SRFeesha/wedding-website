@@ -18,7 +18,10 @@ export default function LocationSection({ copy }) {
         style={inView ? { animation: `fadeInUp 560ms ${ease} both` } : { opacity: 0 }}
       >
         {/* Photo */}
-        <div className="w-full flex-shrink-0 overflow-hidden rounded-2xl sm:w-[44%]">
+        <div
+          className="w-full flex-shrink-0 overflow-hidden rounded-2xl sm:w-[44%]"
+          style={{ boxShadow: "0 2px 8px rgba(44,22,16,0.10), 0 1px 2px rgba(44,22,16,0.08), 0 0 0 1px rgba(0,0,0,0.07)" }}
+        >
           <img
             src={photo.url}
             alt="Tenuta Savoca"
@@ -31,7 +34,7 @@ export default function LocationSection({ copy }) {
           <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-ink/45">
             Location
           </p>
-          <h2 className="font-display mt-2 text-4xl text-ink sm:text-5xl">
+          <h2 className="font-display mt-2 text-4xl text-ink sm:text-5xl [text-wrap:balance]">
             Tenuta Savoca
           </h2>
 

@@ -24,7 +24,7 @@ export default function FaqSection({ copy }) {
         className="mx-auto max-w-2xl"
         style={inView ? { animation: `fadeInUp 560ms ${ease} both` } : { opacity: 0 }}
       >
-        <h2 className="text-center font-display text-5xl font-semibold text-ink">
+        <h2 className="text-center font-display text-5xl font-semibold text-ink [text-wrap:balance]">
           {copy.faqTitle}
         </h2>
         <ul className="mt-8">
@@ -66,9 +66,18 @@ export default function FaqSection({ copy }) {
                   }}
                 >
                   <div style={{ overflow: "hidden" }}>
-                    <div className="pb-5">
+                    <div
+                      className="pb-5"
+                      style={{
+                        opacity: isOpen ? 1 : 0,
+                        transform: isOpen ? "translateY(0px)" : "translateY(-4px)",
+                        transition: isOpen
+                          ? "opacity 280ms cubic-bezier(0.25, 1, 0.5, 1), transform 280ms cubic-bezier(0.25, 1, 0.5, 1)"
+                          : "opacity 200ms cubic-bezier(0.5, 0, 0.75, 0), transform 200ms cubic-bezier(0.5, 0, 0.75, 0)",
+                      }}
+                    >
                       {item.a && (
-                        <p className="font-body text-[24px] leading-[1.25] text-ink/85">
+                        <p className="font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]">
                           {item.a}
                         </p>
                       )}
