@@ -40,7 +40,15 @@ export default function App({ locale }) {
 
   return (
     <div className="font-body text-[20px] text-ink sm:text-[21px] lg:text-[22px]">
-      <main>
+      {/* Fixed footer — sits behind, revealed as main scrolls away */}
+      <footer className="fixed bottom-0 z-0 flex h-[5vh] w-full flex-col items-center justify-end bg-canvas-100 pb-5">
+        <p className="font-sans text-xs font-medium tracking-wide text-ink/35">
+          se ci sono domande o problemi, scriveteci :)
+        </p>
+      </footer>
+
+      {/* Main content scrolls on top of footer, padding-bottom reveals it */}
+      <main className="relative z-10 pb-[5vh]">
         <HeroSection
           copy={copy}
           locale={locale}
@@ -52,11 +60,6 @@ export default function App({ locale }) {
         <GiftsSection copy={copy} />
         <RSVPForm copy={copy} />
         <hr className="border-t border-[#C9A87A]/30 bg-canvas-100" />
-        <footer className="bg-canvas-100 pb-10 pt-4 text-center">
-          <p className="font-sans text-xs font-medium tracking-wide text-ink/35">
-            © 2026 Sara &amp; Ben · Tenuta Savoca, Piazza Armerina
-          </p>
-        </footer>
       </main>
     </div>
   )
