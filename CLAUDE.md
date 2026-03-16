@@ -7,6 +7,12 @@
 - If unsure whether something warrants a commit, ask.
 - Never push to `origin/main` (which triggers a Vercel deploy) without an explicit instruction to do so.
 
+## Context7 — always use up-to-date docs
+
+- **Always use the `find-docs` skill (Context7) by default** when writing or modifying code that touches any library, framework, or API — including React, Tailwind, Vite, react-router-dom, Notion API, Vercel, and any other dependency in this project.
+- Do not rely solely on training knowledge for API signatures, config options, or version-specific behavior. Fetch docs proactively, without waiting for the user to ask.
+- This applies especially when: adding a new feature, debugging an integration, updating a dependency, or working with any external service.
+
 ## Motion design guidance for agents
 
 - This project is a wedding site, not a productivity app. Favor polished, romantic, low-friction motion over ultra-snappy utilitarian motion.

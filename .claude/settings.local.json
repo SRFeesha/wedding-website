@@ -23,7 +23,13 @@
       "Bash(grep -rn \"BusNotice\\\\|MapWidget\\\\|MediaStrip\\\\|MoodboardBand\\\\|PlantAccent\\\\|SectionBlock\\\\|WeatherWidget\\\\|weatherAdapter\" src/ --include=\"*.{js,jsx}\")",
       "Bash(npx playwright:*)",
       "WebFetch(domain:iconic.app)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(grep -r VanIcon node_modules/@phosphor-icons/react/dist/ --include=*.js -l)",
+      "Bash(npx ctx7:*)",
+      "Bash(find:*)",
+      "Bash(echo:*)",
+      "Bash(printf:*)",
+      "Bash(npx:*)"
     ]
   }
 }
