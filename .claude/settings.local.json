@@ -29,7 +29,8 @@
       "Bash(find:*)",
       "Bash(echo:*)",
       "Bash(printf:*)",
-      "Bash(npx:*)"
+      "Bash(npx:*)",
+      "WebFetch(domain:leone.gdn)"
     ]
   }
 }
