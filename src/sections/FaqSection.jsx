@@ -35,14 +35,12 @@ export default function FaqSection({ copy }) {
         <h2 className="text-center font-display text-5xl font-semibold text-ink [text-wrap:balance]">
           {copy.faqTitle}
         </h2>
-        <ul className="mt-8">
+        <ul className="mt-8 divide-y divide-[#C9A87A]/35">
           {copy.faqList.map((item, index) => {
             const isOpen = openItems.has(index)
-            const isLast = index === copy.faqList.length - 1
             return (
               <li
                 key={item.q}
-                className={`border-t border-[#C9A87A]/35 ${isLast ? "border-b" : ""}`}
               >
                 <button
                   type="button"

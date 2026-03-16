@@ -283,9 +283,9 @@ export default function RSVPForm({ copy }) {
   ];
 
   return (
-    <section id="rsvp" className="bg-canvas-100 px-5 pt-20 sm:px-8">
+    <section id="rsvp" className="bg-canvas-100 px-3 pt-20 sm:px-8">
       <div
-        className="mx-auto max-w-2xl rounded-t-3xl bg-canvas-50 px-7 pt-24 pb-12 sm:px-12 sm:pt-24 sm:pb-12"
+        className="mx-auto max-w-2xl rounded-t-3xl bg-canvas-50 px-5 pt-24 pb-12 sm:px-12 sm:pt-24 sm:pb-12"
         style={{ border: "1px solid rgba(196,168,122,0.40)", boxShadow: "0 2px 20px rgba(44,22,16,0.07)" }}
       >
         {/* Header */}
