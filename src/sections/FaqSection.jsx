@@ -5,7 +5,7 @@ import { useInView } from "../hooks/useInView"
 const ease = "cubic-bezier(0.25, 1, 0.5, 1)"
 
 export default function FaqSection({ copy }) {
-  const [openItems, setOpenItems] = useState(() => new Set(copy.faqList.map((_, i) => i)))
+  const [openItems, setOpenItems] = useState(() => new Set())
   const [ref, inView] = useInView()
 
   const toggle = (index) => {
