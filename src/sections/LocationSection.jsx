@@ -17,7 +17,7 @@ export default function LocationSection({ copy }) {
             ellipse centered at top-center, transparent in the dome, fades to black below.
             This hides the photo near the top-center (arch dips down) and reveals it at the edges first. */}
         <div
-          className="absolute inset-0 bg-center bg-no-repeat [background-size:100%_auto] sm:[background-size:cover] [mask-image:radial-gradient(ellipse_150%_280px_at_50%_0%,transparent_50%,black_80%)] [-webkit-mask-image:radial-gradient(ellipse_150%_280px_at_50%_0%,transparent_50%,black_80%)]"
+          className="absolute inset-0 bg-center bg-no-repeat [background-size:cover] [mask-image:radial-gradient(ellipse_150%_400px_at_50%_0%,transparent_35%,black_95%)] [-webkit-mask-image:radial-gradient(ellipse_150%_400px_at_50%_0%,transparent_35%,black_95%)]"
           style={{
             backgroundImage: `url('${photo.url}')`,
           }}
@@ -25,23 +25,7 @@ export default function LocationSection({ copy }) {
           aria-label={photo.alt}
         />
 
-        {/* Bottom-pool radial gradient for text legibility — larger on mobile */}
-        <div
-          className="absolute inset-0 pointer-events-none sm:hidden"
-          style={{
-            background:
-              "radial-gradient(60% 70% at 50% 96.17%, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 100%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 pointer-events-none hidden sm:block"
-          style={{
-            background:
-              "radial-gradient(27.15% 47.92% at 50% 96.17%, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 100%)",
-          }}
-        />
-
-        {/* Bottom fade — above radial so canvas-50 wins at the edge */}
+        {/* Bottom fade — canvas-50 wins at the edge */}
         <div
           className="absolute inset-x-0 bottom-0 h-40 pointer-events-none"
           style={{
@@ -49,49 +33,27 @@ export default function LocationSection({ copy }) {
           }}
         />
 
-        {/* Text overlay — bottom-centered */}
+        {/* Text overlay — sits right at the mask fade boundary */}
         <div
           ref={ref}
-          className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-16 text-center sm:pb-20"
+          className="absolute inset-x-0 top-0 flex flex-col items-center pt-4 text-center sm:pt-6"
           style={inView ? { animation: `fadeInUp 560ms ${ease} both` } : { opacity: 0 }}
         >
           <p
-            className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-canvas-50/80"
-            style={{ textShadow: "0px 2px 8px rgba(0,0,0,0.25)" }}
+            className="font-sans text-base font-bold uppercase tracking-widest text-crimson-700/60"
           >
             Location
           </p>
           <h2
-            className="font-display mt-1.5 text-5xl text-canvas-50 sm:text-6xl [text-wrap:balance]"
-            style={{ textShadow: "0px 2px 8px rgba(0,0,0,0.25)" }}
+            className="font-display mt-1.5 text-4xl text-ink sm:text-5xl [text-wrap:balance]"
           >
             Tenuta Savoca
           </h2>
-          <div className="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
-            <span
-              className="font-body text-2xl text-canvas-50/90"
-              style={{ textShadow: "0px 2px 8px rgba(0,0,0,0.25)" }}
-            >
-              Piazza Armerina
-            </span>
-            <span
-              className="font-body text-2xl text-canvas-50/60"
-              aria-hidden="true"
-              style={{ textShadow: "0px 2px 8px rgba(0,0,0,0.25)" }}
-            >
-              ·
-            </span>
-            <a
-              href={copy.mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-body text-2xl text-canvas-50/90 underline underline-offset-4 transition hover:text-canvas-50"
-              style={{ textShadow: "0px 2px 8px rgba(0,0,0,0.25)" }}
-            >
-              Google maps
-              <span className="sr-only">(opens in new tab)</span>
-            </a>
-          </div>
+          <p
+            className="mt-2 font-body text-2xl text-ink/80"
+          >
+            Piazza Armerina
+          </p>
         </div>
       </div>
     </section>
