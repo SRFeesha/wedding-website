@@ -1,8 +1,7 @@
 export const defaultLocale = "it"
 export const locales = ["it", "en"]
 
-const mapsUrl =
-  "https://www.google.com/maps/search/?api=1&query=Tenuta+Savoca+Piazza+Armerina"
+const mapsUrl = "https://maps.app.goo.gl/efKxntkWJ2yPQznZ8"
 
 const moodboardImages = [
   {
@@ -149,30 +148,21 @@ export const content = {
     faqList: [
       {
         q: "Come arrivare alla location",
-        items: [
-          "Se arrivate in macchina, nessun problema: trovate il link di Google Maps qui sotto e lui vi guiderà fino a noi (1.30h).",
-          "Se invece preferite godervi la giornata senza pensare alla guida, stiamo organizzando un bus che partirà da Catania la domenica mattina per portarvi alla location. Stiamo valutando di organizzare il rientro il lunedì da Piazza Armerina, invece che la notte stessa dell'evento, così da poter festeggiare tutti con più tranquillità. Aggiorneremo presto questa sezione.",
-        ],
+        a: "Se venite in macchina, seguite il link Google Maps qui sotto. Sono circa 1h 30 da Catania. Se preferite non pensarci, stiamo organizzando un bus da Catania domenica mattina, e stiamo valutando il rientro da Piazza Armerina il lunedì, così nessuno dovrà andar via di fretta. Maggiori dettagli a breve!",
+        cta: { label: "Apri Google Maps", url: mapsUrl },
       },
       {
         q: "Programma della serata",
-        a: "Sarà a cena! Inizio stimato per le 15. Seguiranno maggiori dettagli.",
+        a: "È una cena! Si comincia intorno alle 15:00. Maggiori dettagli a seguire!",
       },
       {
         q: "Dresscode",
-        items: [
-          "Eleganti, stare comodi, sentirvi voi stessi.",
-          "Occhio ai tacchi a spillo.",
-          "Portare una giacchettina per la sera che potrebbe fare freschetto.",
-          "Per ispirazione, ecco una moodboard.",
-        ],
+        a: "Vestiti con eleganza, ma sii te stesso. Tieni a mente che c'è del prato, quindi forse lascia i tacchi a spillo a casa. Le serate di settembre si fanno fresche, quindi una giacchina leggera non guasta. Per ispirazione sui colori, dai un'occhiata al nostro moodboard.",
+        cta: { label: "Moodboard →", url: "#" },
       },
       {
         q: "Dove dormire",
-        items: [
-          "Purtroppo non possiamo offrire il soggiorno.",
-          "Vi consigliamo di pernottare la notte prima a Catania e la notte delle nozze invece a Piazza Armerina. Siamo in contatto con alcuni hotel per prezzi favorevoli. Seguiranno aggiornamenti.",
-        ],
+        a: "Purtroppo non siamo in grado di offrire alloggio in loco. Vi consigliamo di pernottare la sera prima a Catania e la notte del matrimonio a Piazza Armerina — entrambe bellissime, vale la pena esplorarle. Stiamo lavorando per ottenere tariffe agevolate con alcuni hotel nelle vicinanze, vi faremo sapere!",
       },
       {
         q: "Regali",
@@ -306,30 +296,21 @@ export const content = {
     faqList: [
       {
         q: "Getting to the venue",
-        items: [
-          "If you're driving, no problem — find the Google Maps link below and it'll guide you straight to us (approx. 1h 30).",
-          "If you'd rather enjoy the day without worrying about driving, we're organising a bus from Catania on Sunday morning. We're also looking into arranging the return trip on Monday from Piazza Armerina, rather than the same night, so everyone can celebrate without rushing. We'll update this section soon.",
-        ],
+        a: "If you're driving, just follow the Google Maps link below. It's about 1h 30 from Catania. If you'd rather leave the driving to someone else, we're organising a bus from Catania on Sunday morning, and we're looking into a return trip from Piazza Armerina on Monday so nobody has to rush off. More details soon!",
+        cta: { label: "Open Google Maps", url: mapsUrl },
       },
       {
         q: "Programme",
-        a: "It's a dinner! Estimated start around 15:00. More details to follow.",
+        a: "It's an evening dinner celebration — things will get started around 3pm. More details to follow!",
       },
       {
         q: "Dresscode",
-        items: [
-          "Elegant but comfortable, be yourselves.",
-          "Watch out for stilettos on the grass.",
-          "Bring a light jacket for the evening — it might get chilly.",
-          "For inspiration, here's a moodboard.",
-        ],
+        a: "Dress elegantly, but be yourself. Just keep in mind there's grass, so maybe leave the stilettos at home. September evenings can get chilly, so a light jacket is a good idea. For colour inspiration, check out our moodboard.",
+        cta: { label: "Moodboard →", url: "#" },
       },
       {
         q: "Where to stay",
-        items: [
-          "Unfortunately we're unable to offer accommodation.",
-          "We recommend staying the night before in Catania and the wedding night in Piazza Armerina. We're in touch with some hotels for preferential rates. Updates to follow.",
-        ],
+        a: "Unfortunately we're not able to offer accommodation on-site. We recommend spending the night before in Catania and the wedding night in Piazza Armerina — both are beautiful spots worth exploring. We're working on preferential rates with some nearby hotels, so stay tuned for updates!",
       },
       {
         q: "Gifts",

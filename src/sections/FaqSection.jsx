@@ -89,8 +89,18 @@ export default function FaqSection({ copy }) {
                           {item.a}
                         </p>
                       )}
+                      {item.cta && (
+                        <a
+                          href={item.cta.url}
+                          target={item.cta.url !== "#" ? "_blank" : undefined}
+                          rel={item.cta.url !== "#" ? "noopener noreferrer" : undefined}
+                          className="mt-3 inline-flex items-center font-sans text-base font-medium text-crimson-700 underline underline-offset-2 hover:text-crimson-600 transition-colors"
+                        >
+                          {item.cta.label}
+                        </a>
+                      )}
                       {item.iban && (
-                        <div className="mt-4 flex flex-col items-start gap-3">
+                        <div className="mt-4 flex flex-wrap items-center gap-3">
                           <p className="font-mono text-xl font-medium tracking-wide text-ink/90">
                             {IBAN}
                           </p>
