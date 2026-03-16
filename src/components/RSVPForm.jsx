@@ -387,7 +387,7 @@ export default function RSVPForm({ copy }) {
           <Disclosure show={form.attending === true} contentClassName="pb-0.5" delay={0.08}>
             <div>
               {form.guests.length > 0 && (
-                <div className="divide-y divide-[#C9A87A]/25 mb-6 pl-6">
+                <div className="divide-y divide-[#C9A87A]/25 mb-6">
                   <AnimatePresence initial={false}>
                   {form.guests.map((guest, i) => {
                     const isOpen = expandedGuests.has(guest.id);
@@ -403,11 +403,17 @@ export default function RSVPForm({ copy }) {
                       >
                         {/* Header row */}
                         <div className="flex items-center gap-2">
+                          <span
+                            id={`guest-heading-${i}`}
+                            className="font-display text-2xl font-semibold leading-tight text-ink"
+                          >
+                            {guestTitle}
+                          </span>
                           <button
                             type="button"
                             onClick={() => toggleGuestDetails(guest.id)}
                             aria-expanded={isOpen}
-                            className="relative -ml-[32px] shrink-0 rounded-md p-3 text-saffron-600 transition-colors hover:bg-saffron-600/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                            className="relative shrink-0 rounded-md p-3 text-saffron-600 transition-colors hover:bg-saffron-600/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
                           >
                             <CaretDownIcon
                               size={16}
@@ -419,12 +425,6 @@ export default function RSVPForm({ copy }) {
                               }}
                             />
                           </button>
-                          <span
-                            id={`guest-heading-${i}`}
-                            className="font-display text-2xl font-semibold leading-tight text-ink"
-                          >
-                            {guestTitle}
-                          </span>
                           <button
                             type="button"
                             aria-label={`${t.removeGuestLabel} ${guestTitle}`}
