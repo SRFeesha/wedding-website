@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { motion, LayoutGroup, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   WarningCircleIcon, CircleNotchIcon, CaretDownIcon,
-  CheckCircleIcon, XSquareIcon, PlusIcon,
+  CheckCircleIcon, XSquareIcon, PlusIcon, ArrowRightIcon,
   BusIcon, CarIcon, QuestionIcon,
   BabyIcon, ConfettiIcon, CheersIcon,
   ForkKnifeIcon, HeartIcon,
@@ -298,23 +298,18 @@ export default function RSVPForm({ copy }) {
               ref={summaryRef}
               tabIndex={-1}
               role="alert"
-              className="mx-auto mt-6 max-w-[600px] scroll-mt-4 rounded-2xl border border-error/25 bg-error/5 px-5 py-4 outline-none"
+              className="mx-auto mt-6 max-w-[600px] scroll-mt-4 border-l-4 border-error pl-4 py-2 outline-none"
               initial={{ opacity: 0, y: shouldReduce ? 0 : -6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, transition: { duration: 0.2 } }}
               transition={shouldReduce ? { duration: 0 } : { duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
             >
-              <div className="flex items-start gap-3">
-                <WarningCircleIcon size={18} weight="fill" className="mt-0.5 shrink-0 text-error" aria-hidden="true" />
-                <div>
-                  <p className="font-sans text-sm font-semibold text-error">{t.validationSummaryTitle}</p>
-                  <ul className="mt-1.5 list-disc list-inside space-y-0.5">
-                    {errorLabels.map((label, i) => (
-                      <li key={i} className="font-sans text-sm text-error/80">{label}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              <p className="font-ibm text-sm font-semibold text-error">{t.validationSummaryTitle}</p>
+              <ul className="mt-1 list-disc pl-3.5 space-y-0.5 marker:text-error/60">
+                {errorLabels.map((label, i) => (
+                  <li key={i} className="font-ibm text-[15px] leading-snug text-error/90">{label}</li>
+                ))}
+              </ul>
             </motion.div>
           )}
         </AnimatePresence>
@@ -360,7 +355,7 @@ export default function RSVPForm({ copy }) {
                         <div className="w-px self-stretch bg-black/20" />
                       )}
                       <button
-                        className={`relative flex flex-1 items-center justify-center gap-2 rounded-xl px-3.5 py-3 font-ibm text-base font-semibold leading-6 transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
+                        className={`relative flex flex-1 items-center justify-center gap-2 rounded-[14px] px-3.5 py-3 font-ibm text-base font-semibold leading-6 transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
                           active ? "text-white" : "text-ink"
                         }`}
                         aria-pressed={active}
@@ -370,13 +365,13 @@ export default function RSVPForm({ copy }) {
                           <motion.span
                             layoutId="attendance-pill"
                             aria-hidden="true"
-                            className="absolute inset-0 rounded-xl bg-crimson-600"
+                            className="absolute inset-0 rounded-[14px] bg-crimson-600"
                             style={{ boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.30), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" }}
                             transition={{ type: "spring", stiffness: 380, damping: 35 }}
                           />
                         )}
                         <span className="relative z-10 flex items-center gap-2">
-                          <opt.Icon size={16} weight={active ? "fill" : "regular"} aria-hidden="true" />
+                          <opt.Icon size={20} weight={active ? "fill" : "regular"} aria-hidden="true" className="opacity-60" />
                           {opt.label}
                         </span>
                       </button>
@@ -670,13 +665,20 @@ export default function RSVPForm({ copy }) {
           {/* Submit */}
           <div className="py-2">
             <button
-              className="w-full rounded-2xl bg-crimson-600 px-7 py-3 font-sans text-2xl font-medium text-white outline outline-2 outline-offset-[-2px] outline-black/25 transition hover:bg-crimson-700 active:scale-[0.97] disabled:active:scale-100 disabled:cursor-not-allowed flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-saffron-500"
+              className="group w-full rounded-2xl bg-crimson-600 px-7 py-3 font-sans text-2xl font-medium text-white outline outline-2 outline-offset-[-2px] outline-black/25 transition hover:bg-crimson-700 active:scale-[0.97] disabled:active:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-saffron-500"
               style={{ boxShadow: SUBMIT_SHADOW }}
               onClick={handleSubmit}
               disabled={status === "loading"}
               aria-label={status === "loading" ? t.submittingLabel : undefined}
             >
-              {status === "loading" ? <Spinner /> : t.submitLabel}
+              {status === "loading" ? <Spinner /> : (
+                <>
+                  {t.submitLabel}
+                  <span className="group-hover:animate-[arrow-fly_0.45s_ease-out_both]">
+                    <ArrowRightIcon size={20} weight="bold" aria-hidden="true" />
+                  </span>
+                </>
+              )}
             </button>
           </div>
 

@@ -133,6 +133,13 @@ body {
   scrollbar-width: none;
 }
 
+@keyframes arrow-fly {
+  0%   { transform: translateX(0);    opacity: 1; }
+  40%  { transform: translateX(8px);  opacity: 0; }
+  41%  { transform: translateX(-4px); opacity: 0; }
+  100% { transform: translateX(0);    opacity: 1; }
+}
+
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(14px) scale(0.985); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
