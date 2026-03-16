@@ -18,7 +18,7 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
 
       <div className="relative flex flex-col items-center gap-5 px-5 text-center sm:px-10">
         <h1
-          className="relative inline-flex w-72 items-start justify-center gap-12 sm:w-96 sm:gap-14"
+          className="relative inline-flex w-72 items-start justify-center gap-6 sm:w-96 sm:gap-8"
           style={{ animation: `fadeInUp 560ms ${ease} 200ms both` }}
         >
           <span className="sr-only">Sara &amp; Ben</span>
@@ -30,7 +30,7 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
           </span>
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -rotate-[6deg] font-script text-8xl font-normal leading-none text-white/90 sm:text-9xl"
+            className="pointer-events-none absolute left-[55%] top-0 -translate-x-1/2 -rotate-[6deg] font-script text-8xl font-normal leading-none text-white/60 sm:text-9xl"
           >
             &amp;
           </span>
