@@ -677,9 +677,7 @@ export default function RSVPForm({ copy }) {
               {status === "loading" ? <Spinner /> : (
                 <>
                   {t.submitLabel}
-                  <span className="group-hover:animate-[arrow-fly_0.45s_ease-out_both]">
-                    <ArrowRightIcon size={20} weight="bold" aria-hidden="true" />
-                  </span>
+                  <ArrowRightIcon size={20} weight="bold" aria-hidden="true" />
                 </>
               )}
             </button>
