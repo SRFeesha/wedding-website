@@ -123,7 +123,7 @@ export const content = {
           sublabel: "Ci pensiamo noi — c'è una tata dedicata",
         },
       ],
-      messageLabel: "Note",
+      messageLabel: "Messaggio per gli sposi",
       messagePlaceholder:
         "Hai qualcosa da dire a Sarai e Ben? Questo è il posto giusto.",
       dietaryOtherValue: "Lascia una nota (allergie, intolleranze, altro)",
@@ -278,7 +278,7 @@ export const content = {
           sublabel: "We'll take care of them — there's a dedicated nanny",
         },
       ],
-      messageLabel: "Notes",
+      messageLabel: "Message for the grooms",
       messagePlaceholder:
         "Got something to tell Sarai & Ben? This is the place.",
       dietaryOtherValue: "Leave a note (allergies, intolerances, other)",

@@ -7,16 +7,9 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
   return (
     <section
       id="hero"
-      className="relative flex flex-col items-center bg-canvas-50 pb-24 pt-[15vh] sm:pb-32"
+      className="flex flex-col items-center bg-canvas-50 pb-24 pt-[15vh] sm:pb-32"
       aria-label="Hero"
     >
-      <div
-        className="absolute top-5 right-5 sm:top-6 sm:right-6"
-        style={{ animation: `fadeInUp 560ms ${ease} 40ms both` }}
-      >
-        <LanguageToggle locale={locale} onChange={onChangeLocale} />
-      </div>
-
       <div className="flex flex-col items-center gap-5 px-5 text-center sm:px-10">
         <p
           className="text-base font-bold uppercase tracking-widest text-crimson-700/60"
@@ -57,6 +50,10 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
             {copy.dateLabel}
           </p>
           <AddToCalendar copy={copy} />
+        </div>
+
+        <div className="mt-3" style={{ animation: `fadeInUp 560ms ${ease} 640ms both` }}>
+          <LanguageToggle locale={locale} onChange={onChangeLocale} />
         </div>
       </div>
     </section>
