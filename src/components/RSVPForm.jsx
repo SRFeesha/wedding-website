@@ -402,7 +402,7 @@ export default function RSVPForm({ copy }) {
                         transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
                       >
                         {/* Header row */}
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 border-b border-[#C9A87A]/30 pb-2">
                           <span
                             id={`guest-heading-${i}`}
                             className="font-display text-2xl font-semibold leading-tight text-ink"
