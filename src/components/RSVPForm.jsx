@@ -298,7 +298,7 @@ export default function RSVPForm({ copy }) {
               ref={summaryRef}
               tabIndex={-1}
               role="alert"
-              className="relative mx-auto mt-6 max-w-[600px] scroll-mt-4 pl-5 py-2 outline-none before:absolute before:inset-y-0 before:left-0 before:w-[4px] before:rounded-r-full before:bg-error before:content-[''] before:animate-border-blink before:[animation-delay:350ms]"
+              className="relative mx-auto mt-6 max-w-[600px] scroll-mt-4 pl-5 py-2 outline-none before:absolute before:inset-y-0 before:left-0 before:w-[4px] before:rounded-r-full before:bg-error before:content-[''] after:absolute after:inset-y-0 after:left-0 after:w-[4px] after:rounded-r-full after:bg-error after:content-[''] after:animate-ping-once after:[animation-delay:350ms]"
               initial={{ opacity: 0, y: shouldReduce ? 0 : -6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, transition: { duration: 0.2 } }}

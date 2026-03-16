@@ -1,32 +1,51 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import RSVPForm from "./components/RSVPForm"
 import SectionDivider from "./components/SectionDivider"
 import FaqSection from "./sections/FaqSection"
 import GiftsSection from "./sections/GiftsSection"
 import HeroSection from "./sections/HeroSection"
 import LocationSection from "./sections/LocationSection"
-import { content, defaultLocale, locales } from "./content/content"
+import { content } from "./content/content"
 
-const STORAGE_KEY = "wedding-locale"
+const BASE_URL = "https://sara-e-ben-wedding.vercel.app"
 
-function getInitialLocale() {
-  const saved = localStorage.getItem(STORAGE_KEY)
-  if (saved && locales.includes(saved)) return saved
-  return defaultLocale
+const META = {
+  it: {
+    title: "Sara & Ben — 27 Settembre 2026",
+    description:
+      "Informazioni pratiche per il matrimonio del 27 settembre 2026 a Tenuta Savoca.",
+  },
+  en: {
+    title: "Sara & Ben — September 27, 2026",
+    description:
+      "Practical information for Sara & Ben's wedding on September 27, 2026, at Tenuta Savoca, Sicily.",
+  },
 }
 
-export default function App() {
-  const [locale, setLocale] = useState(getInitialLocale)
+export default function App({ locale }) {
+  const navigate = useNavigate()
   const copy = content[locale]
+
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, locale)
+    const { title, description } = META[locale]
+    document.title = title
     document.documentElement.lang = locale
+    document.querySelector('meta[name="description"]').setAttribute("content", description)
+    document.querySelector('meta[property="og:title"]').setAttribute("content", title)
+    document.querySelector('meta[property="og:description"]').setAttribute("content", description)
+    document.querySelector('meta[property="og:url"]').setAttribute("content", `${BASE_URL}/${locale}`)
+    document.querySelector('link[rel="canonical"]').setAttribute("href", `${BASE_URL}/${locale}`)
   }, [locale])
 
   return (
     <div className="font-body text-[20px] text-ink sm:text-[21px] lg:text-[22px]">
       <main>
-        <HeroSection copy={copy} locale={locale} onChangeLocale={setLocale} />
+        <HeroSection
+          copy={copy}
+          locale={locale}
+          onChangeLocale={(id) => navigate(`/${id}`)}
+        />
         <LocationSection copy={copy} />
         <SectionDivider />
         <FaqSection copy={copy} />

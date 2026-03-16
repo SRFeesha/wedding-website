@@ -49,15 +49,14 @@ export default {
           "0%": { opacity: "1" },
           "100%": { opacity: "0" },
         },
-        borderBlink: {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0" },
+        pingOnce: {
+          "75%, 100%": { transform: "scale(2)", opacity: "0" },
         },
       },
       animation: {
         fadeInUp: "fadeInUp 560ms ease-out both",
         fadeOut: "fadeOut 400ms ease-in both",
-        "border-blink": "borderBlink 500ms ease-in-out 1",
+        "ping-once": "pingOnce 700ms cubic-bezier(0, 0, 0.2, 1) 1 forwards",
       },
       transitionTimingFunction: {
         spring: "cubic-bezier(0.25, 1, 0.5, 1)",
