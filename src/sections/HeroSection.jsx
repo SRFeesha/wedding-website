@@ -6,7 +6,7 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[100svh] flex-col"
+      className="relative flex min-h-[100svh] flex-col items-center justify-center"
       aria-label="Hero"
     >
       <img
@@ -16,7 +16,7 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
       />
       <div className="absolute inset-0 bg-gradient-to-b from-ink/50 via-ink/30 to-ink/65" />
 
-      <div className="relative mt-auto flex flex-col items-center gap-5 px-5 pb-16 text-center sm:px-10 sm:pb-20">
+      <div className="relative flex flex-col items-center gap-5 px-5 text-center sm:px-10">
         <h1
           className="relative inline-flex w-72 items-start justify-center gap-12 sm:w-96 sm:gap-14"
           style={{ animation: `fadeInUp 560ms ${ease} 200ms both` }}
