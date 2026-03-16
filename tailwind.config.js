@@ -49,10 +49,15 @@ export default {
           "0%": { opacity: "1" },
           "100%": { opacity: "0" },
         },
+        borderBlink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
+        },
       },
       animation: {
         fadeInUp: "fadeInUp 560ms ease-out both",
         fadeOut: "fadeOut 400ms ease-in both",
+        "border-blink": "borderBlink 500ms ease-in-out 1",
       },
       transitionTimingFunction: {
         spring: "cubic-bezier(0.25, 1, 0.5, 1)",

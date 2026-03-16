@@ -21,7 +21,7 @@ function inputClass(hasError) {
 function FieldError({ id, msg }) {
   if (!msg) return null;
   return (
-    <p id={id} className="mt-1.5 flex items-center gap-2 font-sans text-[17px] leading-snug text-error">
+    <p id={id} className="mt-1.5 flex items-center gap-1 px-1.5 font-ibm text-[17px] leading-snug text-error">
       <WarningCircleIcon size={18} weight="fill" aria-hidden="true" style={{ flexShrink: 0 }} />
       {msg}
     </p>
@@ -298,16 +298,19 @@ export default function RSVPForm({ copy }) {
               ref={summaryRef}
               tabIndex={-1}
               role="alert"
-              className="mx-auto mt-6 max-w-[600px] scroll-mt-4 border-l-4 border-error pl-4 py-2 outline-none"
+              className="relative mx-auto mt-6 max-w-[600px] scroll-mt-4 pl-5 py-2 outline-none before:absolute before:inset-y-0 before:left-0 before:w-[4px] before:rounded-r-full before:bg-error before:content-[''] before:animate-border-blink before:[animation-delay:350ms]"
               initial={{ opacity: 0, y: shouldReduce ? 0 : -6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, transition: { duration: 0.2 } }}
               transition={shouldReduce ? { duration: 0 } : { duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
             >
-              <p className="font-ibm text-sm font-semibold text-error">{t.validationSummaryTitle}</p>
-              <ul className="mt-1 list-disc pl-3.5 space-y-0.5 marker:text-error/60">
+              <p className="flex items-center gap-1 font-ibm text-[18px] font-semibold leading-snug text-error">
+                <WarningCircleIcon size={18} weight="fill" aria-hidden="true" style={{ flexShrink: 0 }} />
+                {t.validationSummaryTitle}
+              </p>
+              <ul className="mt-1.5 list-disc pl-[22px] space-y-1 marker:text-error/30">
                 {errorLabels.map((label, i) => (
-                  <li key={i} className="font-ibm text-[15px] leading-snug text-error/90">{label}</li>
+                  <li key={i} className="font-ibm text-[18px] leading-snug text-error/90">{label}</li>
                 ))}
               </ul>
             </motion.div>
