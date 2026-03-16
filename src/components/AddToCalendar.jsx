@@ -1,5 +1,4 @@
-import { useState, useRef, useEffect } from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import { CalendarPlusIcon } from "@phosphor-icons/react"
 
 // Sept 27 2026 — ceremony at 15:30, festivities until ~02:00
 // Europe/Rome is CEST (UTC+2) in September
@@ -34,114 +33,30 @@ function downloadICS(event) {
   URL.revokeObjectURL(url)
 }
 
-function googleCalendarUrl({ title, location, description }) {
-  const params = new URLSearchParams({
-    action: "TEMPLATE",
-    text: title,
-    dates: `${DT_START}/${DT_END}`,
-    details: description,
-    location,
-  })
-  return `https://www.google.com/calendar/render?${params}`
-}
-
-const EASE = [0.25, 1, 0.5, 1]
-
 export default function AddToCalendar({ copy }) {
-  const [open, setOpen] = useState(false)
-  const ref = useRef(null)
-
   const event = {
     title: copy.calEventTitle,
     location: copy.calEventLocation,
     description: copy.calEventDescription,
   }
 
-  useEffect(() => {
-    if (!open) return
-    function onPointerDown(e) {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(false)
-    }
-    document.addEventListener("pointerdown", onPointerDown)
-    return () => document.removeEventListener("pointerdown", onPointerDown)
-  }, [open])
-
   return (
-    <div ref={ref} className="relative inline-flex flex-col items-center">
+    <div className="group relative inline-flex">
       <button
         type="button"
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-        aria-haspopup="true"
-        className="inline-flex items-center gap-1.5 rounded-full border border-ink/20 px-3.5 py-1.5 font-sans text-sm font-medium text-ink/55 transition-colors duration-200 hover:border-crimson-600/40 hover:text-crimson-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+        onClick={() => downloadICS(event)}
+        aria-label={copy.addToCalendarLabel}
+        className="inline-flex items-center justify-center rounded-xl border border-ink/20 p-2 text-ink/90 transition duration-200 ease-spring hover:bg-black/10 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
       >
-        <CalendarIcon />
-        {copy.addToCalendarLabel}
+        <CalendarPlusIcon size={20} />
       </button>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            key="cal-dropdown"
-            role="menu"
-            initial={{ opacity: 0, y: -6, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -4, scale: 0.98 }}
-            transition={{ duration: 0.18, ease: EASE }}
-            className="absolute top-full z-10 mt-2 min-w-[11.5rem] overflow-hidden rounded-2xl border border-ink/10 bg-canvas-50 shadow-card"
-          >
-            <button
-              type="button"
-              role="menuitem"
-              onClick={() => { downloadICS(event); setOpen(false) }}
-              className="flex w-full items-center gap-2.5 px-4 py-3 font-sans text-sm font-medium text-ink/70 transition-colors duration-150 hover:bg-canvas-100 hover:text-ink"
-            >
-              <DownloadIcon />
-              {copy.icsLabel}
-            </button>
-            <div className="mx-3 h-px bg-ink/8" />
-            <a
-              href={googleCalendarUrl(event)}
-              target="_blank"
-              rel="noopener noreferrer"
-              role="menuitem"
-              onClick={() => setOpen(false)}
-              className="flex w-full items-center gap-2.5 px-4 py-3 font-sans text-sm font-medium text-ink/70 transition-colors duration-150 hover:bg-canvas-100 hover:text-ink"
-            >
-              <ExternalIcon />
-              {copy.googleCalendarLabel}
-            </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-lg bg-ink px-2.5 py-1 font-sans text-xs font-medium text-canvas-50 opacity-0 transition-all duration-150 ease-out group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:transition-none"
+      >
+        {copy.addToCalendarLabel}
+      </span>
     </div>
-  )
-}
-
-function CalendarIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="1" y="2.5" width="12" height="10.5" rx="1.5" />
-      <path d="M1 6.5h12" />
-      <path d="M4.5 1v3M9.5 1v3" />
-    </svg>
-  )
-}
-
-function DownloadIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M7 1.5v7M4.5 6.5 7 9l2.5-2.5" />
-      <path d="M2 11.5h10" />
-    </svg>
-  )
-}
-
-function ExternalIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M5.5 2.5H2.5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-3" />
-      <path d="M8.5 2.5H11.5v3M11.5 2.5 6 8" />
-    </svg>
   )
 }

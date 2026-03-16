@@ -42,18 +42,17 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
           </span>
         </h1>
 
-        <p
-          className="font-condensed text-xl font-medium text-ink/80 sm:text-2xl"
+        <div
+          className="flex items-center gap-2"
           style={{ animation: `fadeInUp 560ms ${ease} 360ms both` }}
         >
-          {copy.dateLabel}
-        </p>
-
-        <div style={{ animation: `fadeInUp 560ms ${ease} 480ms both` }}>
+          <p className="font-condensed text-xl font-medium text-ink/80 sm:text-2xl">
+            {copy.dateLabel}
+          </p>
           <AddToCalendar copy={copy} />
         </div>
 
-        <div style={{ animation: `fadeInUp 560ms ${ease} 600ms both` }}>
+        <div style={{ animation: `fadeInUp 560ms ${ease} 520ms both` }}>
           <LanguageToggle locale={locale} onChange={onChangeLocale} />
         </div>
       </div>
