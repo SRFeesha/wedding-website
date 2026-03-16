@@ -151,6 +151,7 @@ export const content = {
     giftsTitle: "Regali",
     giftsBody:
       "Non ci servono cose — la casa è già piena. Il regalo più bello è la vostra presenza. Se volete contribuire al nostro viaggio di nozze, ecco l'IBAN:",
+    ibanNumber: "DE71 1001 0178 1814 7799 50",
     faqTitle: "Domande frequenti",
     faqList: [
       {

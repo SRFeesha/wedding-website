@@ -113,7 +113,7 @@ export default function OpeningEnvelope({ phase, onOpen, locale, onChangeLocale,
           </div>
         </div>
 
-        <p className="mt-4 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-ink/45 sm:text-xs">
+        <p className="mt-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-ink/60 sm:text-xs">
           {locale === "it" ? "Clicca per aprire il sigillo" : "Click to break the seal"}
         </p>
       </div>

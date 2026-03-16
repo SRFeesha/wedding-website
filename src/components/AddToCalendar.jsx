@@ -46,7 +46,7 @@ export default function AddToCalendar({ copy }) {
         type="button"
         onClick={() => downloadICS(event)}
         aria-label={copy.addToCalendarLabel}
-        className="inline-flex items-center justify-center rounded-xl border border-ink/20 p-2 text-ink/90 transition duration-200 ease-spring hover:bg-black/10 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+        className="inline-flex items-center justify-center rounded-xl border border-ink/20 p-3 text-ink/90 transition duration-200 ease-spring hover:bg-black/10 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
       >
         <CalendarPlusIcon size={20} />
       </button>

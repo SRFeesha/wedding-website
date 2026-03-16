@@ -2,7 +2,6 @@ import { useState } from "react"
 import { CaretDownIcon, CopyIcon, CheckCircleIcon } from "@phosphor-icons/react"
 import { useInView } from "../hooks/useInView"
 
-const IBAN = "DE71 1001 0178 1814 7799 50"
 const ease = "cubic-bezier(0.25, 1, 0.5, 1)"
 
 export default function FaqSection({ copy }) {
@@ -11,7 +10,7 @@ export default function FaqSection({ copy }) {
   const [ref, inView] = useInView()
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(IBAN.replace(/\s/g, ""))
+    navigator.clipboard.writeText(copy.ibanNumber.replace(/\s/g, ""))
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -35,7 +34,7 @@ export default function FaqSection({ copy }) {
         <h2 className="text-center font-display text-5xl font-semibold text-ink [text-wrap:balance]">
           {copy.faqTitle}
         </h2>
-        <ul className="mt-8 divide-y divide-[#C9A87A]/35">
+        <ul className="mt-8 divide-y divide-saffron-500/35">
           {copy.faqList.map((item, index) => {
             const isOpen = openItems.has(index)
             return (
@@ -100,12 +99,12 @@ export default function FaqSection({ copy }) {
                       {item.iban && (
                         <div className="mt-4 flex flex-wrap items-center gap-3">
                           <p className="font-mono text-xl font-medium tracking-wide text-ink/90">
-                            {IBAN}
+                            {copy.ibanNumber}
                           </p>
                           <button
                             onClick={handleCopy}
                             aria-label={copied ? copy.copiedIban : copy.copyIban}
-                            className="inline-flex items-center gap-1 rounded-xl bg-black/10 px-3.5 py-1.5 font-ibm text-base font-medium text-ink/90 transition duration-200 ease-spring hover:bg-black/15 active:scale-[0.94]"
+                            className="inline-flex items-center gap-1 rounded-xl bg-black/10 px-3.5 py-2.5 font-ibm text-base font-medium text-ink/90 transition duration-200 ease-spring hover:bg-black/15 active:scale-[0.94]"
                           >
                             <span aria-live="polite" aria-atomic="true">
                               {copied ? copy.copiedIban : copy.copyIban}

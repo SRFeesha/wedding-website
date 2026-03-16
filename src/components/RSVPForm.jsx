@@ -256,6 +256,7 @@ export default function RSVPForm({ copy }) {
                 type="video/mp4"
               />
             </video>
+            <span aria-hidden="true" className="col-start-1 row-start-1 text-5xl">{form.attending ? "🎉" : "🥹"}</span>
             <h2
               className="col-start-1 row-start-1 font-display text-5xl font-semibold text-ink"
               style={{ animation: `fadeInUp 560ms ease-out ${delay}ms both` }}
@@ -475,7 +476,7 @@ export default function RSVPForm({ copy }) {
                             type="button"
                             aria-label={`${t.removeGuestLabel} ${guestTitle}`}
                             onClick={() => removeGuest(i)}
-                            className="ml-auto font-ibm text-sm font-medium text-ink/40 rounded-lg border border-transparent px-2.5 py-1 transition hover:border-ink/20 hover:bg-ink/5 hover:text-ink/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                            className="ml-auto font-ibm text-sm font-medium text-ink/40 rounded-lg border border-transparent px-2.5 py-2.5 transition hover:border-ink/20 hover:bg-ink/5 hover:text-ink/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
                           >
                             {t.removeGuestLabel}
                           </button>
@@ -610,7 +611,7 @@ export default function RSVPForm({ copy }) {
               <button
                 type="button"
                 onClick={addGuest}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-white px-3.5 py-1.5 font-ibm text-base font-medium text-ink outline outline-2 outline-offset-[-2px] outline-black/20 shadow-[0px_2px_8px_rgba(0,0,0,0.09)] transition duration-200 ease-spring hover:bg-white hover:outline-black/40 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-white px-3.5 py-2.5 font-ibm text-base font-medium text-ink outline outline-2 outline-offset-[-2px] outline-black/20 shadow-[0px_2px_8px_rgba(0,0,0,0.09)] transition duration-200 ease-spring hover:bg-white hover:outline-black/40 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
               >
                 <PlusIcon size={16} weight="bold" aria-hidden="true" />
                 {t.addGuestLabel}

@@ -30,7 +30,13 @@
       "Bash(echo:*)",
       "Bash(printf:*)",
       "Bash(npx:*)",
-      "WebFetch(domain:leone.gdn)"
+      "WebFetch(domain:leone.gdn)",
+      "Bash(file:*)",
+      "Bash(grep:*)",
+      "Bash(gh run:*)",
+      "Bash(vercel ls:*)",
+      "Bash(vercel inspect:*)",
+      "Bash(sed:*)"
     ]
   }
 }

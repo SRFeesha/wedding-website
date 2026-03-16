@@ -2,7 +2,6 @@ import { useState } from "react"
 import { CopyIcon, CheckCircleIcon } from "@phosphor-icons/react"
 import { useInView } from "../hooks/useInView"
 
-const IBAN = "DE71 1001 0178 1814 7799 50"
 const ease = "cubic-bezier(0.25, 1, 0.5, 1)"
 
 export default function GiftsSection({ copy }) {
@@ -10,7 +9,7 @@ export default function GiftsSection({ copy }) {
   const [ref, inView] = useInView()
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(IBAN.replace(/\s/g, ""))
+    navigator.clipboard.writeText(copy.ibanNumber.replace(/\s/g, ""))
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -32,13 +31,13 @@ export default function GiftsSection({ copy }) {
 
         <div className="flex flex-col items-center gap-3">
           <p className="font-mono text-xl font-medium tracking-wide text-ink/90">
-            {IBAN}
+            {copy.ibanNumber}
           </p>
 
           <button
             onClick={handleCopy}
             aria-label={copied ? copy.copiedIban : copy.copyIban}
-            className="inline-flex items-center gap-1 rounded-xl bg-black/10 px-3.5 py-1.5 font-ibm text-base font-medium text-ink/90 transition duration-200 ease-spring hover:bg-black/15 active:scale-[0.94]"
+            className="inline-flex items-center gap-1 rounded-xl bg-black/10 px-3.5 py-2.5 font-ibm text-base font-medium text-ink/90 transition duration-200 ease-spring hover:bg-black/15 active:scale-[0.94]"
           >
             <span aria-live="polite" aria-atomic="true">
               {copied ? copy.copiedIban : copy.copyIban}
