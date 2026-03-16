@@ -25,7 +25,7 @@ const moodboardImages = [
 export const content = {
   it: {
     siteTitle: "Sara & Ben",
-    heroEyebrow: "Siete invitati a festeggiare con",
+    heroEyebrow: "Siete invitati a festeggiare il matrimonio di",
     dateLabel: "Domenica 27 settembre 2026",
     locationLabel: "Tenuta Savoca, Piazza Armerina",
     mapsLabel: "Apri Google Maps",
@@ -173,7 +173,7 @@ export const content = {
   },
   en: {
     siteTitle: "Sara & Ben",
-    heroEyebrow: "You are invited to celebrate with",
+    heroEyebrow: "You are invited to celebrate the wedding of",
     dateLabel: "Sunday, September 27, 2026",
     locationLabel: "Tenuta Savoca, Piazza Armerina",
     mapsLabel: "Open Google Maps",

@@ -11,19 +11,19 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
     >
       <div className="flex flex-col items-center gap-5 px-5 text-center sm:px-10">
         <p
-          className="text-sm font-bold uppercase tracking-widest text-crimson-700/60"
+          className="text-base font-bold uppercase tracking-widest text-crimson-700/60"
           style={{ fontFamily: 'sans-serif', animation: `fadeInUp 560ms ${ease} 40ms both` }}
         >
           {copy.heroEyebrow}
         </p>
         <h1
-          className="relative inline-flex w-72 items-start justify-center gap-6 sm:w-96 sm:gap-8"
+          className="relative inline-flex w-80 items-start justify-center gap-6 sm:w-[28rem] sm:gap-8"
           style={{ animation: `fadeInUp 560ms ${ease} 200ms both` }}
         >
           <span className="sr-only">Sara &amp; Ben</span>
           <span
             aria-hidden="true"
-            className="flex-1 text-right font-dm text-5xl font-normal leading-none text-ink sm:text-6xl"
+            className="flex-1 text-right font-dm text-6xl font-normal leading-none text-ink sm:text-7xl"
           >
             Sara
           </span>
@@ -35,14 +35,14 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
           </span>
           <span
             aria-hidden="true"
-            className="flex-1 font-dm text-5xl font-normal leading-none text-ink sm:text-6xl"
+            className="flex-1 font-dm text-6xl font-normal leading-none text-ink sm:text-7xl"
           >
             Ben
           </span>
         </h1>
 
         <p
-          className="font-condensed text-base font-medium text-ink/60 sm:text-lg"
+          className="font-condensed text-xl font-medium text-ink/80 sm:text-2xl"
           style={{ animation: `fadeInUp 560ms ${ease} 360ms both` }}
         >
           {copy.dateLabel}
