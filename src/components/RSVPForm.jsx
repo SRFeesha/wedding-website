@@ -274,7 +274,13 @@ export default function RSVPForm({ copy }) {
     );
   }
 
-  const errorMessages = [...new Set(Object.values(errors).filter(Boolean))];
+  const errorLabels = [
+    ...(errors.name ? [t.namePlaceholder] : []),
+    ...(errors.attending ? [t.attendanceLabel] : []),
+    ...form.guests
+      .map((g, i) => errors[`guest_name_${g.id}`] ? `${t.guestLabel} ${i + 2} — ${t.nameLabel}` : null)
+      .filter(Boolean),
+  ];
 
   return (
     <section id="rsvp" className="bg-canvas-50 px-5 py-20 sm:px-8">
@@ -287,7 +293,7 @@ export default function RSVPForm({ copy }) {
 
         {/* Error summary */}
         <AnimatePresence>
-          {errorMessages.length > 0 && (
+          {errorLabels.length > 0 && (
             <motion.div
               ref={summaryRef}
               tabIndex={-1}
@@ -302,9 +308,9 @@ export default function RSVPForm({ copy }) {
                 <WarningCircleIcon size={18} weight="fill" className="mt-0.5 shrink-0 text-error" aria-hidden="true" />
                 <div>
                   <p className="font-sans text-sm font-semibold text-error">{t.validationSummaryTitle}</p>
-                  <ul className="mt-1.5 space-y-1">
-                    {errorMessages.map((msg, i) => (
-                      <li key={i} className="font-sans text-sm text-error/80">{msg}</li>
+                  <ul className="mt-1.5 list-disc list-inside space-y-0.5">
+                    {errorLabels.map((label, i) => (
+                      <li key={i} className="font-sans text-sm text-error/80">{label}</li>
                     ))}
                   </ul>
                 </div>
@@ -370,7 +376,7 @@ export default function RSVPForm({ copy }) {
                           />
                         )}
                         <span className="relative z-10 flex items-center gap-2">
-                          <opt.Icon size={16} weight="fill" aria-hidden="true" />
+                          <opt.Icon size={16} weight={active ? "fill" : "regular"} aria-hidden="true" />
                           {opt.label}
                         </span>
                       </button>
