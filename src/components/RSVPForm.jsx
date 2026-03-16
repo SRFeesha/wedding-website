@@ -283,8 +283,11 @@ export default function RSVPForm({ copy }) {
   ];
 
   return (
-    <section id="rsvp" className="bg-canvas-50 px-5 py-20 sm:px-8">
-      <div className="mx-auto max-w-2xl">
+    <section id="rsvp" className="bg-canvas-100 px-5 pt-20 sm:px-8">
+      <div
+        className="mx-auto max-w-2xl rounded-t-3xl bg-canvas-50 px-7 pt-24 pb-12 sm:px-12 sm:pt-24 sm:pb-12"
+        style={{ border: "1px solid rgba(196,168,122,0.40)", boxShadow: "0 2px 20px rgba(44,22,16,0.07)" }}
+      >
         {/* Header */}
         <div className="text-center">
           <h2 className="font-display text-5xl font-semibold text-ink [text-wrap:balance]">{t.title}</h2>
@@ -308,11 +311,14 @@ export default function RSVPForm({ copy }) {
                 <WarningCircleIcon size={18} weight="fill" aria-hidden="true" style={{ flexShrink: 0 }} />
                 {t.validationSummaryTitle}
               </p>
-              <ul className="mt-1.5 list-disc pl-[22px] space-y-1 marker:text-error/30">
+              <ol className="mt-1.5 list-none space-y-1">
                 {errorLabels.map((label, i) => (
-                  <li key={i} className="font-ibm text-[18px] leading-snug text-error/90">{label}</li>
+                  <li key={i} className="flex items-baseline gap-2 font-ibm text-[18px] leading-snug text-error/90">
+                    <span className="tabular-nums shrink-0 text-error/40 text-[14px]">{i + 1}.</span>
+                    {label}
+                  </li>
                 ))}
-              </ul>
+              </ol>
             </motion.div>
           )}
         </AnimatePresence>

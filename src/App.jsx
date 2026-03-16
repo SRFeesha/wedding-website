@@ -51,6 +51,12 @@ export default function App({ locale }) {
         <SectionDivider className="bg-canvas-100" />
         <GiftsSection copy={copy} />
         <RSVPForm copy={copy} />
+        <hr className="border-t border-[#C9A87A]/30 bg-canvas-100" />
+        <footer className="bg-canvas-100 pb-10 pt-4 text-center">
+          <p className="font-sans text-xs font-medium tracking-wide text-ink/35">
+            © 2026 Sara &amp; Ben · Tenuta Savoca, Piazza Armerina
+          </p>
+        </footer>
       </main>
     </div>
   )
