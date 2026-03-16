@@ -1,4 +1,5 @@
 import LanguageToggle from "../components/LanguageToggle"
+import AddToCalendar from "../components/AddToCalendar"
 
 const ease = "cubic-bezier(0.25, 1, 0.5, 1)"
 
@@ -48,7 +49,11 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
           {copy.dateLabel}
         </p>
 
-        <div style={{ animation: `fadeInUp 560ms ${ease} 520ms both` }}>
+        <div style={{ animation: `fadeInUp 560ms ${ease} 480ms both` }}>
+          <AddToCalendar copy={copy} />
+        </div>
+
+        <div style={{ animation: `fadeInUp 560ms ${ease} 600ms both` }}>
           <LanguageToggle locale={locale} onChange={onChangeLocale} />
         </div>
       </div>
