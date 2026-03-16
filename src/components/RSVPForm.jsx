@@ -606,7 +606,7 @@ export default function RSVPForm({ copy }) {
               <button
                 type="button"
                 onClick={addGuest}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-white px-3.5 py-1.5 font-ibm text-base font-medium text-ink outline outline-2 outline-offset-[-2px] outline-black/20 shadow-[0px_1px_3px_rgba(0,0,0,0.08)] transition duration-200 ease-spring hover:bg-white hover:outline-black/40 hover:shadow-[0px_4px_14px_rgba(0,0,0,0.16)] active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-white px-3.5 py-1.5 font-ibm text-base font-medium text-ink outline outline-2 outline-offset-[-2px] outline-black/20 shadow-[0px_2px_8px_rgba(0,0,0,0.09)] transition duration-200 ease-spring hover:bg-white hover:outline-black/40 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
               >
                 <PlusIcon size={16} weight="bold" aria-hidden="true" />
                 {t.addGuestLabel}
