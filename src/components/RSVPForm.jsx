@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { motion, LayoutGroup, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   WarningCircleIcon, CircleNotchIcon, CaretDownIcon,
-  CheckIcon, XIcon, PlusIcon,
+  CheckCircleIcon, XSquareIcon, PlusIcon,
   BusIcon, CarIcon, QuestionIcon,
   BabyIcon, ConfettiIcon, CheersIcon,
   ForkKnifeIcon, HeartIcon,
@@ -142,6 +142,8 @@ export default function RSVPForm({ copy }) {
   };
 
   const guestIdRef = useRef(0);
+  const summaryRef = useRef(null);
+  const shouldReduce = useReducedMotion();
   const [expandedGuests, setExpandedGuests] = useState(() => new Set());
 
   const addGuest = () => {
@@ -190,6 +192,10 @@ export default function RSVPForm({ copy }) {
         form.guests.forEach((g) => { if (!g.name.trim()) next.add(g.id); });
         return next;
       });
+      setTimeout(() => {
+        summaryRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        summaryRef.current?.focus({ preventScroll: true });
+      }, 30);
       return;
     }
 
@@ -268,6 +274,8 @@ export default function RSVPForm({ copy }) {
     );
   }
 
+  const errorMessages = [...new Set(Object.values(errors).filter(Boolean))];
+
   return (
     <section id="rsvp" className="bg-canvas-50 px-5 py-20 sm:px-8">
       <div className="mx-auto max-w-2xl">
@@ -276,6 +284,34 @@ export default function RSVPForm({ copy }) {
           <h2 className="font-display text-5xl font-semibold text-ink [text-wrap:balance]">{t.title}</h2>
           <p className="mt-3 font-display text-xl italic text-ink/75">{t.deadline}</p>
         </div>
+
+        {/* Error summary */}
+        <AnimatePresence>
+          {errorMessages.length > 0 && (
+            <motion.div
+              ref={summaryRef}
+              tabIndex={-1}
+              role="alert"
+              className="mx-auto mt-6 max-w-[600px] scroll-mt-4 rounded-2xl border border-error/25 bg-error/5 px-5 py-4 outline-none"
+              initial={{ opacity: 0, y: shouldReduce ? 0 : -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, transition: { duration: 0.2 } }}
+              transition={shouldReduce ? { duration: 0 } : { duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+            >
+              <div className="flex items-start gap-3">
+                <WarningCircleIcon size={18} weight="fill" className="mt-0.5 shrink-0 text-error" aria-hidden="true" />
+                <div>
+                  <p className="font-sans text-sm font-semibold text-error">{t.validationSummaryTitle}</p>
+                  <ul className="mt-1.5 space-y-1">
+                    {errorMessages.map((msg, i) => (
+                      <li key={i} className="font-sans text-sm text-error/80">{msg}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="mx-auto mt-9 max-w-[600px] space-y-8">
 
@@ -308,8 +344,8 @@ export default function RSVPForm({ copy }) {
                 }`}
               >
                 {[
-                  { value: true,  label: t.attendanceYes, Icon: CheckIcon },
-                  { value: false, label: t.attendanceNo,  Icon: XIcon },
+                  { value: true,  label: t.attendanceYes, Icon: CheckCircleIcon },
+                  { value: false, label: t.attendanceNo,  Icon: XSquareIcon },
                 ].map((opt, i) => {
                   const active = form.attending === opt.value;
                   return (

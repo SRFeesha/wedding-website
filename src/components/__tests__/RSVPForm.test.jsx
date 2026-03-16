@@ -68,15 +68,15 @@ describe("RSVPForm — validation", () => {
     const user = userEvent.setup();
     renderForm();
     await user.click(screen.getByText(copy.rsvp.submitLabel));
-    expect(screen.getByText(copy.rsvp.validationName)).toBeInTheDocument();
-    expect(screen.getByText(copy.rsvp.validationAttendance)).toBeInTheDocument();
+    expect(screen.getAllByText(copy.rsvp.validationName)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(copy.rsvp.validationAttendance)[0]).toBeInTheDocument();
   });
 
   it("clears the name error when the user starts typing", async () => {
     const user = userEvent.setup();
     renderForm();
     await user.click(screen.getByText(copy.rsvp.submitLabel));
-    expect(screen.getByText(copy.rsvp.validationName)).toBeInTheDocument();
+    expect(screen.getAllByText(copy.rsvp.validationName)[0]).toBeInTheDocument();
     await user.type(screen.getByLabelText(copy.rsvp.namePlaceholder), "Alice");
     expect(screen.queryByText(copy.rsvp.validationName)).not.toBeInTheDocument();
   });
@@ -85,7 +85,7 @@ describe("RSVPForm — validation", () => {
     const user = userEvent.setup();
     renderForm();
     await user.click(screen.getByText(copy.rsvp.submitLabel));
-    expect(screen.getByText(copy.rsvp.validationAttendance)).toBeInTheDocument();
+    expect(screen.getAllByText(copy.rsvp.validationAttendance)[0]).toBeInTheDocument();
     await user.click(screen.getByText(copy.rsvp.attendanceNo));
     expect(screen.queryByText(copy.rsvp.validationAttendance)).not.toBeInTheDocument();
   });
