@@ -7,19 +7,26 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
   return (
     <section
       id="hero"
-      className="flex flex-col items-center bg-canvas-50 pb-24 pt-[10vh] sm:pb-32"
+      className="relative flex flex-col items-center bg-canvas-50 pb-24 pt-[15vh] sm:pb-32"
       aria-label="Hero"
     >
+      <div
+        className="absolute top-5 right-5 sm:top-6 sm:right-6"
+        style={{ animation: `fadeInUp 560ms ${ease} 40ms both` }}
+      >
+        <LanguageToggle locale={locale} onChange={onChangeLocale} />
+      </div>
+
       <div className="flex flex-col items-center gap-5 px-5 text-center sm:px-10">
         <p
           className="text-base font-bold uppercase tracking-widest text-crimson-700/60"
-          style={{ fontFamily: 'sans-serif', animation: `fadeInUp 560ms ${ease} 40ms both` }}
+          style={{ fontFamily: 'sans-serif', animation: `fadeInUp 560ms ${ease} 200ms both` }}
         >
           {copy.heroEyebrow}
         </p>
         <h1
           className="relative inline-flex w-80 items-start justify-center gap-6 sm:w-[28rem] sm:gap-8"
-          style={{ animation: `fadeInUp 560ms ${ease} 200ms both` }}
+          style={{ animation: `fadeInUp 560ms ${ease} 360ms both` }}
         >
           <span className="sr-only">Sara &amp; Ben</span>
           <span
@@ -44,16 +51,12 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
 
         <div
           className="flex items-center gap-2"
-          style={{ animation: `fadeInUp 560ms ${ease} 360ms both` }}
+          style={{ animation: `fadeInUp 560ms ${ease} 520ms both` }}
         >
           <p className="font-condensed text-xl font-medium text-ink/80 sm:text-2xl">
             {copy.dateLabel}
           </p>
           <AddToCalendar copy={copy} />
-        </div>
-
-        <div style={{ animation: `fadeInUp 560ms ${ease} 520ms both` }}>
-          <LanguageToggle locale={locale} onChange={onChangeLocale} />
         </div>
       </div>
     </section>
