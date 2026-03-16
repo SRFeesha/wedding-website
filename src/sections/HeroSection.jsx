@@ -30,7 +30,7 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
           </span>
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute left-[55%] top-0 -translate-x-1/2 -rotate-[6deg] font-script text-8xl font-normal leading-none text-ink/30 sm:text-9xl"
+            className="pointer-events-none absolute left-[55%] -top-[6px] -translate-x-1/2 -rotate-[6deg] font-script text-8xl font-normal leading-none text-ink/30 sm:text-9xl"
           >
             &amp;
           </span>

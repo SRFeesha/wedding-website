@@ -42,7 +42,7 @@ export default function LocationSection({ copy }) {
           <p
             className="font-sans text-base font-bold uppercase tracking-widest text-crimson-700/60"
           >
-            Location
+            {copy.locationEyebrow}
           </p>
           <h2
             className="font-display mt-1.5 text-4xl text-dusty-500 sm:text-5xl [text-wrap:balance]"
@@ -52,7 +52,7 @@ export default function LocationSection({ copy }) {
           <p
             className="mt-2 font-body text-2xl text-ink/80"
           >
-            Piazza Armerina
+            {copy.locationSubtitle ?? "Piazza Armerina"}
           </p>
         </div>
       </div>
