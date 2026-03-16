@@ -26,7 +26,7 @@ export default function LocationSection({ copy }) {
         <div
           className="absolute inset-x-0 top-0 h-32 pointer-events-none"
           style={{
-            background: "linear-gradient(to bottom, #2C1610 0%, transparent 100%)",
+            background: "linear-gradient(to bottom, #F5EBD8 0%, transparent 100%)",
           }}
         />
 
