@@ -11,18 +11,15 @@ export default function LocationSection({ copy }) {
       id="location"
       className="relative z-10 -mt-8 bg-canvas-50"
     >
-      <div className="relative h-[90vh] w-full">
+      <div className="relative h-[100vh] w-full">
 
         {/* Photo layer — radial-gradient mask creates the arch fade:
             ellipse centered at top-center, transparent in the dome, fades to black below.
             This hides the photo near the top-center (arch dips down) and reveals it at the edges first. */}
         <div
-          className="absolute inset-0 [mask-image:radial-gradient(ellipse_150%_280px_at_50%_0%,transparent_50%,black_80%)] [-webkit-mask-image:radial-gradient(ellipse_150%_280px_at_50%_0%,transparent_50%,black_80%)]"
+          className="absolute inset-0 bg-center bg-no-repeat [background-size:100%_auto] sm:[background-size:cover] [mask-image:radial-gradient(ellipse_150%_280px_at_50%_0%,transparent_50%,black_80%)] [-webkit-mask-image:radial-gradient(ellipse_150%_280px_at_50%_0%,transparent_50%,black_80%)]"
           style={{
             backgroundImage: `url('${photo.url}')`,
-            backgroundSize: "cover",
-            backgroundPosition: "top center",
-            backgroundRepeat: "no-repeat",
           }}
           role="img"
           aria-label={photo.alt}

@@ -148,6 +148,11 @@ export const content = {
     faqTitle: "Domande frequenti",
     faqList: [
       {
+        q: "Regali",
+        a: "Non ci servono cose — la casa è già piena. Il regalo più bello è la vostra presenza. Se volete contribuire al nostro viaggio di nozze, ecco l'IBAN:",
+        iban: true,
+      },
+      {
         q: "Come arrivare alla location",
         items: [
           "Se arrivate in macchina, nessun problema: trovate il link di Google Maps qui sotto e lui vi guiderà fino a noi (1.30h).",
@@ -299,6 +304,11 @@ export const content = {
       "We don't need things — the house is already full. Your presence is the greatest gift. If you'd like to contribute to our honeymoon, here's the IBAN:",
     faqTitle: "Frequently asked questions",
     faqList: [
+      {
+        q: "Gifts",
+        a: "We don't need things — the house is already full. Your presence is the greatest gift. If you'd like to contribute to our honeymoon, here's the IBAN:",
+        iban: true,
+      },
       {
         q: "Getting to the venue",
         items: [

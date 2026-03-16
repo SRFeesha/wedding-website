@@ -1,9 +1,7 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import RSVPForm from "./components/RSVPForm"
-import SectionDivider from "./components/SectionDivider"
 import FaqSection from "./sections/FaqSection"
-import GiftsSection from "./sections/GiftsSection"
 import HeroSection from "./sections/HeroSection"
 import LocationSection from "./sections/LocationSection"
 import { content } from "./content/content"
@@ -40,15 +38,7 @@ export default function App({ locale }) {
 
   return (
     <div className="font-body text-[20px] text-ink sm:text-[21px] lg:text-[22px]">
-      {/* Fixed footer — sits behind, revealed as main scrolls away */}
-      <footer className="fixed bottom-0 z-0 flex h-[5vh] w-full flex-col items-center justify-end bg-canvas-100 pb-5">
-        <p className="font-sans text-xs font-medium tracking-wide text-ink/35">
-          se ci sono domande o problemi, scriveteci :)
-        </p>
-      </footer>
-
-      {/* Main content scrolls on top of footer, padding-bottom reveals it */}
-      <main className="relative z-10 pb-[5vh]">
+      <main className="relative z-10">
         <HeroSection
           copy={copy}
           locale={locale}
@@ -56,8 +46,6 @@ export default function App({ locale }) {
         />
         <LocationSection copy={copy} />
         <FaqSection copy={copy} />
-        <SectionDivider className="bg-canvas-100" />
-        <GiftsSection copy={copy} />
         <RSVPForm copy={copy} />
         <hr className="border-t border-[#C9A87A]/30 bg-canvas-100" />
       </main>
