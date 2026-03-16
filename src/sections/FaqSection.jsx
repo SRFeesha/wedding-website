@@ -117,13 +117,14 @@ export default function FaqSection({ copy }) {
                         </div>
                       )}
                       {item.items && (
-                        <div className="space-y-2">
+                        <ul className="space-y-3">
                           {item.items.map((line) => (
-                            <p key={line} className="font-body text-[24px] leading-[1.25] text-ink/85">
-                              {line}
-                            </p>
+                            <li key={line} className="flex items-start gap-3">
+                              <span className="mt-[0.45em] h-1.5 w-1.5 shrink-0 rounded-full bg-saffron-600" aria-hidden="true" />
+                              <p className="font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]">{line}</p>
+                            </li>
                           ))}
-                        </div>
+                        </ul>
                       )}
                     </div>
                   </div>

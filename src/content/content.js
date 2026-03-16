@@ -148,11 +148,6 @@ export const content = {
     faqTitle: "Domande frequenti",
     faqList: [
       {
-        q: "Regali",
-        a: "Non ci servono cose — la casa è già piena. Il regalo più bello è la vostra presenza. Se volete contribuire al nostro viaggio di nozze, ecco l'IBAN:",
-        iban: true,
-      },
-      {
         q: "Come arrivare alla location",
         items: [
           "Se arrivate in macchina, nessun problema: trovate il link di Google Maps qui sotto e lui vi guiderà fino a noi (1.30h).",
@@ -164,7 +159,7 @@ export const content = {
         a: "Sarà a cena! Inizio stimato per le 15. Seguiranno maggiori dettagli.",
       },
       {
-        q: "Dresscode?",
+        q: "Dresscode",
         items: [
           "Eleganti, stare comodi, sentirvi voi stessi.",
           "Occhio ai tacchi a spillo.",
@@ -178,6 +173,11 @@ export const content = {
           "Purtroppo non possiamo offrire il soggiorno.",
           "Vi consigliamo di pernottare la notte prima a Catania e la notte delle nozze invece a Piazza Armerina. Siamo in contatto con alcuni hotel per prezzi favorevoli. Seguiranno aggiornamenti.",
         ],
+      },
+      {
+        q: "Regali",
+        a: "Non ci servono cose — la casa è già piena. Il regalo più bello è la vostra presenza. Se volete contribuire al nostro viaggio di nozze, ecco l'IBAN:",
+        iban: true,
       },
     ],
   },
@@ -305,11 +305,6 @@ export const content = {
     faqTitle: "Frequently asked questions",
     faqList: [
       {
-        q: "Gifts",
-        a: "We don't need things — the house is already full. Your presence is the greatest gift. If you'd like to contribute to our honeymoon, here's the IBAN:",
-        iban: true,
-      },
-      {
         q: "Getting to the venue",
         items: [
           "If you're driving, no problem — find the Google Maps link below and it'll guide you straight to us (approx. 1h 30).",
@@ -321,7 +316,7 @@ export const content = {
         a: "It's a dinner! Estimated start around 15:00. More details to follow.",
       },
       {
-        q: "Dresscode?",
+        q: "Dresscode",
         items: [
           "Elegant but comfortable, be yourselves.",
           "Watch out for stilettos on the grass.",
@@ -335,6 +330,11 @@ export const content = {
           "Unfortunately we're unable to offer accommodation.",
           "We recommend staying the night before in Catania and the wedding night in Piazza Armerina. We're in touch with some hotels for preferential rates. Updates to follow.",
         ],
+      },
+      {
+        q: "Gifts",
+        a: "We don't need things — the house is already full. Your presence is the greatest gift. If you'd like to contribute to our honeymoon, here's the IBAN:",
+        iban: true,
       },
     ],
   },
