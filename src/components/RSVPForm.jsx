@@ -64,8 +64,8 @@ function DietarySelectIcon({ value }) {
   );
 }
 
-const TRANSPORT_ICONS = { bus: BusIcon, car: CarIcon, unsure: QuestionIcon };
-const AGE_ICONS       = { baby: BabyIcon, kid: ConfettiIcon, adult: CheersIcon };
+const TRANSPORT_ICONS    = { bus: BusIcon, car: CarIcon, unsure: QuestionIcon };
+const AGE_ICONS          = { baby: BabyIcon, kid: ConfettiIcon, adult: CheersIcon };
 const BABY_SEATING_ICONS = { table: ForkKnifeIcon, nanny: HeartIcon };
 
 function CrossfadeIcon({ Icon, active, size = 16 }) {
@@ -91,12 +91,14 @@ function CrossfadeIcon({ Icon, active, size = 16 }) {
   );
 }
 
+const ACTIVE_PILL_SHADOW =
+  "0px 1px 2px 0px rgba(0,0,0,0.12), inset 0px 2px 4px 0px rgba(255,255,255,0.04)";
 const SUBMIT_SHADOW =
-  "0px 2px 4px 0px rgba(0,0,0,0.30), inset 0px 8px 8px 0px rgba(255,255,255,0.05)";
+  "0px 2px 4px 0px rgba(0,0,0,0.18), inset 0px 4px 6px 0px rgba(255,255,255,0.04)";
 
 const bodyDelay = 2000;
 
-const OPEN_TRANSITION = { duration: 0.35, ease: [0.25, 1, 0.5, 1] };
+const OPEN_TRANSITION  = { duration: 0.35, ease: [0.25, 1, 0.5, 1] };
 const CLOSE_TRANSITION = { duration: 0.26, ease: [0.5, 0, 0.75, 0] };
 const SPRING = { type: "spring", stiffness: 460, damping: 32 };
 
@@ -120,6 +122,73 @@ function Disclosure({ show, children, className = "", contentClassName = "", del
         </motion.div>
       )}
     </AnimatePresence>
+  );
+}
+
+// Shared option-group control: renders a list of selectable option buttons
+// with icon crossfade, active pill, and consistent label weight.
+// Pass layoutId for an animated sliding pill (transport); omit for direct bg (age group, baby seating).
+// Pass renderAfter(opt, active) to inject per-option nested content (e.g. sub-disclosures).
+function OptionGroup({
+  labelId,
+  options,
+  value,
+  onChange,
+  icons = {},
+  layoutId,
+  containerClassName = "rounded-[18px] bg-white/40 p-1.5",
+  containerStyle = { boxShadow: "0 1px 3px rgba(44,22,16,0.06), 0 0 0 1px rgba(196,168,122,0.20)" },
+  renderAfter,
+}) {
+  const items = options.map((opt) => {
+    const active = value === opt.value;
+    const Icon = icons[opt.value];
+    return (
+      <div key={opt.value}>
+        <button
+          type="button"
+          aria-pressed={active}
+          onClick={() => onChange(opt.value)}
+          className={`relative w-full rounded-xl px-5 py-3 text-left transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
+            active ? (layoutId ? "text-white" : "bg-crimson-600/90 text-white") : "text-ink"
+          }`}
+          style={active && !layoutId ? { boxShadow: ACTIVE_PILL_SHADOW } : undefined}
+        >
+          {active && layoutId && (
+            <motion.span
+              layoutId={layoutId}
+              aria-hidden="true"
+              className="absolute inset-0 rounded-xl bg-crimson-600/90"
+              style={{ boxShadow: ACTIVE_PILL_SHADOW }}
+              transition={SPRING}
+            />
+          )}
+          <div className="relative z-10 flex items-center gap-3">
+            {Icon && <CrossfadeIcon Icon={Icon} active={active} size={20} />}
+            <div>
+              <span className={`block font-ibm text-base leading-snug ${active ? "font-semibold" : "font-medium"}`}>
+                {opt.label}
+              </span>
+              <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>
+                {opt.sublabel}
+              </span>
+            </div>
+          </div>
+        </button>
+        {renderAfter?.(opt, active)}
+      </div>
+    );
+  });
+
+  return (
+    <div
+      role="group"
+      aria-labelledby={labelId}
+      className={containerClassName}
+      style={containerStyle}
+    >
+      {layoutId ? <LayoutGroup>{items}</LayoutGroup> : items}
+    </div>
   );
 }
 
@@ -186,7 +255,6 @@ export default function RSVPForm({ copy }) {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      // Expand any guest cards that have errors so the field is visible
       setExpandedGuests((prev) => {
         const next = new Set(prev);
         form.guests.forEach((g) => { if (!g.name.trim()) next.add(g.id); });
@@ -376,8 +444,8 @@ export default function RSVPForm({ copy }) {
                           <motion.span
                             layoutId="attendance-pill"
                             aria-hidden="true"
-                            className="absolute inset-0 rounded-[14px] bg-crimson-600"
-                            style={{ boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.30), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" }}
+                            className="absolute inset-0 rounded-[14px] bg-crimson-600/90"
+                            style={{ boxShadow: ACTIVE_PILL_SHADOW }}
                             transition={{ type: "spring", stiffness: 380, damping: 35 }}
                           />
                         )}
@@ -412,7 +480,7 @@ export default function RSVPForm({ copy }) {
                 </select>
                 <Chevron />
               </div>
-              <Disclosure show={form.dietary === t.dietaryOtherValue} contentClassName="pl-4 pt-3 pb-1">
+              <Disclosure show={form.dietary === t.dietaryOtherValue} contentClassName="pl-4 pt-3 pb-6">
                 <div>
                   <label htmlFor="rsvp-dietary-note" className={labelClass}>{t.dietaryNoteLabel}</label>
                   <textarea
@@ -503,102 +571,73 @@ export default function RSVPForm({ copy }) {
                               <FieldError id={`guest-name-error-${i}`} msg={errors[`guest_name_${guest.id}`]} />
                             </div>
 
-                            <div role="group" aria-labelledby={`guest-age-label-${i}`}>
+                            <div>
                               <span id={`guest-age-label-${i}`} className={labelClass}>{t.ageGroupLabel}</span>
-                              <div className="mt-1 rounded-[18px] bg-white/40 p-1.5" style={{ boxShadow: "0 1px 3px rgba(44,22,16,0.06), 0 0 0 1px rgba(196,168,122,0.20)" }}>
-                                {t.ageGroupOptions.map((opt) => {
-                                  const active = guest.ageGroup === opt.value;
-                                  const Icon = AGE_ICONS[opt.value];
-                                  return (
-                                    <div key={opt.value}>
-                                      <button
-                                        type="button"
-                                        aria-pressed={active}
-                                        onClick={() => updateGuest(i, "ageGroup", opt.value)}
-                                        className={`w-full rounded-xl px-5 py-3 text-left transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
-                                          active ? "bg-crimson-600 text-white" : "text-ink"
-                                        }`}
-                                        style={active ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
-                                      >
-                                        <div className="flex items-center gap-3">
-                                          {Icon && <CrossfadeIcon Icon={Icon} active={active} size={20} />}
-                                          <div>
-                                            <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
-                                            <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
-                                          </div>
-                                        </div>
-                                      </button>
-
-                                      <Disclosure show={opt.value === "baby" && active} contentClassName="pl-4 pt-3 pb-1">
-                                        <div role="group" aria-labelledby={`guest-babyseating-label-${i}`}>
-                                          <span id={`guest-babyseating-label-${i}`} className={labelClass}>{t.babySeatingLabel}</span>
-                                          <div className="mt-1 rounded-[18px] bg-white/40 p-1.5" style={{ boxShadow: "0 1px 3px rgba(44,22,16,0.06), 0 0 0 1px rgba(196,168,122,0.20)" }}>
-                                            {t.babySeatingOptions.map((bOpt) => {
-                                              const bActive = guest.babySeating === bOpt.value;
-                                              const BIcon = BABY_SEATING_ICONS[bOpt.value];
-                                              return (
-                                                <button
-                                                  key={bOpt.value}
-                                                  type="button"
-                                                  aria-pressed={bActive}
-                                                  onClick={() => updateGuest(i, "babySeating", bOpt.value)}
-                                                  className={`w-full rounded-xl px-5 py-3 text-left transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
-                                                    bActive ? "bg-crimson-600 text-white" : "text-ink"
-                                                  }`}
-                                                  style={bActive ? { boxShadow: "0px 1px 2px rgba(0,0,0,0.25), inset 0px 4px 4px rgba(255,255,255,0.05)" } : undefined}
-                                                >
-                                                  <div className="flex items-center gap-3">
-                                                    {BIcon && <CrossfadeIcon Icon={BIcon} active={bActive} size={20} />}
-                                                    <div>
-                                                      <span className="block font-ibm text-base font-semibold leading-snug">{bOpt.label}</span>
-                                                      <span className={`block font-ibm text-sm ${bActive ? "text-white/70" : "text-ink/50"}`}>{bOpt.sublabel}</span>
-                                                    </div>
-                                                  </div>
-                                                </button>
-                                              );
-                                            })}
-                                          </div>
-                                        </div>
-                                      </Disclosure>
-
-                                      <Disclosure show={opt.value === "adult" && active} contentClassName="pl-4 pt-3 pb-1">
-                                        <div>
-                                          <label htmlFor={`guest-dietary-${i}`} className={labelClass}>{t.dietaryLabel}</label>
-                                          <div className="relative">
-                                            <DietarySelectIcon value={guest.dietary} />
-                                            <select
-                                              id={`guest-dietary-${i}`}
-                                              className={`${inputClass(false)} appearance-none cursor-pointer pl-9 pr-9`}
-                                              value={guest.dietary}
-                                              onChange={(e) => updateGuest(i, "dietary", e.target.value)}
-                                            >
-                                              {t.dietaryOptions.map((o) => (
-                                                <option key={o} value={o}>{o}</option>
-                                              ))}
-                                            </select>
-                                            <Chevron />
-                                          </div>
-                                          <Disclosure show={guest.dietary === t.dietaryOtherValue} contentClassName="pl-4 pt-3 pb-1">
-                                            <div>
-                                              <label htmlFor={`guest-dietary-note-${i}`} className={labelClass}>{t.dietaryNoteLabel}</label>
-                                              <textarea
-                                                id={`guest-dietary-note-${i}`}
-                                                className={inputClass(false)}
-                                                rows={2}
-                                                maxLength={1000}
-                                                placeholder={t.dietaryNotePlaceholder}
-                                                value={guest.dietaryNote || ""}
-                                                onChange={(e) => updateGuest(i, "dietaryNote", e.target.value)}
-                                                style={{ resize: "none", lineHeight: "1.7" }}
-                                              />
-                                            </div>
-                                          </Disclosure>
-                                        </div>
-                                      </Disclosure>
-                                    </div>
+                              <OptionGroup
+                                labelId={`guest-age-label-${i}`}
+                                options={t.ageGroupOptions}
+                                value={guest.ageGroup}
+                                onChange={(v) => updateGuest(i, "ageGroup", v)}
+                                icons={AGE_ICONS}
+                                layoutId={`age-group-pill-${guest.id}`}
+                                containerClassName="mt-1 mr-4 mb-4 rounded-[18px] bg-white/40 p-1.5"
+                                renderAfter={(opt, active) => {
+                                  if (opt.value === "baby") return (
+                                    <Disclosure key="baby" show={active} contentClassName="pl-4 pt-3 pb-1">
+                                      <div>
+                                        <span id={`guest-babyseating-label-${i}`} className={labelClass}>{t.babySeatingLabel}</span>
+                                        <OptionGroup
+                                          labelId={`guest-babyseating-label-${i}`}
+                                          options={t.babySeatingOptions}
+                                          value={guest.babySeating}
+                                          onChange={(v) => updateGuest(i, "babySeating", v)}
+                                          icons={BABY_SEATING_ICONS}
+                                          layoutId={`baby-seating-pill-${guest.id}`}
+                                          containerClassName="mt-1 mr-4 mb-4 rounded-[18px] p-1.5"
+                                          containerStyle={{ boxShadow: "0 0 0 1px rgba(196,168,122,0.20)" }}
+                                        />
+                                      </div>
+                                    </Disclosure>
                                   );
-                                })}
-                              </div>
+                                  if (opt.value === "adult") return (
+                                    <Disclosure key="adult" show={active} contentClassName="pl-4 pt-3 pb-1">
+                                      <div>
+                                        <label htmlFor={`guest-dietary-${i}`} className={labelClass}>{t.dietaryLabel}</label>
+                                        <div className="relative mr-4 mb-4">
+                                          <DietarySelectIcon value={guest.dietary} />
+                                          <select
+                                            id={`guest-dietary-${i}`}
+                                            className={`${inputClass(false)} appearance-none cursor-pointer pl-9 pr-9`}
+                                            value={guest.dietary}
+                                            onChange={(e) => updateGuest(i, "dietary", e.target.value)}
+                                          >
+                                            {t.dietaryOptions.map((o) => (
+                                              <option key={o} value={o}>{o}</option>
+                                            ))}
+                                          </select>
+                                          <Chevron />
+                                        </div>
+                                        <Disclosure show={guest.dietary === t.dietaryOtherValue} contentClassName="pl-4 pt-3 pb-1">
+                                          <div>
+                                            <label htmlFor={`guest-dietary-note-${i}`} className={labelClass}>{t.dietaryNoteLabel}</label>
+                                            <textarea
+                                              id={`guest-dietary-note-${i}`}
+                                              className={inputClass(false)}
+                                              rows={2}
+                                              maxLength={1000}
+                                              placeholder={t.dietaryNotePlaceholder}
+                                              value={guest.dietaryNote || ""}
+                                              onChange={(e) => updateGuest(i, "dietaryNote", e.target.value)}
+                                              style={{ resize: "none", lineHeight: "1.7" }}
+                                            />
+                                          </div>
+                                        </Disclosure>
+                                      </div>
+                                    </Disclosure>
+                                  );
+                                  return null;
+                                }}
+                              />
                             </div>
                           </div>
                         </Disclosure>
@@ -612,7 +651,7 @@ export default function RSVPForm({ copy }) {
               <button
                 type="button"
                 onClick={addGuest}
-                className="flex w-full items-center justify-center gap-1.5 rounded-2xl bg-white/90 px-3.5 py-3 font-ibm text-base font-medium text-ink outline outline-2 outline-black/20 transition duration-200 ease-spring hover:outline-black/40 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                className="flex w-full items-center justify-center gap-1.5 rounded-2xl bg-white/80 px-3.5 py-3 font-ibm text-base font-medium text-ink outline outline-1 outline-black/10 transition duration-200 ease-spring hover:outline-black/20 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
                 style={{ boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.30), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" }}
               >
                 <PlusIcon size={16} weight="bold" aria-hidden="true" />
@@ -625,42 +664,14 @@ export default function RSVPForm({ copy }) {
           <Disclosure show={form.attending === true} contentClassName="pb-0.5" delay={0}>
             <div>
               <label id="transport-label" className={labelClass}>{t.transportLabel}</label>
-              <LayoutGroup>
-                <div role="group" aria-labelledby="transport-label" className="rounded-[18px] bg-white/40 p-1.5" style={{ boxShadow: "0 1px 3px rgba(44,22,16,0.06), 0 0 0 1px rgba(196,168,122,0.20)" }}>
-                  {t.transportOptions.map((opt) => {
-                    const active = form.transport === opt.value;
-                    const Icon = TRANSPORT_ICONS[opt.value];
-                    return (
-                      <button
-                        key={opt.value}
-                        type="button"
-                        aria-pressed={active}
-                        onClick={() => handleChange("transport", opt.value)}
-                        className={`relative w-full rounded-xl px-5 py-3 text-left transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600 ${
-                          active ? "text-white" : "text-ink"
-                        }`}
-                      >
-                        {active && (
-                          <motion.span
-                            layoutId="transport-pill"
-                            aria-hidden="true"
-                            className="absolute inset-0 rounded-xl bg-crimson-600"
-                            style={{ boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.25), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" }}
-                            transition={SPRING}
-                          />
-                        )}
-                        <div className="relative z-10 flex items-center gap-3">
-                          {Icon && <CrossfadeIcon Icon={Icon} active={active} size={20} />}
-                          <div>
-                            <span className="block font-ibm text-base font-semibold leading-snug">{opt.label}</span>
-                            <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>{opt.sublabel}</span>
-                          </div>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </LayoutGroup>
+              <OptionGroup
+                labelId="transport-label"
+                options={t.transportOptions}
+                value={form.transport}
+                onChange={(v) => handleChange("transport", v)}
+                icons={TRANSPORT_ICONS}
+                layoutId="transport-pill"
+              />
             </div>
           </Disclosure>
 
@@ -682,7 +693,7 @@ export default function RSVPForm({ copy }) {
           {/* Submit */}
           <div className="py-2">
             <button
-              className="group w-full rounded-2xl bg-crimson-600 px-7 py-3 font-sans text-2xl font-medium text-white outline outline-2 outline-offset-[-2px] outline-black/25 transition hover:bg-crimson-700 active:scale-[0.97] disabled:active:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-saffron-500"
+              className="group w-full rounded-2xl bg-crimson-600/95 px-7 py-3 font-sans text-2xl font-medium text-white outline outline-2 outline-offset-[-2px] outline-black/15 transition hover:bg-crimson-600 active:scale-[0.97] disabled:active:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-saffron-500"
               style={{ boxShadow: SUBMIT_SHADOW }}
               onClick={handleSubmit}
               disabled={status === "loading"}
