@@ -193,7 +193,7 @@ export default function RSVPForm({ copy }) {
         return next;
       });
       setTimeout(() => {
-        summaryRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        summaryRef.current?.scrollIntoView?.({ behavior: "smooth", block: "start" });
         summaryRef.current?.focus({ preventScroll: true });
       }, 30);
       return;
