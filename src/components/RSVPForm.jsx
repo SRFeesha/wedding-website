@@ -332,6 +332,7 @@ export default function RSVPForm({ copy }) {
               id="rsvp-name"
               type="text"
               autoComplete="name"
+              maxLength={200}
               className={inputClass(!!errors.name)}
               value={form.name}
               onChange={(e) => handleChange("name", e.target.value)}
@@ -417,6 +418,7 @@ export default function RSVPForm({ copy }) {
                     id="rsvp-dietary-note"
                     className={inputClass(false)}
                     rows={2}
+                    maxLength={1000}
                     placeholder={t.dietaryNotePlaceholder}
                     value={form.dietaryNote}
                     onChange={(e) => handleChange("dietaryNote", e.target.value)}
@@ -488,6 +490,7 @@ export default function RSVPForm({ copy }) {
                                 id={`guest-name-${i}`}
                                 aria-label={t.namePlaceholder}
                                 aria-describedby={errors[`guest_name_${guest.id}`] ? `guest-name-error-${i}` : undefined}
+                                maxLength={200}
                                 className={`${inputClass(!!errors[`guest_name_${guest.id}`])} mt-1`}
                                 value={guest.name}
                                 onChange={(e) => {
@@ -580,6 +583,7 @@ export default function RSVPForm({ copy }) {
                                                 id={`guest-dietary-note-${i}`}
                                                 className={inputClass(false)}
                                                 rows={2}
+                                                maxLength={1000}
                                                 placeholder={t.dietaryNotePlaceholder}
                                                 value={guest.dietaryNote || ""}
                                                 onChange={(e) => updateGuest(i, "dietaryNote", e.target.value)}
@@ -664,6 +668,7 @@ export default function RSVPForm({ copy }) {
               id="rsvp-message"
               className={inputClass(false)}
               rows={3}
+              maxLength={2000}
               placeholder={t.messagePlaceholder}
               value={form.message}
               onChange={(e) => handleChange("message", e.target.value)}

@@ -200,11 +200,11 @@ describe("handler", () => {
     expect(guestCallBody.properties.Attending.select.name).toBe("Yes");
   });
 
-  it("returns 500 with detail when Notion API fails", async () => {
+  it("returns 500 when Notion API fails", async () => {
     mockNotionFail("validation_error");
     const res = makeRes();
     await handler(makeReq({ name: "Alice", attending: "Yes", guests: [] }), res);
     expect(res.statusCode).toBe(500);
-    expect(res.body.detail).toBeTruthy();
+    expect(res.body.error).toBeTruthy();
   });
 });
