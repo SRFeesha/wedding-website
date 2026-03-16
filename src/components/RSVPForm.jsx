@@ -434,7 +434,7 @@ export default function RSVPForm({ copy }) {
           <Disclosure show={form.attending === true} contentClassName="pb-0.5" delay={0.08}>
             <div>
               {form.guests.length > 0 && (
-                <div className="divide-y divide-[#C9A87A]/25 mb-6">
+                <motion.div layout className="mb-6">
                   <AnimatePresence initial={false}>
                   {form.guests.map((guest, i) => {
                     const isOpen = expandedGuests.has(guest.id);
@@ -442,11 +442,12 @@ export default function RSVPForm({ copy }) {
                     return (
                       <motion.div
                         key={guest.id}
-                        className="py-4 first:pt-0"
-                        initial={{ opacity: 0, y: 10 }}
+                        layout
+                        className="py-4"
+                        initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -4, transition: { duration: 0.2, ease: [0.5, 0, 0.75, 0] } }}
-                        transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+                        transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
                       >
                         {/* Header row */}
                         <div className="flex items-center gap-2 border-b border-[#C9A87A]/30 pb-2">
@@ -605,13 +606,14 @@ export default function RSVPForm({ copy }) {
                     );
                   })}
                   </AnimatePresence>
-                </div>
+                </motion.div>
               )}
 
               <button
                 type="button"
                 onClick={addGuest}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-white px-3.5 py-2.5 font-ibm text-base font-medium text-ink outline outline-2 outline-offset-[-2px] outline-black/20 shadow-[0px_2px_8px_rgba(0,0,0,0.09)] transition duration-200 ease-spring hover:bg-white hover:outline-black/40 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                className="flex w-full items-center justify-center gap-1.5 rounded-2xl bg-white/90 px-3.5 py-3 font-ibm text-base font-medium text-ink outline outline-2 outline-black/20 transition duration-200 ease-spring hover:outline-black/40 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson-600"
+                style={{ boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.30), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" }}
               >
                 <PlusIcon size={16} weight="bold" aria-hidden="true" />
                 {t.addGuestLabel}

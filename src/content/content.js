@@ -125,7 +125,7 @@ export const content = {
       ],
       messageLabel: "Messaggio per gli sposi",
       messagePlaceholder:
-        "Hai qualcosa da dire a Sarai e Ben? Questo è il posto giusto.",
+        "Hai qualcosa da dire a Sara e Ben? Questo è il posto giusto.",
       dietaryOtherValue: "Lascia una nota (allergie, intolleranze, altro)",
       submitLabel: "Invia",
       submittingLabel: "Invio…",
@@ -144,7 +144,8 @@ export const content = {
     icsLabel: "Apple / Outlook (.ics)",
     googleCalendarLabel: "Google Calendar",
     calEventTitle: "🌋💍 Matrimonio Sara & Ben",
-    calEventDescription: "Il giorno del matrimonio di Sara & Ben — Tenuta Savoca, Piazza Armerina.",
+    calEventDescription:
+      "Il giorno del matrimonio di Sara & Ben — Tenuta Savoca, Piazza Armerina.",
     calEventLocation: "Tenuta Savoca, Piazza Armerina, Sicilia, Italia",
     copyIban: "Copia IBAN",
     copiedIban: "Copiato!",
@@ -281,7 +282,7 @@ export const content = {
       ],
       messageLabel: "Message for the grooms",
       messagePlaceholder:
-        "Got something to tell Sarai & Ben? This is the place.",
+        "Got something to tell Sara & Ben? This is the place.",
       dietaryOtherValue: "Leave a note (allergies, intolerances, other)",
       submitLabel: "Send",
       submittingLabel: "Sending…",
@@ -301,13 +302,15 @@ export const content = {
     icsLabel: "Apple / Outlook (.ics)",
     googleCalendarLabel: "Google Calendar",
     calEventTitle: "🌋💍 Sara & Ben Wedding",
-    calEventDescription: "Sara & Ben's wedding day — Tenuta Savoca, Piazza Armerina.",
+    calEventDescription:
+      "Sara & Ben's wedding day — Tenuta Savoca, Piazza Armerina.",
     calEventLocation: "Tenuta Savoca, Piazza Armerina, Sicily, Italy",
     copyIban: "Copy IBAN",
     copiedIban: "Copied!",
     giftsTitle: "Gifts",
     giftsBody:
       "We don't need things — the house is already full. Your presence is the greatest gift. If you'd like to contribute to our honeymoon, here's the IBAN:",
+    ibanNumber: "DE71 1001 0178 1814 7799 50",
     faqTitle: "Frequently asked questions",
     faqList: [
       {
