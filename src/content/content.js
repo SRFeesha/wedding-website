@@ -3,59 +3,12 @@ export const locales = ["it", "en"]
 
 const mapsUrl = "https://maps.app.goo.gl/efKxntkWJ2yPQznZ8"
 
-const moodboardImages = [
-  {
-    url: "https://i.pinimg.com/736x/cd/6b/68/cd6b68ae1476fb6f560d4efb258c122f.jpg",
-    alt: "Warm autumn bouquet inspiration.",
-  },
-  {
-    url: "https://i.pinimg.com/736x/af/6a/13/af6a139901c63aa4736be5c944877c5a.jpg",
-    alt: "Textile and floral woodland setup inspiration.",
-  },
-  {
-    url: "https://i.pinimg.com/736x/33/83/7d/33837da0b6aba3c478adba829e096766.jpg",
-    alt: "Rustic floral entrance inspiration.",
-  },
-  {
-    url: "https://i.pinimg.com/736x/4d/16/eb/4d16eb5c845e2260d04e9ac7997c0c94.jpg",
-    alt: "Golden floral detail inspiration.",
-  },
-]
-
 export const content = {
   it: {
-    siteTitle: "Sara & Ben",
     heroEyebrow: "Siete invitati a festeggiare il matrimonio di",
     dateLabel: "Domenica 27 settembre 2026",
-    locationLabel: "Tenuta Savoca, Piazza Armerina",
     locationEyebrow: "Dove",
-    mapsLabel: "Apri Google Maps",
     mapsUrl,
-    moodImages: moodboardImages,
-    bento: {
-      programTitle: "Programma",
-      programIntro: "Orari indicativi per capire il ritmo della giornata.",
-      schedule: [
-        "1:30 Partenza bus da Catania",
-        "3:00 Arrivo a Tenuta Savoca",
-        "3:30 Cerimonia",
-        "4:00 Accoglienza (Bosco)",
-        "5:30 Aperitivo",
-        "8:00 Cena",
-        "9:30 Taglio torta e general frolicking",
-        "11:00 Rave",
-        "02:00 😴",
-        "10:00 Navetta hotel ogni 30 min",
-        "15:00 (Lunedì 28) Bus verso Catania",
-      ],
-      locationTitle: "Location e come raggiungerlo",
-      locationLines: [
-        "Vicino a Piazza Armerina",
-        "Aeroporto consigliato: Catania (CTA)",
-      ],
-    },
-    locationDescription:
-      "La tenuta si trova nell'entroterra siciliano, nei pressi di Piazza Armerina. Il posto si trova a circa 600m di altitudine — la sera fa freschino!",
     rsvp: {
       title: "RSVP",
       deadline: "Per favore rispondi entro il 1° giugno 2026",
@@ -76,20 +29,6 @@ export const content = {
       dietaryNoteLabel: "Nota",
       dietaryNotePlaceholder:
         "Es. intolleranza al lattosio, allergia alle noci…",
-      transportLabel: "Come pensi di arrivare?",
-      transportOptions: [
-        {
-          value: "bus",
-          label: "Con il bus",
-          sublabel: "Partenza da Catania la domenica mattina",
-        },
-        { value: "car", label: "In macchina", sublabel: "Ci arrangiamo noi" },
-        {
-          value: "unsure",
-          label: "Non lo so ancora",
-          sublabel: "Lo decido più avanti",
-        },
-      ],
       addGuestLabel: "Aggiungi un'altra persona",
       removeGuestLabel: "Rimuovi",
       ageGroupLabel: "Fascia d'età",
@@ -141,79 +80,53 @@ export const content = {
       validationSummaryTitle: "Prima di inviare, controlla questi campi:",
     },
     addToCalendarLabel: "Aggiungi al calendario",
-    icsLabel: "Apple / Outlook (.ics)",
-    googleCalendarLabel: "Google Calendar",
     calEventTitle: "🌋💍 Matrimonio Sara & Ben",
     calEventDescription:
       "Il giorno del matrimonio di Sara & Ben — Tenuta Savoca, Piazza Armerina.",
     calEventLocation: "Tenuta Savoca, Piazza Armerina, Sicilia, Italia",
+    ibanLabel: "IBAN",
     copyIban: "Copia IBAN",
     copiedIban: "Copiato!",
-    giftsTitle: "Regali",
-    giftsBody:
-      "Non ci servono cose — la casa è già piena. Il regalo più bello è la vostra presenza. Se volete contribuire al nostro viaggio di nozze, ecco l'IBAN:",
+    beneficiaryLabel: "Beneficiari",
+    beneficiaryName: "Beniamino Marini & Sara Tavakoli Fard",
     ibanNumber: "DE71 1001 0178 1814 7799 50",
-    faqTitle: "Domande frequenti",
+    faqTitle: "Info",
     faqList: [
       {
-        q: "Come arrivare alla location",
-        a: "Se venite in macchina, seguite il link Google Maps qui sotto. Sono circa 1h 30 da Catania. Se preferite non pensarci, stiamo organizzando un bus da Catania domenica mattina, e stiamo valutando il rientro da Piazza Armerina il lunedì, così nessuno dovrà andar via di fretta. Maggiori dettagli a breve!",
+        q: "Come arrivare e dove dormire",
+        a: [
+          "Piazza Armerina vale già da sola il viaggio: un bellissimo borgo medievale nel cuore della Sicilia, a 700 metri sul livello del mare. La location si trova a circa 5km dal centro e a 1h30 da Catania. Vi consigliamo di arrivare il giorno prima per esplorare il borgo con calma.",
+          "Stiamo lavorando per ottenere tariffe agevolate con alcuni hotel nelle vicinanze, vi faremo sapere!",
+        ],
         cta: { label: "Apri Google Maps", url: mapsUrl },
       },
       {
-        q: "Programma della serata",
-        a: "È una cena! Si comincia intorno alle 15:00. Maggiori dettagli a seguire!",
+        q: "Programma",
+        a: "Vi aspettiamo nel primo pomeriggio, maggiori dettagli in arrivo!",
       },
       {
         q: "Dresscode",
-        a: "Vestiti con eleganza, ma sii te stesso. Tieni a mente che c'è del prato, quindi forse lascia i tacchi a spillo a casa. Le serate di settembre si fanno fresche, quindi una giacchina leggera non guasta. Per ispirazione sui colori, dai un'occhiata al nostro moodboard.",
-        cta: { label: "Moodboard →", url: "#" },
-      },
-      {
-        q: "Dove dormire",
-        a: "Purtroppo non siamo in grado di offrire alloggio in loco. Vi consigliamo di pernottare la sera prima a Catania e la notte del matrimonio a Piazza Armerina — entrambe bellissime, vale la pena esplorarle. Stiamo lavorando per ottenere tariffe agevolate con alcuni hotel nelle vicinanze, vi faremo sapere!",
+        items: [
+          "Eleganti, ma senza perdere di vista il vostro stile",
+          "I toni caldi e terrosi si sposano perfettamente con la stagione e il luogo",
+          "Il prato potrebbe mettere a dura prova i tacchi a spillo. Pensateci bene prima di essere temerari",
+          "Le serate di settembre in Sicilia possono sorprendere. Una giacchettina leggera non guasta",
+          "Il bianco è della sposa :)",
+        ],
       },
       {
         q: "Regali",
-        a: "Non ci servono cose — la casa è già piena. Il regalo più bello è la vostra presenza. Se volete contribuire al nostro viaggio di nozze, ecco l'IBAN:",
+        a: "Il regalo più bello è poter condividere questo importante momento con voi. Se tuttavia desiderate farci un dono, ecco i nostri dettagli:",
         iban: true,
       },
     ],
   },
   en: {
-    siteTitle: "Sara & Ben",
     heroEyebrow: "You are invited to celebrate the wedding of",
     dateLabel: "Sunday, September 27, 2026",
-    locationLabel: "Tenuta Savoca, Piazza Armerina",
     locationEyebrow: "Where",
     locationSubtitle: "Piazza Armerina, Sicily",
-    mapsLabel: "Open Google Maps",
     mapsUrl,
-    moodImages: moodboardImages,
-    bento: {
-      programTitle: "Timetable",
-      programIntro: "Approximate times to guide the flow of the day.",
-      schedule: [
-        "1:30 Bus departure from Catania",
-        "3:00 Arrival at Tenuta Savoca",
-        "3:30 Ceremony",
-        "4:00 Welcome (Woods)",
-        "5:30 Aperitivo",
-        "8:00 Dinner",
-        "9:30 Cake cutting and general frolicking",
-        "11:00 Rave",
-        "02:00 😴",
-        "10:00 Hotel shuttle every 30 min",
-        "15:00 (Monday 28) Bus to Catania",
-      ],
-      locationTitle: "Location and how to reach it",
-      locationLines: [
-        "Near Piazza Armerina",
-        "Recommended airport: Catania (CTA)",
-      ],
-    },
-    locationDescription:
-      "The estate sits in the Sicilian hinterland, near Piazza Armerina, at around 600m altitude — evenings can be quite chilly!",
     rsvp: {
       title: "RSVP",
       deadline: "Please respond by June 1, 2026",
@@ -233,20 +146,6 @@ export const content = {
       ],
       dietaryNoteLabel: "Note",
       dietaryNotePlaceholder: "E.g. lactose intolerant, nut allergy…",
-      transportLabel: "How are you planning to get to the wedding location?",
-      transportOptions: [
-        {
-          value: "bus",
-          label: "By bus",
-          sublabel: "Departing from Catania on Sunday morning",
-        },
-        { value: "car", label: "By car", sublabel: "We'll sort ourselves out" },
-        {
-          value: "unsure",
-          label: "Not sure yet",
-          sublabel: "I'll decide later",
-        },
-      ],
       addGuestLabel: "Add another person",
       removeGuestLabel: "Remove",
       ageGroupLabel: "Age group",
@@ -299,41 +198,43 @@ export const content = {
       validationSummaryTitle: "Please review the following before sending:",
     },
     addToCalendarLabel: "Add to calendar",
-    icsLabel: "Apple / Outlook (.ics)",
-    googleCalendarLabel: "Google Calendar",
     calEventTitle: "🌋💍 Sara & Ben Wedding",
     calEventDescription:
       "Sara & Ben's wedding day — Tenuta Savoca, Piazza Armerina.",
     calEventLocation: "Tenuta Savoca, Piazza Armerina, Sicily, Italy",
+    ibanLabel: "IBAN",
     copyIban: "Copy IBAN",
     copiedIban: "Copied!",
-    giftsTitle: "Gifts",
-    giftsBody:
-      "We don't need things — the house is already full. Your presence is the greatest gift. If you'd like to contribute to our honeymoon, here's the IBAN:",
+    beneficiaryLabel: "Beneficiary",
+    beneficiaryName: "Beniamino Marini & Sara Tavakoli Fard",
     ibanNumber: "DE71 1001 0178 1814 7799 50",
-    faqTitle: "Frequently asked questions",
+    faqTitle: "The details",
     faqList: [
       {
-        q: "Getting to the venue",
-        a: "If you're driving, just follow the Google Maps link below. It's about 1h 30 from Catania. If you'd rather leave the driving to someone else, we're organising a bus from Catania on Sunday morning, and we're looking into a return trip from Piazza Armerina on Monday so nobody has to rush off. More details soon!",
-        cta: { label: "Open Google Maps", url: mapsUrl },
+        q: "Getting there & where to stay",
+        a: [
+          "Piazza Armerina is worth the trip on its own: it's a beautiful medieval borgo in the heart of Sicily sitting at 700 metres above sea level. The venue is around 5km from the town centre and about 1h30 from Catania. We recommend arriving the day before to explore the town at your own pace.",
+          "We're working on preferential rates with nearby hotels and will share details soon.",
+        ],
+        cta: { label: "Open in Google Maps", url: mapsUrl },
       },
       {
-        q: "Programme",
-        a: "It's an evening dinner celebration — things will get started around 3pm. More details to follow!",
+        q: "The plan",
+        a: "We'll see you in the early afternoon, stay tuned for more!",
       },
       {
         q: "Dresscode",
-        a: "Dress elegantly, but be yourself. Just keep in mind there's grass, so maybe leave the stilettos at home. September evenings can get chilly, so a light jacket is a good idea. For colour inspiration, check out our moodboard.",
-        cta: { label: "Moodboard →", url: "#" },
-      },
-      {
-        q: "Where to stay",
-        a: "Unfortunately we're not able to offer accommodation on-site. We recommend spending the night before in Catania and the wedding night in Piazza Armerina — both are beautiful spots worth exploring. We're working on preferential rates with some nearby hotels, so stay tuned for updates!",
+        items: [
+          "Dress elegantly, but make it yours",
+          "Warm, earthy tones fit the season and the location beautifully",
+          "Grass and stilettos don't mix well — heels are absolutely fine",
+          "Pack a light jacket. September evenings in Sicily can surprise you",
+          "White is for the bride :)",
+        ],
       },
       {
         q: "Gifts",
-        a: "We don't need things — the house is already full. Your presence is the greatest gift. If you'd like to contribute to our honeymoon, here's the IBAN:",
+        a: "Having you there means everything. If you'd like to make a gift, here's our bank account:",
         iban: true,
       },
     ],

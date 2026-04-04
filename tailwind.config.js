@@ -29,8 +29,8 @@ export default {
         error: "#B5340F",  // validation errors
       },
       fontFamily: {
-        sans: ["Instrument Sans", "sans-serif"],
-        ibm: ["IBM Plex Sans", "sans-serif"],
+        sans: ["IBM Plex Sans", "sans-serif"],
+        mono: ["IBM Plex Mono", "monospace"],
         display: ["Crimson Pro", "serif"],
         body: ["Crimson Text", "serif"],
         script: ["Alex Brush", "cursive"],

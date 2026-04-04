@@ -82,9 +82,17 @@ export default function FaqSection({ copy }) {
                       }}
                     >
                       {item.a && (
-                        <p className="font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]">
-                          {item.a}
-                        </p>
+                        Array.isArray(item.a)
+                          ? <div className="flex flex-col gap-2">{item.a.map((para, i) => (
+                              <p key={i} className="font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]">
+                                {para}
+                              </p>
+                            ))}</div>
+                          : (
+                              <p className="font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]">
+                                {item.a}
+                              </p>
+                            )
                       )}
                       {item.cta && (
                         <a
@@ -97,37 +105,46 @@ export default function FaqSection({ copy }) {
                         </a>
                       )}
                       {item.iban && (
-                        <div className="mt-4 flex flex-wrap items-center gap-3">
-                          <p className="font-mono text-xl font-medium tracking-wide text-ink/90">
-                            {copy.ibanNumber}
-                          </p>
-                          <button
-                            onClick={handleCopy}
-                            aria-label={copied ? copy.copiedIban : copy.copyIban}
-                            className="inline-flex items-center gap-1 rounded-xl bg-black/10 px-3.5 py-2.5 font-ibm text-base font-medium text-ink/90 transition duration-200 ease-spring hover:bg-black/15 active:scale-[0.94]"
-                          >
-                            <span aria-live="polite" aria-atomic="true">
-                              {copied ? copy.copiedIban : copy.copyIban}
-                            </span>
-                            {copied ? (
-                              <CheckCircleIcon
-                                size={16}
-                                weight="bold"
-                                className="text-sage-500"
-                                aria-hidden="true"
-                                style={{ animation: "scaleIn 200ms cubic-bezier(0.34, 1.56, 0.64, 1) both" }}
-                              />
-                            ) : (
-                              <CopyIcon size={16} weight="bold" style={{ opacity: 0.5 }} aria-hidden="true" />
-                            )}
-                          </button>
+                        <div className="mt-4 flex flex-col gap-4">
+                          <div className="flex flex-col gap-0.5">
+                            <p className="font-sans text-xs font-medium uppercase tracking-widest text-ink/40">{copy.beneficiaryLabel}</p>
+                            <p className="font-sans text-xl font-medium text-ink/85">{copy.beneficiaryName}</p>
+                          </div>
+                          <div className="flex flex-col gap-0.5">
+                            <p className="translate-y-2 font-sans text-xs font-medium uppercase tracking-widest text-ink/40">{copy.ibanLabel}</p>
+                            <div className="flex flex-wrap items-center gap-3">
+                              <p className="font-mono text-xl font-medium tracking-wide text-ink/90 [font-feature-settings:'zero']">
+                                {copy.ibanNumber}
+                              </p>
+                              <button
+                                onClick={handleCopy}
+                                aria-label={copied ? copy.copiedIban : copy.copyIban}
+                                className="inline-flex items-center gap-1 rounded-xl bg-black/10 px-3.5 py-2.5 font-sans text-base font-medium text-ink/90 transition duration-200 ease-spring hover:bg-black/15 active:scale-[0.94]"
+                              >
+                                <span aria-live="polite" aria-atomic="true">
+                                  {copied ? copy.copiedIban : copy.copyIban}
+                                </span>
+                                {copied ? (
+                                  <CheckCircleIcon
+                                    size={16}
+                                    weight="bold"
+                                    className="text-sage-500"
+                                    aria-hidden="true"
+                                    style={{ animation: "scaleIn 200ms cubic-bezier(0.34, 1.56, 0.64, 1) both" }}
+                                  />
+                                ) : (
+                                  <CopyIcon size={16} weight="bold" style={{ opacity: 0.5 }} aria-hidden="true" />
+                                )}
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       )}
                       {item.items && (
-                        <ul className="space-y-3">
+                        <ul className="space-y-3 pl-3">
                           {item.items.map((line) => (
-                            <li key={line} className="flex items-start gap-3">
-                              <span className="mt-[0.45em] h-1.5 w-1.5 shrink-0 rounded-full bg-gold-600" aria-hidden="true" />
+                            <li key={line} className="flex items-start gap-2">
+                              <span className="mt-[0.5em] h-2 w-2 shrink-0 rounded-full bg-gold-600" aria-hidden="true" />
                               <p className="font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]">{line}</p>
                             </li>
                           ))}

@@ -3,25 +3,24 @@ import { motion, LayoutGroup, AnimatePresence, useReducedMotion } from "framer-m
 import {
   WarningCircleIcon, CircleNotchIcon, CaretDownIcon,
   CheckCircleIcon, XSquareIcon, PlusIcon, ArrowRightIcon,
-  BusIcon, CarIcon, QuestionIcon,
   BabyIcon, ConfettiIcon, CheersIcon,
   ForkKnifeIcon, HeartIcon,
   LeafIcon, CheeseIcon, GrainsSlashIcon,
 } from "@phosphor-icons/react";
 
 const labelClass =
-  "block font-ibm text-base font-semibold text-ink/70 px-1.5 pb-1";
+  "block font-sans text-base font-semibold text-ink/70 px-1.5 pb-1";
 
 function inputClass(hasError) {
   if (hasError)
-    return "w-full rounded-2xl bg-white px-4 py-3 font-ibm text-[18px] text-ink outline outline-2 outline-error focus:outline-error transition";
-  return "w-full rounded-2xl bg-white px-4 py-3 font-ibm text-[18px] text-ink outline outline-2 outline-black/20 focus:outline-sienna-600 transition";
+    return "w-full rounded-2xl bg-white px-4 py-3 font-sans text-[18px] text-ink outline outline-2 outline-error focus:outline-error transition";
+  return "w-full rounded-2xl bg-white px-4 py-3 font-sans text-[18px] text-ink outline outline-2 outline-black/20 focus:outline-sienna-600 transition";
 }
 
 function FieldError({ id, msg }) {
   if (!msg) return null;
   return (
-    <p id={id} className="mt-1.5 flex items-center gap-1 px-1.5 font-ibm text-[17px] leading-snug text-error">
+    <p id={id} className="mt-1.5 flex items-center gap-1 px-1.5 font-sans text-[17px] leading-snug text-error">
       <WarningCircleIcon size={18} weight="fill" aria-hidden="true" style={{ flexShrink: 0 }} />
       {msg}
     </p>
@@ -64,7 +63,6 @@ function DietarySelectIcon({ value }) {
   );
 }
 
-const TRANSPORT_ICONS    = { bus: BusIcon, car: CarIcon, unsure: QuestionIcon };
 const AGE_ICONS          = { baby: BabyIcon, kid: ConfettiIcon, adult: CheersIcon };
 const BABY_SEATING_ICONS = { table: ForkKnifeIcon, nanny: HeartIcon };
 
@@ -166,10 +164,10 @@ function OptionGroup({
           <div className="relative z-10 flex items-center gap-3">
             {Icon && <CrossfadeIcon Icon={Icon} active={active} size={20} />}
             <div>
-              <span className={`block font-ibm text-base leading-snug ${active ? "font-semibold" : "font-medium"}`}>
+              <span className={`block font-sans text-base leading-snug ${active ? "font-semibold" : "font-medium"}`}>
                 {opt.label}
               </span>
-              <span className={`block font-ibm text-sm ${active ? "text-white/70" : "text-ink/50"}`}>
+              <span className={`block font-sans text-sm ${active ? "text-white/70" : "text-ink/50"}`}>
                 {opt.sublabel}
               </span>
             </div>
@@ -197,7 +195,6 @@ export default function RSVPForm({ copy }) {
   const [form, setForm] = useState({
     name: "",
     attending: null,
-    transport: null,
     dietary: t.dietaryOptions[0],
     dietaryNote: "",
     message: "",
@@ -277,7 +274,6 @@ export default function RSVPForm({ copy }) {
         body: JSON.stringify({
           name: form.name,
           attending: form.attending ? "Yes" : "No",
-          transport: form.transport ?? "",
           dietary: form.dietary === t.dietaryOtherValue ? "" : (form.dietary || t.dietaryOptions[0]),
           dietaryNote: form.dietary === t.dietaryOtherValue ? form.dietaryNote : "",
           message: form.message,
@@ -376,13 +372,13 @@ export default function RSVPForm({ copy }) {
               exit={{ opacity: 0, transition: { duration: 0.2 } }}
               transition={shouldReduce ? { duration: 0 } : { duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
             >
-              <p className="flex items-center gap-1 font-ibm text-[18px] font-semibold leading-snug text-error">
+              <p className="flex items-center gap-1 font-sans text-[18px] font-semibold leading-snug text-error">
                 <WarningCircleIcon size={18} weight="fill" aria-hidden="true" style={{ flexShrink: 0 }} />
                 {t.validationSummaryTitle}
               </p>
               <ol className="mt-1.5 list-none space-y-1">
                 {errorLabels.map((label, i) => (
-                  <li key={i} className="flex items-baseline gap-2 font-ibm text-[18px] leading-snug text-error/90">
+                  <li key={i} className="flex items-baseline gap-2 font-sans text-[18px] leading-snug text-error/90">
                     <span className="tabular-nums shrink-0 text-error/40 text-[14px]">{i + 1}.</span>
                     {label}
                   </li>
@@ -434,7 +430,7 @@ export default function RSVPForm({ copy }) {
                         <div className="w-px self-stretch bg-black/20" />
                       )}
                       <button
-                        className={`relative flex flex-1 items-center justify-center gap-2 rounded-[14px] px-3.5 py-3 font-ibm text-base font-semibold leading-6 transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sienna-600 ${
+                        className={`relative flex flex-1 items-center justify-center gap-2 rounded-[14px] px-3.5 py-3 font-sans text-base font-semibold leading-6 transition-colors duration-200 ease-spring focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sienna-600 ${
                           active ? "text-white" : "text-ink"
                         }`}
                         aria-pressed={active}
@@ -545,7 +541,7 @@ export default function RSVPForm({ copy }) {
                             type="button"
                             aria-label={`${t.removeGuestLabel} ${guestTitle}`}
                             onClick={() => removeGuest(i)}
-                            className="ml-auto font-ibm text-sm font-medium text-ink/40 rounded-lg border border-transparent px-2.5 py-2.5 transition hover:border-ink/20 hover:bg-ink/5 hover:text-ink/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sienna-600"
+                            className="ml-auto font-sans text-sm font-medium text-ink/40 rounded-lg border border-transparent px-2.5 py-2.5 transition hover:border-ink/20 hover:bg-ink/5 hover:text-ink/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sienna-600"
                           >
                             {t.removeGuestLabel}
                           </button>
@@ -651,27 +647,12 @@ export default function RSVPForm({ copy }) {
               <button
                 type="button"
                 onClick={addGuest}
-                className="flex w-full items-center justify-center gap-1.5 rounded-2xl bg-white/80 px-3.5 py-3 font-ibm text-base font-medium text-ink outline outline-1 outline-black/10 transition duration-200 ease-spring hover:outline-black/20 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sienna-600"
+                className="flex w-full items-center justify-center gap-1.5 rounded-2xl bg-white/80 px-3.5 py-3 font-sans text-base font-medium text-ink outline outline-1 outline-black/10 transition duration-200 ease-spring hover:outline-black/20 active:scale-[0.94] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sienna-600"
                 style={{ boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.30), inset 0px 4px 4px 0px rgba(255,255,255,0.05)" }}
               >
                 <PlusIcon size={16} weight="bold" aria-hidden="true" />
                 {t.addGuestLabel}
               </button>
-            </div>
-          </Disclosure>
-
-          {/* Transport (conditional) */}
-          <Disclosure show={form.attending === true} contentClassName="pb-0.5" delay={0}>
-            <div>
-              <label id="transport-label" className={labelClass}>{t.transportLabel}</label>
-              <OptionGroup
-                labelId="transport-label"
-                options={t.transportOptions}
-                value={form.transport}
-                onChange={(v) => handleChange("transport", v)}
-                icons={TRANSPORT_ICONS}
-                layoutId="transport-pill"
-              />
             </div>
           </Disclosure>
 

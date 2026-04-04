@@ -12,7 +12,7 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
     >
       <div className="flex flex-col items-center gap-5 px-5 text-center sm:px-10">
         <p
-          className="font-ibm text-base font-bold uppercase tracking-widest text-sienna-700/60"
+          className="font-sans text-base font-bold uppercase tracking-widest text-sienna-700/60"
           style={{ animation: `fadeInUp 560ms ${ease} 80ms both` }}
         >
           {copy.heroEyebrow}
