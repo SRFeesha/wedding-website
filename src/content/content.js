@@ -90,7 +90,7 @@ export const content = {
     beneficiaryLabel: "Beneficiari",
     beneficiaryName: "Beniamino Marini & Sara Tavakoli Fard",
     ibanNumber: "DE71 1001 0178 1814 7799 50",
-    faqTitle: "Domande frequenti",
+    faqTitle: "Info",
     faqList: [
       {
         q: "Come arrivare e dove dormire",
@@ -101,13 +101,18 @@ export const content = {
         cta: { label: "Apri Google Maps", url: mapsUrl },
       },
       {
-        q: "Programma della serata",
-        a: "È una cena! Si comincia intorno alle 15:00. Maggiori dettagli a seguire!",
+        q: "Programma",
+        a: "Vi aspettiamo nel primo pomeriggio, maggiori dettagli in arrivo!",
       },
       {
         q: "Dresscode",
-        a: "Vestiti con eleganza, ma sii te stesso. Tieni a mente che c'è del prato, quindi forse lascia i tacchi a spillo a casa. Le serate di settembre si fanno fresche, quindi una giacchina leggera non guasta. Per ispirazione sui colori, dai un'occhiata al nostro moodboard.",
-        cta: { label: "Moodboard →", url: "#" },
+        items: [
+          "Eleganti, ma senza perdere di vista il vostro stile",
+          "I toni caldi e terrosi si sposano perfettamente con la stagione e il luogo",
+          "Il prato potrebbe mettere a dura prova i tacchi a spillo. Pensateci bene prima di essere temerari",
+          "Le serate di settembre in Sicilia possono sorprendere. Una giacchettina leggera non guasta",
+          "Il bianco è della sposa :)",
+        ],
       },
       {
         q: "Regali",
@@ -203,7 +208,7 @@ export const content = {
     beneficiaryLabel: "Beneficiary",
     beneficiaryName: "Beniamino Marini & Sara Tavakoli Fard",
     ibanNumber: "DE71 1001 0178 1814 7799 50",
-    faqTitle: "Frequently asked questions",
+    faqTitle: "The details",
     faqList: [
       {
         q: "Getting there & where to stay",
@@ -214,13 +219,18 @@ export const content = {
         cta: { label: "Open in Google Maps", url: mapsUrl },
       },
       {
-        q: "Programme",
-        a: "It's an evening dinner celebration — things will get started around 3pm. More details to follow!",
+        q: "The plan",
+        a: "We'll see you in the early afternoon, stay tuned for more!",
       },
       {
         q: "Dresscode",
-        a: "Dress elegantly, but be yourself. Just keep in mind there's grass, so maybe leave the stilettos at home. September evenings can get chilly, so a light jacket is a good idea. For colour inspiration, check out our moodboard.",
-        cta: { label: "Moodboard →", url: "#" },
+        items: [
+          "Dress elegantly, but make it yours",
+          "Warm, earthy tones fit the season and the location beautifully",
+          "Grass and stilettos don't mix well — heels are absolutely fine",
+          "Pack a light jacket. September evenings in Sicily can surprise you",
+          "White is for the bride :)",
+        ],
       },
       {
         q: "Gifts",
