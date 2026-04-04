@@ -136,7 +136,7 @@ function buildEmailHtml({ name, attending, dietary, message, guests }) {
 ${m}`;
 }
 
-async function sendNotificationEmail({ name, attending, dietary, transport, message, guests }) {
+async function sendNotificationEmail({ name, attending, dietary, message, guests }) {
   if (!RESEND_API_KEY || !NOTIFICATION_EMAIL) return;
   const resend = new Resend(RESEND_API_KEY);
   try {
@@ -144,7 +144,7 @@ async function sendNotificationEmail({ name, attending, dietary, transport, mess
       from: "RSVP <onboarding@resend.dev>",
       to: NOTIFICATION_EMAIL,
       subject: `RSVP: ${name} — ${attending === "Yes" ? "attending" : "not attending"}`,
-      html: buildEmailHtml({ name, attending, dietary, transport, message, guests }),
+      html: buildEmailHtml({ name, attending, dietary, message, guests }),
     });
   } catch (err) {
     console.error("Resend error:", err);
@@ -166,7 +166,6 @@ export default async function handler(req, res) {
   // Coerce and cap all scalar inputs
   const name        = str(body.name, MAX_NAME);
   const attending   = str(body.attending, 3);
-  const transport   = str(body.transport, 10);
   const dietary     = str(body.dietary, MAX_NAME);
   const dietaryNote = str(body.dietaryNote, MAX_NOTE);
   const message     = str(body.message, MAX_MESSAGE);
@@ -177,9 +176,6 @@ export default async function handler(req, res) {
   }
   if (!VALID_ATTENDING.has(attending)) {
     return res.status(400).json({ error: "Invalid attending value" });
-  }
-  if (!VALID_TRANSPORT.has(transport)) {
-    return res.status(400).json({ error: "Invalid transport value" });
   }
 
   // Guests array
@@ -215,7 +211,6 @@ export default async function handler(req, res) {
       ageGroup: "adult",
       dietary:     attending === "Yes" ? dietary     : "",
       dietaryNote: attending === "Yes" ? dietaryNote : "",
-      transport:   attending === "Yes" ? transport   : "",
       message,
       comesWith: attending === "Yes" ? name : "",
     }));
@@ -229,14 +224,13 @@ export default async function handler(req, res) {
         ageGroup:    g.ageGroup || "",
         dietary:     g.ageGroup === "kid" ? "Kid" : g.ageGroup === "baby" ? "Baby" : (g.dietary || ""),
         dietaryNote: g.ageGroup === "adult" ? (g.dietaryNote || "") : "",
-        transport,
         babySeating: g.babySeating || "",
         message:     "",
         comesWith:   name,
       }));
     }
 
-    await sendNotificationEmail({ name, attending, dietary, transport, message, guests });
+    await sendNotificationEmail({ name, attending, dietary, message, guests });
 
     return res.status(200).json({ success: true });
   } catch (err) {
