@@ -40,7 +40,8 @@
       "Bash(\\\\ for:*)",
       "Bash(claude logout:*)",
       "Bash(claude auth:*)",
-      "Skill(commit-commands:commit)"
+      "Skill(commit-commands:commit)",
+      "Skill(commit-commands:commit-push-pr)"
     ]
   }
 }
