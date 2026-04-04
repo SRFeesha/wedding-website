@@ -38,52 +38,42 @@ function mockNotionFail(message = "something went wrong") {
 
 describe("buildProperties", () => {
   it("sets Name as title", () => {
-    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "", transport: "", message: "", comesWith: "" });
+    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "", message: "", comesWith: "" });
     expect(p.Name.title[0].text.content).toBe("Alice");
   });
 
   it("sets Attending as select", () => {
-    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "", transport: "", message: "", comesWith: "" });
+    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "", message: "", comesWith: "" });
     expect(p.Attending.select.name).toBe("Yes");
   });
 
   it("wraps dietary in multi_select", () => {
-    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "Vegan", transport: "", message: "", comesWith: "" });
+    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "Vegan", message: "", comesWith: "" });
     expect(p.Dietary.multi_select).toEqual([{ name: "Vegan" }]);
   });
 
   it("sets Dietary to empty array when not provided", () => {
-    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "", transport: "", message: "", comesWith: "" });
+    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "", message: "", comesWith: "" });
     expect(p.Dietary.multi_select).toEqual([]);
   });
 
-  it("includes Transport select when transport is set", () => {
-    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "", transport: "bus", message: "", comesWith: "" });
-    expect(p.Transport.select.name).toBe("bus");
-  });
-
-  it("omits Transport when transport is empty", () => {
-    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "", transport: "", message: "", comesWith: "" });
-    expect(p.Transport).toBeUndefined();
-  });
-
   it("includes Age group select when ageGroup is set", () => {
-    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "", transport: "", message: "", comesWith: "", ageGroup: "kid" });
+    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "", message: "", comesWith: "", ageGroup: "kid" });
     expect(p["Age group"].select.name).toBe("kid");
   });
 
   it("omits Age group when ageGroup is falsy", () => {
-    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "", transport: "", message: "", comesWith: "", ageGroup: "" });
+    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "", message: "", comesWith: "", ageGroup: "" });
     expect(p["Age group"]).toBeUndefined();
   });
 
   it("sets Comes with", () => {
-    const p = buildProperties({ name: "Bob", attending: "Yes", dietary: "", transport: "", message: "", comesWith: "Marco" });
+    const p = buildProperties({ name: "Bob", attending: "Yes", dietary: "", message: "", comesWith: "Marco" });
     expect(p["Comes with"].rich_text[0].text.content).toBe("Marco");
   });
 
   it("includes Submitted at date", () => {
-    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "", transport: "", message: "", comesWith: "" });
+    const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "", message: "", comesWith: "" });
     expect(p["Submitted at"].date.start).toBeTruthy();
   });
 });
@@ -117,7 +107,7 @@ describe("handler", () => {
   it("creates exactly 1 Notion page when there are no additional guests", async () => {
     mockNotionOk();
     const res = makeRes();
-    await handler(makeReq({ name: "Alice", attending: "Yes", transport: "bus", dietary: "Vegan", message: "", guests: [] }), res);
+    await handler(makeReq({ name: "Alice", attending: "Yes", dietary: "Vegan", message: "", guests: [] }), res);
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual({ success: true });
@@ -127,7 +117,7 @@ describe("handler", () => {
     mockNotionOk();
     const res = makeRes();
     await handler(makeReq({
-      name: "Alice", attending: "Yes", transport: "bus", dietary: "Vegan", message: "",
+      name: "Alice", attending: "Yes", dietary: "Vegan", message: "",
       guests: [
         { name: "Bob",   ageGroup: "adult", dietary: "I eat everything" },
         { name: "Clara", ageGroup: "kid",   dietary: "I eat everything" },
@@ -140,29 +130,17 @@ describe("handler", () => {
     mockNotionOk();
     const res = makeRes();
     await handler(makeReq({
-      name: "Alice", attending: "Yes", transport: "", dietary: "", message: "",
+      name: "Alice", attending: "Yes", dietary: "", message: "",
       guests: [{ name: "", ageGroup: "adult", dietary: "" }],
     }), res);
     expect(fetch).toHaveBeenCalledTimes(1); // only primary
-  });
-
-  it("passes transport from primary to additional guests", async () => {
-    mockNotionOk();
-    const res = makeRes();
-    await handler(makeReq({
-      name: "Alice", attending: "Yes", transport: "car", dietary: "", message: "",
-      guests: [{ name: "Bob", ageGroup: "adult", dietary: "" }],
-    }), res);
-
-    const guestCallBody = JSON.parse(fetch.mock.calls[1][1].body);
-    expect(guestCallBody.properties.Transport.select.name).toBe("car");
   });
 
   it("sets dietary to 'Kid' for kid guests regardless of form value", async () => {
     mockNotionOk();
     const res = makeRes();
     await handler(makeReq({
-      name: "Alice", attending: "Yes", transport: "", dietary: "", message: "",
+      name: "Alice", attending: "Yes", dietary: "", message: "",
       guests: [{ name: "Timmy", ageGroup: "kid", dietary: "Vegan" }],
     }), res);
     const guestCallBody = JSON.parse(fetch.mock.calls[1][1].body);
@@ -173,7 +151,7 @@ describe("handler", () => {
     mockNotionOk();
     const res = makeRes();
     await handler(makeReq({
-      name: "Alice", attending: "Yes", transport: "", dietary: "", message: "",
+      name: "Alice", attending: "Yes", dietary: "", message: "",
       guests: [{ name: "Sofia", ageGroup: "baby", dietary: "" }],
     }), res);
     const guestCallBody = JSON.parse(fetch.mock.calls[1][1].body);
@@ -183,7 +161,7 @@ describe("handler", () => {
   it("sets ageGroup to 'adult' for the primary guest", async () => {
     mockNotionOk();
     const res = makeRes();
-    await handler(makeReq({ name: "Alice", attending: "Yes", transport: "", dietary: "", message: "", guests: [] }), res);
+    await handler(makeReq({ name: "Alice", attending: "Yes", dietary: "", message: "", guests: [] }), res);
     const primaryCallBody = JSON.parse(fetch.mock.calls[0][1].body);
     expect(primaryCallBody.properties["Age group"].select.name).toBe("adult");
   });
@@ -192,7 +170,7 @@ describe("handler", () => {
     mockNotionOk();
     const res = makeRes();
     await handler(makeReq({
-      name: "Alice", attending: "No", transport: "", dietary: "", message: "",
+      name: "Alice", attending: "No", dietary: "", message: "",
       guests: [{ name: "Bob", ageGroup: "adult", dietary: "" }],
     }), res);
 

@@ -32,29 +32,26 @@ describe("RSVPForm — rendering", () => {
     expect(screen.getByText(copy.rsvp.attendanceNo)).toBeInTheDocument();
   });
 
-  it("does not show transport, dietary, or guest button when attending is not selected", () => {
+  it("does not show dietary or guest button when attending is not selected", () => {
     renderForm();
-    expect(screen.queryByText(copy.rsvp.transportLabel)).not.toBeInTheDocument();
     expect(screen.queryByText(copy.rsvp.dietaryLabel)).not.toBeInTheDocument();
     expect(screen.queryByText(copy.rsvp.addGuestLabel)).not.toBeInTheDocument();
   });
 
-  it("shows transport, dietary and add-guest button after selecting attending", async () => {
+  it("shows dietary and add-guest button after selecting attending", async () => {
     const user = userEvent.setup();
     renderForm();
     await user.click(screen.getByText(copy.rsvp.attendanceYes));
-    expect(screen.getByText(copy.rsvp.transportLabel)).toBeInTheDocument();
     expect(screen.getByText(copy.rsvp.dietaryLabel)).toBeInTheDocument();
     expect(screen.getByText(copy.rsvp.addGuestLabel)).toBeInTheDocument();
   });
 
-  it("hides transport, dietary and add-guest button after selecting not attending", async () => {
+  it("hides dietary and add-guest button after selecting not attending", async () => {
     const user = userEvent.setup();
     renderForm();
     await user.click(screen.getByText(copy.rsvp.attendanceYes));
     await user.click(screen.getByText(copy.rsvp.attendanceNo));
     await waitFor(() => {
-      expect(screen.queryByText(copy.rsvp.transportLabel)).not.toBeInTheDocument();
       expect(screen.queryByText(copy.rsvp.dietaryLabel)).not.toBeInTheDocument();
       expect(screen.queryByText(copy.rsvp.addGuestLabel)).not.toBeInTheDocument();
     });

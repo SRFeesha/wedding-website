@@ -7,7 +7,6 @@
 //   Age group     → Select      (adult / kid / baby)
 //   Dietary       → Multi-select
 //   Dietary Notes → Rich Text   (free-text allergy/intolerance note)
-//   Transport     → Select      (bus / car / unsure)
 //   Baby seating  → Select      (table / nanny)
 //   Message       → Rich Text
 //   Comes with    → Rich Text   (primary guest's name — groups a party together)
@@ -28,7 +27,6 @@ const MAX_MESSAGE    = 2000;
 const MAX_GUESTS     = 15;
 
 const VALID_ATTENDING    = new Set(["Yes", "No"]);
-const VALID_TRANSPORT    = new Set(["bus", "car", "unsure", ""]);
 const VALID_AGE_GROUP    = new Set(["adult", "kid", "baby", ""]);
 const VALID_BABY_SEATING = new Set(["table", "nanny", ""]);
 
@@ -49,7 +47,7 @@ function htmlEscape(s) {
 
 // ── Notion ────────────────────────────────────────────────────────────────────
 
-export function buildProperties({ name, attending, ageGroup, dietary, dietaryNote, transport, babySeating, message, comesWith }) {
+export function buildProperties({ name, attending, ageGroup, dietary, dietaryNote, babySeating, message, comesWith }) {
   const props = {
     Name: {
       title: [{ text: { content: name } }],
@@ -76,9 +74,6 @@ export function buildProperties({ name, attending, ageGroup, dietary, dietaryNot
   };
 
   // Omit when empty — Notion rejects select: null on page creation
-  if (transport) {
-    props.Transport = { select: { name: transport } };
-  }
   if (ageGroup) {
     props["Age group"] = { select: { name: ageGroup } };
   }
@@ -112,10 +107,9 @@ async function createNotionPage(properties) {
 
 // ── Email ─────────────────────────────────────────────────────────────────────
 
-function buildEmailHtml({ name, attending, dietary, transport, message, guests }) {
+function buildEmailHtml({ name, attending, dietary, message, guests }) {
   const n = htmlEscape(name);
   const d = htmlEscape(dietary || "no dietary");
-  const t = htmlEscape(transport || "not specified");
   const m = message ? `<p>Message: ${htmlEscape(message)}</p>` : "";
 
   if (attending === "No") {
@@ -139,11 +133,10 @@ function buildEmailHtml({ name, attending, dietary, transport, message, guests }
 
   return `<p><strong>${n}</strong> is attending with ${allGuests.length} guest(s).</p>
 <ul>${allGuests.map((g) => `<li>${g}</li>`).join("")}</ul>
-<p>Transport: <strong>${t}</strong></p>
 ${m}`;
 }
 
-async function sendNotificationEmail({ name, attending, dietary, transport, message, guests }) {
+async function sendNotificationEmail({ name, attending, dietary, message, guests }) {
   if (!RESEND_API_KEY || !NOTIFICATION_EMAIL) return;
   const resend = new Resend(RESEND_API_KEY);
   try {
@@ -151,7 +144,7 @@ async function sendNotificationEmail({ name, attending, dietary, transport, mess
       from: "RSVP <onboarding@resend.dev>",
       to: NOTIFICATION_EMAIL,
       subject: `RSVP: ${name} — ${attending === "Yes" ? "attending" : "not attending"}`,
-      html: buildEmailHtml({ name, attending, dietary, transport, message, guests }),
+      html: buildEmailHtml({ name, attending, dietary, message, guests }),
     });
   } catch (err) {
     console.error("Resend error:", err);
@@ -173,7 +166,6 @@ export default async function handler(req, res) {
   // Coerce and cap all scalar inputs
   const name        = str(body.name, MAX_NAME);
   const attending   = str(body.attending, 3);
-  const transport   = str(body.transport, 10);
   const dietary     = str(body.dietary, MAX_NAME);
   const dietaryNote = str(body.dietaryNote, MAX_NOTE);
   const message     = str(body.message, MAX_MESSAGE);
@@ -184,9 +176,6 @@ export default async function handler(req, res) {
   }
   if (!VALID_ATTENDING.has(attending)) {
     return res.status(400).json({ error: "Invalid attending value" });
-  }
-  if (!VALID_TRANSPORT.has(transport)) {
-    return res.status(400).json({ error: "Invalid transport value" });
   }
 
   // Guests array
@@ -222,7 +211,6 @@ export default async function handler(req, res) {
       ageGroup: "adult",
       dietary:     attending === "Yes" ? dietary     : "",
       dietaryNote: attending === "Yes" ? dietaryNote : "",
-      transport:   attending === "Yes" ? transport   : "",
       message,
       comesWith: attending === "Yes" ? name : "",
     }));
@@ -236,14 +224,13 @@ export default async function handler(req, res) {
         ageGroup:    g.ageGroup || "",
         dietary:     g.ageGroup === "kid" ? "Kid" : g.ageGroup === "baby" ? "Baby" : (g.dietary || ""),
         dietaryNote: g.ageGroup === "adult" ? (g.dietaryNote || "") : "",
-        transport,
         babySeating: g.babySeating || "",
         message:     "",
         comesWith:   name,
       }));
     }
 
-    await sendNotificationEmail({ name, attending, dietary, transport, message, guests });
+    await sendNotificationEmail({ name, attending, dietary, message, guests });
 
     return res.status(200).json({ success: true });
   } catch (err) {
