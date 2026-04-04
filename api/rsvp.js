@@ -7,7 +7,6 @@
 //   Age group     → Select      (adult / kid / baby)
 //   Dietary       → Multi-select
 //   Dietary Notes → Rich Text   (free-text allergy/intolerance note)
-//   Transport     → Select      (bus / car / unsure)
 //   Baby seating  → Select      (table / nanny)
 //   Message       → Rich Text
 //   Comes with    → Rich Text   (primary guest's name — groups a party together)
@@ -28,7 +27,6 @@ const MAX_MESSAGE    = 2000;
 const MAX_GUESTS     = 15;
 
 const VALID_ATTENDING    = new Set(["Yes", "No"]);
-const VALID_TRANSPORT    = new Set(["bus", "car", "unsure", ""]);
 const VALID_AGE_GROUP    = new Set(["adult", "kid", "baby", ""]);
 const VALID_BABY_SEATING = new Set(["table", "nanny", ""]);
 
@@ -49,7 +47,7 @@ function htmlEscape(s) {
 
 // ── Notion ────────────────────────────────────────────────────────────────────
 
-export function buildProperties({ name, attending, ageGroup, dietary, dietaryNote, transport, babySeating, message, comesWith }) {
+export function buildProperties({ name, attending, ageGroup, dietary, dietaryNote, babySeating, message, comesWith }) {
   const props = {
     Name: {
       title: [{ text: { content: name } }],
@@ -76,9 +74,6 @@ export function buildProperties({ name, attending, ageGroup, dietary, dietaryNot
   };
 
   // Omit when empty — Notion rejects select: null on page creation
-  if (transport) {
-    props.Transport = { select: { name: transport } };
-  }
   if (ageGroup) {
     props["Age group"] = { select: { name: ageGroup } };
   }
@@ -112,10 +107,9 @@ async function createNotionPage(properties) {
 
 // ── Email ─────────────────────────────────────────────────────────────────────
 
-function buildEmailHtml({ name, attending, dietary, transport, message, guests }) {
+function buildEmailHtml({ name, attending, dietary, message, guests }) {
   const n = htmlEscape(name);
   const d = htmlEscape(dietary || "no dietary");
-  const t = htmlEscape(transport || "not specified");
   const m = message ? `<p>Message: ${htmlEscape(message)}</p>` : "";
 
   if (attending === "No") {
@@ -139,7 +133,6 @@ function buildEmailHtml({ name, attending, dietary, transport, message, guests }
 
   return `<p><strong>${n}</strong> is attending with ${allGuests.length} guest(s).</p>
 <ul>${allGuests.map((g) => `<li>${g}</li>`).join("")}</ul>
-<p>Transport: <strong>${t}</strong></p>
 ${m}`;
 }
 

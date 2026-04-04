@@ -4,7 +4,7 @@ import {
   WarningCircleIcon, CircleNotchIcon, CaretDownIcon,
   CheckCircleIcon, XSquareIcon, PlusIcon, ArrowRightIcon,
   BabyIcon, ConfettiIcon, CheersIcon,
-  ForkKnifeIcon, HeartIcon,
+  ForkKnifeIcon, HeartIcon, QuestionIcon,
   LeafIcon, CheeseIcon, GrainsSlashIcon,
 } from "@phosphor-icons/react";
 
