@@ -37,7 +37,10 @@
       "Bash(vercel ls:*)",
       "Bash(vercel inspect:*)",
       "Bash(sed:*)",
-      "Bash(\\\\ for:*)"
+      "Bash(\\\\ for:*)",
+      "Bash(claude logout:*)",
+      "Bash(claude auth:*)",
+      "Skill(commit-commands:commit)"
     ]
   }
 }
