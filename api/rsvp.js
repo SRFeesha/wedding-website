@@ -16,8 +16,6 @@ import { Resend } from "resend";
 
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID;
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL;
 
 // ── Validation constants ──────────────────────────────────────────────────────
 
@@ -107,7 +105,7 @@ async function createNotionPage(properties) {
 
 // ── Email ─────────────────────────────────────────────────────────────────────
 
-function buildEmailHtml({ name, attending, dietary, message, guests }) {
+export function buildEmailHtml({ name, attending, dietary, message, guests }) {
   const n = htmlEscape(name);
   const d = htmlEscape(dietary || "no dietary");
   const m = message ? `<p>Message: ${htmlEscape(message)}</p>` : "";
@@ -137,12 +135,14 @@ ${m}`;
 }
 
 async function sendNotificationEmail({ name, attending, dietary, message, guests }) {
-  if (!RESEND_API_KEY || !NOTIFICATION_EMAIL) return;
-  const resend = new Resend(RESEND_API_KEY);
+  const apiKey = process.env.RESEND_API_KEY;
+  const notifEmail = process.env.NOTIFICATION_EMAIL;
+  if (!apiKey || !notifEmail) return;
+  const resend = new Resend(apiKey);
   try {
     await resend.emails.send({
       from: "RSVP <onboarding@resend.dev>",
-      to: NOTIFICATION_EMAIL,
+      to: notifEmail,
       subject: `RSVP: ${name} — ${attending === "Yes" ? "attending" : "not attending"}`,
       html: buildEmailHtml({ name, attending, dietary, message, guests }),
     });

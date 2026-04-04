@@ -1,13 +1,19 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
-// Prevent Resend from making real fetch calls during tests
+// Shared spy — must use vi.hoisted so it exists when the vi.mock factory runs
+// (vi.mock calls are hoisted above variable declarations by vitest's transformer)
+const mockEmailSend = vi.hoisted(() =>
+  vi.fn().mockResolvedValue({ id: "test-email-id" })
+);
+
+// Prevent Resend from making real network calls during tests
 vi.mock("resend", () => ({
   Resend: vi.fn().mockImplementation(() => ({
-    emails: { send: vi.fn().mockResolvedValue({ id: "test-email-id" }) },
+    emails: { send: mockEmailSend },
   })),
 }));
 
-import { buildProperties } from "../rsvp.js";
+import { buildProperties, buildEmailHtml } from "../rsvp.js";
 import handler from "../rsvp.js";
 
 // ─── helpers ────────────────────────────────────────────────────────────────
@@ -75,6 +81,63 @@ describe("buildProperties", () => {
   it("includes Submitted at date", () => {
     const p = buildProperties({ name: "Alice", attending: "Yes", dietary: "", message: "", comesWith: "" });
     expect(p["Submitted at"].date.start).toBeTruthy();
+  });
+});
+
+// ─── buildEmailHtml ──────────────────────────────────────────────────────────
+
+describe("buildEmailHtml", () => {
+  it("states the guest will not be attending when attending is No", () => {
+    const html = buildEmailHtml({ name: "Alice", attending: "No", dietary: "", message: "", guests: [] });
+    expect(html).toContain("<strong>Alice</strong>");
+    expect(html).toContain("not be attending");
+  });
+
+  it("appends message paragraph for a not-attending guest", () => {
+    const html = buildEmailHtml({ name: "Alice", attending: "No", dietary: "", message: "See you next time!", guests: [] });
+    expect(html).toContain("See you next time!");
+  });
+
+  it("omits message block when message is empty", () => {
+    const html = buildEmailHtml({ name: "Alice", attending: "No", dietary: "", message: "", guests: [] });
+    expect(html).not.toContain("<p>Message:");
+  });
+
+  it("lists the primary guest with their dietary preference", () => {
+    const html = buildEmailHtml({ name: "Alice", attending: "Yes", dietary: "Vegan", message: "", guests: [] });
+    expect(html).toContain("Alice (adult)");
+    expect(html).toContain("Vegan");
+  });
+
+  it("lists additional adult guests with their dietary preference", () => {
+    const html = buildEmailHtml({
+      name: "Alice", attending: "Yes", dietary: "", message: "",
+      guests: [{ name: "Bob", ageGroup: "adult", dietary: "Pescatarian", babySeating: "" }],
+    });
+    expect(html).toContain("Bob (adult");
+    expect(html).toContain("Pescatarian");
+  });
+
+  it("shows baby seating info for baby guests", () => {
+    const html = buildEmailHtml({
+      name: "Alice", attending: "Yes", dietary: "", message: "",
+      guests: [{ name: "Lily", ageGroup: "baby", dietary: "", babySeating: "nanny" }],
+    });
+    expect(html).toContain("baby — seating: nanny");
+  });
+
+  it("shows 'kid' label for kid guests", () => {
+    const html = buildEmailHtml({
+      name: "Alice", attending: "Yes", dietary: "", message: "",
+      guests: [{ name: "Timmy", ageGroup: "kid", dietary: "", babySeating: "" }],
+    });
+    expect(html).toContain("Timmy (kid)");
+  });
+
+  it("HTML-escapes dangerous characters in guest names", () => {
+    const html = buildEmailHtml({ name: "<script>alert(1)</script>", attending: "No", dietary: "", message: "", guests: [] });
+    expect(html).not.toContain("<script>");
+    expect(html).toContain("&lt;script&gt;");
   });
 });
 
@@ -173,7 +236,6 @@ describe("handler", () => {
       name: "Alice", attending: "No", dietary: "", message: "",
       guests: [{ name: "Bob", ageGroup: "adult", dietary: "" }],
     }), res);
-
     const guestCallBody = JSON.parse(fetch.mock.calls[1][1].body);
     expect(guestCallBody.properties.Attending.select.name).toBe("Yes");
   });
@@ -184,5 +246,73 @@ describe("handler", () => {
     await handler(makeReq({ name: "Alice", attending: "Yes", guests: [] }), res);
     expect(res.statusCode).toBe(500);
     expect(res.body.error).toBeTruthy();
+  });
+
+  // ─── email notification ──────────────────────────────────────────────────
+
+  describe("email notification", () => {
+    beforeEach(() => {
+      process.env.RESEND_API_KEY = "test-resend-key";
+      process.env.NOTIFICATION_EMAIL = "notify@example.com";
+    });
+
+    afterEach(() => {
+      delete process.env.RESEND_API_KEY;
+      delete process.env.NOTIFICATION_EMAIL;
+    });
+
+    it("sends an email after a successful RSVP submission", async () => {
+      mockNotionOk();
+      const res = makeRes();
+      await handler(makeReq({ name: "Alice", attending: "Yes", dietary: "Vegan", message: "", guests: [] }), res);
+      expect(mockEmailSend).toHaveBeenCalledOnce();
+    });
+
+    it("sends an email when the guest is not attending", async () => {
+      mockNotionOk();
+      const res = makeRes();
+      await handler(makeReq({ name: "Alice", attending: "No", dietary: "", message: "", guests: [] }), res);
+      expect(mockEmailSend).toHaveBeenCalledOnce();
+    });
+
+    it("email subject includes guest name and attending status", async () => {
+      mockNotionOk();
+      const res = makeRes();
+      await handler(makeReq({ name: "Alice", attending: "Yes", dietary: "", message: "", guests: [] }), res);
+      const { subject } = mockEmailSend.mock.calls[0][0];
+      expect(subject).toContain("Alice");
+      expect(subject).toContain("attending");
+    });
+
+    it("does not send email when Notion API fails", async () => {
+      mockNotionFail();
+      const res = makeRes();
+      await handler(makeReq({ name: "Alice", attending: "Yes", dietary: "", message: "", guests: [] }), res);
+      expect(mockEmailSend).not.toHaveBeenCalled();
+    });
+
+    it("does not send email when RESEND_API_KEY is not set", async () => {
+      delete process.env.RESEND_API_KEY;
+      mockNotionOk();
+      const res = makeRes();
+      await handler(makeReq({ name: "Alice", attending: "Yes", dietary: "", message: "", guests: [] }), res);
+      expect(mockEmailSend).not.toHaveBeenCalled();
+    });
+
+    it("does not send email when NOTIFICATION_EMAIL is not set", async () => {
+      delete process.env.NOTIFICATION_EMAIL;
+      mockNotionOk();
+      const res = makeRes();
+      await handler(makeReq({ name: "Alice", attending: "Yes", dietary: "", message: "", guests: [] }), res);
+      expect(mockEmailSend).not.toHaveBeenCalled();
+    });
+
+    it("still returns 200 when email sending throws", async () => {
+      mockNotionOk();
+      mockEmailSend.mockRejectedValueOnce(new Error("Resend down"));
+      const res = makeRes();
+      await handler(makeReq({ name: "Alice", attending: "Yes", dietary: "", message: "", guests: [] }), res);
+      expect(res.statusCode).toBe(200);
+    });
   });
 });
