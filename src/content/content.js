@@ -93,8 +93,11 @@ export const content = {
     faqTitle: "Domande frequenti",
     faqList: [
       {
-        q: "Come arrivare alla location",
-        a: "Se venite in macchina, seguite il link Google Maps qui sotto. Sono circa 1h 30 da Catania. Se preferite non pensarci, stiamo organizzando un bus da Catania domenica mattina, e stiamo valutando il rientro da Piazza Armerina il lunedì, così nessuno dovrà andar via di fretta. Maggiori dettagli a breve!",
+        q: "Come arrivare e dove dormire",
+        a: [
+          "Piazza Armerina vale già da sola il viaggio: un bellissimo borgo medievale nel cuore della Sicilia, a 700 metri sul livello del mare. La location, Tenuta Savoca, si trova a 5km dal centro e a circa 1h30 da Catania. Vi consigliamo di arrivare la sera prima per esplorare il borgo con calma.",
+          "Stiamo lavorando per ottenere tariffe agevolate con alcuni hotel nelle vicinanze, vi faremo sapere!",
+        ],
         cta: { label: "Apri Google Maps", url: mapsUrl },
       },
       {
@@ -105,10 +108,6 @@ export const content = {
         q: "Dresscode",
         a: "Vestiti con eleganza, ma sii te stesso. Tieni a mente che c'è del prato, quindi forse lascia i tacchi a spillo a casa. Le serate di settembre si fanno fresche, quindi una giacchina leggera non guasta. Per ispirazione sui colori, dai un'occhiata al nostro moodboard.",
         cta: { label: "Moodboard →", url: "#" },
-      },
-      {
-        q: "Dove dormire",
-        a: "Purtroppo non siamo in grado di offrire alloggio in loco. Vi consigliamo di pernottare la sera prima a Catania e la notte del matrimonio a Piazza Armerina — entrambe bellissime, vale la pena esplorarle. Stiamo lavorando per ottenere tariffe agevolate con alcuni hotel nelle vicinanze, vi faremo sapere!",
       },
       {
         q: "Regali",
@@ -207,9 +206,12 @@ export const content = {
     faqTitle: "Frequently asked questions",
     faqList: [
       {
-        q: "Getting to the venue",
-        a: "If you're driving, just follow the Google Maps link below. It's about 1h 30 from Catania. If you'd rather leave the driving to someone else, we're organising a bus from Catania on Sunday morning, and we're looking into a return trip from Piazza Armerina on Monday so nobody has to rush off. More details soon!",
-        cta: { label: "Open Google Maps", url: mapsUrl },
+        q: "Getting there & where to stay",
+        a: [
+          "Piazza Armerina is worth the trip on its own: it's a beautiful medieval borgo in the heart of Sicily sitting at 700 metres above sea level. The venue, Tenuta Savoca, is ~5km from the town centre and about 1h30 from Catania. We recommend arriving the night before to explore the town at your own pace.",
+          "We're working on preferential rates with nearby hotels and will share details soon.",
+        ],
+        cta: { label: "Open in Google Maps", url: mapsUrl },
       },
       {
         q: "Programme",
@@ -221,12 +223,8 @@ export const content = {
         cta: { label: "Moodboard →", url: "#" },
       },
       {
-        q: "Where to stay",
-        a: "Unfortunately we're not able to offer accommodation on-site. We recommend spending the night before in Catania and the wedding night in Piazza Armerina — both are beautiful spots worth exploring. We're working on preferential rates with some nearby hotels, so stay tuned for updates!",
-      },
-      {
         q: "Gifts",
-        a: "Having you there means everything. If you'd like to give us something, here's our bank account:",
+        a: "Having you there means everything. If you'd like to make a gift, here's our bank account:",
         iban: true,
       },
     ],

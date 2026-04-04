@@ -82,9 +82,17 @@ export default function FaqSection({ copy }) {
                       }}
                     >
                       {item.a && (
-                        <p className="font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]">
-                          {item.a}
-                        </p>
+                        Array.isArray(item.a)
+                          ? <div className="flex flex-col gap-2">{item.a.map((para, i) => (
+                              <p key={i} className="font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]">
+                                {para}
+                              </p>
+                            ))}</div>
+                          : (
+                              <p className="font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]">
+                                {item.a}
+                              </p>
+                            )
                       )}
                       {item.cta && (
                         <a
