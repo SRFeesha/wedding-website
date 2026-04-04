@@ -95,7 +95,7 @@ export const content = {
       {
         q: "Come arrivare e dove dormire",
         a: [
-          "Piazza Armerina vale già da sola il viaggio: un bellissimo borgo medievale nel cuore della Sicilia, a 700 metri sul livello del mare. La location, Tenuta Savoca, si trova a 5km dal centro e a circa 1h30 da Catania. Vi consigliamo di arrivare la sera prima per esplorare il borgo con calma.",
+          "Piazza Armerina vale già da sola il viaggio: un bellissimo borgo medievale nel cuore della Sicilia, a 700 metri sul livello del mare. La location si trova a circa 5km dal centro e a 1h30 da Catania. Vi consigliamo di arrivare il giorno prima per esplorare il borgo con calma.",
           "Stiamo lavorando per ottenere tariffe agevolate con alcuni hotel nelle vicinanze, vi faremo sapere!",
         ],
         cta: { label: "Apri Google Maps", url: mapsUrl },
@@ -208,7 +208,7 @@ export const content = {
       {
         q: "Getting there & where to stay",
         a: [
-          "Piazza Armerina is worth the trip on its own: it's a beautiful medieval borgo in the heart of Sicily sitting at 700 metres above sea level. The venue, Tenuta Savoca, is ~5km from the town centre and about 1h30 from Catania. We recommend arriving the night before to explore the town at your own pace.",
+          "Piazza Armerina is worth the trip on its own: it's a beautiful medieval borgo in the heart of Sicily sitting at 700 metres above sea level. The venue is around 5km from the town centre and about 1h30 from Catania. We recommend arriving the day before to explore the town at your own pace.",
           "We're working on preferential rates with nearby hotels and will share details soon.",
         ],
         cta: { label: "Open in Google Maps", url: mapsUrl },
