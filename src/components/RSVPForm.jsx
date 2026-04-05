@@ -320,8 +320,7 @@ export default function RSVPForm({ copy }) {
                 type="video/mp4"
               />
             </video>
-            <span aria-hidden="true" className="col-start-1 row-start-1 text-5xl">{form.attending ? "🎉" : "🥹"}</span>
-            <h2
+<h2
               className="col-start-1 row-start-1 font-display text-5xl font-semibold text-ink"
               style={{ animation: `fadeInUp 560ms ease-out ${delay}ms both` }}
             >
