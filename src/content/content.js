@@ -93,16 +93,41 @@ export const content = {
     faqTitle: "Info",
     faqList: [
       {
-        q: "Come arrivare e dove dormire",
+        q: "Come arrivare",
         a: [
           "Piazza Armerina vale già da sola il viaggio: un bellissimo borgo medievale nel cuore della Sicilia, a 700 metri sul livello del mare. La location si trova a circa 5km dal centro e a 1h30 da Catania. Vi consigliamo di arrivare il giorno prima per esplorare il borgo con calma.",
-          "Stiamo lavorando per ottenere tariffe agevolate con alcuni hotel nelle vicinanze, vi faremo sapere!",
+          "Purtroppo non possiamo aiutare direttamente con il trasporto, ma potete unirvi al gruppo WhatsApp degli ospiti o contattarci direttamente se avete difficoltà a raggiungere il posto — troveremo una soluzione.",
         ],
-        cta: { label: "Apri Google Maps", url: mapsUrl },
+        ctas: [
+          { label: "Apri Google Maps", url: mapsUrl },
+          { label: "Unisciti al gruppo WhatsApp", url: "#" },
+        ],
+      },
+      {
+        q: "Dove dormire",
+        a: [
+          "Stiamo lavorando per ottenere tariffe agevolate con alcuni hotel nelle vicinanze, vi faremo sapere!",
+          "Piazza Armerina è piena di bei B&B, Airbnb e hotel se siete alla ricerca di altre opzioni.",
+        ],
       },
       {
         q: "Programma",
-        a: "Vi aspettiamo nel primo pomeriggio, maggiori dettagli in arrivo!",
+        items: [
+          "La cerimonia inizierà intorno alle 15:00",
+          "Seguiranno aperitivo e cena all'aperto (speriamo 🤞)",
+          "La festa finirà intorno alle 2:00",
+        ],
+      },
+      {
+        q: "Resta aggiornato",
+        a: [
+          "Abbiamo aperto un canale WhatsApp per condividere aggiornamenti con tutti — vi consigliamo di iscrivervi per non perdervi niente!",
+          "Abbiamo anche creato un gruppo per gli ospiti dove potete chiacchierare, trovare compagnia per il viaggio e organizzarvi insieme.",
+        ],
+        ctas: [
+          { label: "Segui il canale", url: "#" },
+          { label: "Unisciti al gruppo", url: "#" },
+        ],
       },
       {
         q: "Dresscode",
@@ -113,6 +138,10 @@ export const content = {
           "Le serate di settembre in Sicilia possono sorprendere. Una giacchettina leggera non guasta",
           "Il bianco è della sposa :)",
         ],
+      },
+      {
+        q: "Posso portare un ospite?",
+        a: "Per questioni di capienza, possiamo ospitare solo le persone che abbiamo invitato personalmente. È una questione di numeri, non di quanto vi vogliamo bene. Grazie per la comprensione.",
       },
       {
         q: "Regali",
@@ -211,16 +240,41 @@ export const content = {
     faqTitle: "The details",
     faqList: [
       {
-        q: "Getting there & where to stay",
+        q: "Getting there",
         a: [
           "Piazza Armerina is worth the trip on its own: it's a beautiful medieval borgo in the heart of Sicily sitting at 700 metres above sea level. The venue is around 5km from the town centre and about 1h30 from Catania. We recommend arriving the day before to explore the town at your own pace.",
-          "We're working on preferential rates with nearby hotels and will share details soon.",
+          "Unfortunately we can't help with transportation directly, but feel free to join the guest WhatsApp group or reach us directly if you're having trouble reaching the location — we'll find a solution.",
         ],
-        cta: { label: "Open in Google Maps", url: mapsUrl },
+        ctas: [
+          { label: "Open in Google Maps", url: mapsUrl },
+          { label: "Join the WhatsApp group", url: "#" },
+        ],
+      },
+      {
+        q: "Where to stay",
+        a: [
+          "We're working on preferential rates with nearby hotels and will share details soon.",
+          "Piazza Armerina is full of nice Airbnbs and hotels if you're looking for other options.",
+        ],
       },
       {
         q: "The plan",
-        a: "We'll see you in the early afternoon, stay tuned for more!",
+        items: [
+          "The ceremony will start around 3:00 p.m.",
+          "There will be an aperitivo and a dinner outside (hopefully 🤞)",
+          "The party will wrap up around 2:00 a.m.",
+        ],
+      },
+      {
+        q: "Stay updated",
+        a: [
+          "We created a WhatsApp channel to share updates with everyone — we suggest you all subscribe so you don't miss anything!",
+          "We also opened a guest group where you can chat with each other, find travel companions, and sort things out together.",
+        ],
+        ctas: [
+          { label: "Follow the channel", url: "#" },
+          { label: "Join the group", url: "#" },
+        ],
       },
       {
         q: "Dresscode",
@@ -231,6 +285,10 @@ export const content = {
           "Pack a light jacket. September evenings in Sicily can surprise you",
           "White is for the bride :)",
         ],
+      },
+      {
+        q: "Can I bring a guest?",
+        a: "Due to limited capacity, we are only able to accommodate the guests mentioned at the moment we invited you. It's a capacity thing, not a reflection of how much we love you. Thank you for understanding.",
       },
       {
         q: "Gifts",
