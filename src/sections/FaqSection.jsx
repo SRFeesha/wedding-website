@@ -94,16 +94,17 @@ export default function FaqSection({ copy }) {
                               </p>
                             )
                       )}
-                      {item.cta && (
+                      {(item.ctas ?? (item.cta ? [item.cta] : null))?.map((cta) => (
                         <a
-                          href={item.cta.url}
-                          target={item.cta.url !== "#" ? "_blank" : undefined}
-                          rel={item.cta.url !== "#" ? "noopener noreferrer" : undefined}
-                          className="mt-3 inline-flex items-center font-sans text-base font-medium text-sienna-700 underline underline-offset-2 hover:text-sienna-600 transition-colors"
+                          key={cta.label}
+                          href={cta.url}
+                          target={cta.url !== "#" ? "_blank" : undefined}
+                          rel={cta.url !== "#" ? "noopener noreferrer" : undefined}
+                          className="mt-3 mr-6 inline-flex items-center font-sans text-base font-medium text-sienna-700 underline underline-offset-2 hover:text-sienna-600 transition-colors"
                         >
-                          {item.cta.label}
+                          {cta.label}
                         </a>
-                      )}
+                      ))}
                       {item.iban && (
                         <div className="mt-4 flex flex-col gap-4">
                           <div className="flex flex-col gap-0.5">
