@@ -96,11 +96,10 @@ export const content = {
         q: "Come arrivare",
         a: [
           "Piazza Armerina vale già da sola il viaggio: un bellissimo borgo medievale nel cuore della Sicilia, a 700 metri sul livello del mare. La location si trova a circa 5km dal centro e a 1h30 da Catania. Vi consigliamo di arrivare il giorno prima per esplorare il borgo con calma.",
-          "Purtroppo non possiamo aiutare direttamente con il trasporto, ma potete unirvi al gruppo WhatsApp degli ospiti o contattarci direttamente se avete difficoltà a raggiungere il posto — troveremo una soluzione.",
+          "Purtroppo non possiamo aiutare direttamente con il trasporto, ma se avete difficoltà a raggiungere il posto scriveteci — troveremo una soluzione insieme ;)",
         ],
         ctas: [
           { label: "Apri Google Maps", url: mapsUrl },
-          { label: "Unisciti al gruppo WhatsApp", url: "#" },
         ],
       },
       {
@@ -121,12 +120,10 @@ export const content = {
       {
         q: "Resta aggiornato",
         a: [
-          "Abbiamo aperto un canale WhatsApp per condividere aggiornamenti con tutti — vi consigliamo di iscrivervi per non perdervi niente!",
-          "Abbiamo anche creato un gruppo per gli ospiti dove potete chiacchierare, trovare compagnia per il viaggio e organizzarvi insieme.",
+          "Abbiamo creato un gruppo WhatsApp per tutti gli ospiti — perfetto per conoscersi prima del grande giorno, organizzare i viaggi e non perdersi nessun aggiornamento dell'ultimo minuto. Vi consigliamo di unirvi!",
         ],
         ctas: [
-          { label: "Segui il canale", url: "#" },
-          { label: "Unisciti al gruppo", url: "#" },
+          { label: "Unisciti al gruppo WhatsApp", url: "https://chat.whatsapp.com/HKQWLGYdniv8btV1Utv03y?mode=gi_t" },
         ],
       },
       {
@@ -243,11 +240,10 @@ export const content = {
         q: "Getting there",
         a: [
           "Piazza Armerina is worth the trip on its own: it's a beautiful medieval borgo in the heart of Sicily sitting at 700 metres above sea level. The venue is around 5km from the town centre and about 1h30 from Catania. We recommend arriving the day before to explore the town at your own pace.",
-          "Unfortunately we can't help with transportation directly, but feel free to join the guest WhatsApp group or reach us directly if you're having trouble reaching the location — we'll find a solution.",
+          "Unfortunately we can't help with transportation directly, but if you're having trouble getting there, just reach out — we'll figure something out together ;)",
         ],
         ctas: [
           { label: "Open in Google Maps", url: mapsUrl },
-          { label: "Join the WhatsApp group", url: "#" },
         ],
       },
       {
@@ -268,12 +264,10 @@ export const content = {
       {
         q: "Stay updated",
         a: [
-          "We created a WhatsApp channel to share updates with everyone — we suggest you all subscribe so you don't miss anything!",
-          "We also opened a guest group where you can chat with each other, find travel companions, and sort things out together.",
+          "We've set up a WhatsApp group for all guests — a great place to connect before the day, coordinate travel, or just say hi. We'll also use it to share any last-minute updates, so we recommend joining so you don't miss a thing.",
         ],
         ctas: [
-          { label: "Follow the channel", url: "#" },
-          { label: "Join the group", url: "#" },
+          { label: "Join the WhatsApp group", url: "https://chat.whatsapp.com/HKQWLGYdniv8btV1Utv03y?mode=gi_t" },
         ],
       },
       {
