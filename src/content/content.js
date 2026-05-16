@@ -11,7 +11,7 @@ export const content = {
     mapsUrl,
     rsvp: {
       title: "RSVP",
-      deadline: "Per favore rispondi entro il 1° giugno 2026",
+      deadline: "Per favore rispondi entro il 31 luglio 2026",
       namePlaceholder: "Nome completo",
       nameLabel: "Nome completo",
       guestLabel: "Ospite",
@@ -95,7 +95,7 @@ export const content = {
       {
         q: "Come arrivare",
         a: [
-          "Piazza Armerina vale già da sola il viaggio: un bellissimo borgo medievale nel cuore della Sicilia, a 700 metri sul livello del mare. La location si trova a circa 5km dal centro e a 1h30 da Catania. Vi consigliamo di arrivare il giorno prima per esplorare il borgo con calma.",
+          "Piazza Armerina vale già da sola il viaggio: un bellissimo borgo medievale nel cuore della Sicilia, a 700 metri sul livello del mare. La location si trova a circa 5km dal centro, a 1h30 da Catania e a 2h30 da Palermo. Vi consigliamo di arrivare il giorno prima per esplorare il borgo con calma.",
           "Purtroppo non possiamo aiutare direttamente con il trasporto, ma se avete difficoltà a raggiungere il posto scriveteci — troveremo una soluzione insieme ;)",
         ],
         ctas: [
@@ -104,23 +104,24 @@ export const content = {
       },
       {
         q: "Dove dormire",
-        a: [
-          "Stiamo lavorando per ottenere tariffe agevolate con alcuni hotel nelle vicinanze, vi faremo sapere!",
-          "Piazza Armerina è piena di bei B&B, Airbnb e hotel se siete alla ricerca di altre opzioni.",
+        blocks: [
+          { type: "text", parts: ["Stiamo trattando tariffe agevolate con il ", { text: "G.H. Hotel", href: "https://maps.app.goo.gl/HG99EGFef7Co1pT76" }, " — un posto tranquillo, senza pretese. I prezzi indicativi sono:"] },
+          { type: "list", items: ["Singola: ~50€", "Doppia: ~75€", "Quadrupla: ~110€"] },
+          { type: "text", value: "I prezzi potrebbero variare (speriamo in meglio). Vi aggiorneremo non appena avremo dettagli definitivi." },
+          { type: "text", value: "Se preferite organizzarvi in autonomia, Piazza Armerina ha tanti bei B&B, Airbnb e hotel tra cui scegliere." },
         ],
       },
       {
         q: "Programma",
-        items: [
-          "La cerimonia inizierà intorno alle 15:00",
-          "Seguiranno aperitivo e cena all'aperto (speriamo 🤞)",
-          "La festa finirà intorno alle 2:00",
+        blocks: [
+          { type: "list", items: ["La cerimonia inizierà intorno alle 15:00", "Seguiranno aperitivo e cena all'aperto (speriamo 🤞)", "La festa finirà intorno alle 2:00"] },
+          { type: "text", parts: ["Presto altri aggiornamenti. Restate in contatto tramite il ", { text: "gruppo WhatsApp", href: "https://chat.whatsapp.com/HKQWLGYdniv8btV1Utv03y?mode=gi_t" }, "."] },
         ],
       },
       {
         q: "Resta aggiornato",
         a: [
-          "Abbiamo creato un gruppo WhatsApp per tutti gli ospiti — perfetto per conoscersi prima del grande giorno, organizzare i viaggi e non perdersi nessun aggiornamento dell'ultimo minuto. Vi consigliamo di unirvi!",
+          "Unitevi al gruppo WhatsApp per restare aggiornati su tutto quello che riguarda il matrimonio. Solo gli admin possono scrivere, quindi niente spam — solo le informazioni che vi servono davvero. Vi consigliamo di unirvi per non perdervi niente.",
         ],
         ctas: [
           { label: "Unisciti al gruppo WhatsApp", url: "https://chat.whatsapp.com/HKQWLGYdniv8btV1Utv03y?mode=gi_t" },
@@ -129,6 +130,7 @@ export const content = {
       {
         q: "Dresscode",
         items: [
+          { text: "Solo Patagonia", strikethrough: true },
           "Eleganti, ma senza perdere di vista il vostro stile",
           "I toni caldi e terrosi si sposano perfettamente con la stagione e il luogo",
           "Il prato potrebbe mettere a dura prova i tacchi a spillo. Pensateci bene prima di essere temerari",
@@ -155,7 +157,7 @@ export const content = {
     mapsUrl,
     rsvp: {
       title: "RSVP",
-      deadline: "Please respond by June 1, 2026",
+      deadline: "Please respond by July 31, 2026",
       namePlaceholder: "Full name",
       nameLabel: "Full name",
       guestLabel: "Guest",
@@ -239,7 +241,7 @@ export const content = {
       {
         q: "Getting there",
         a: [
-          "Piazza Armerina is worth the trip on its own: it's a beautiful medieval borgo in the heart of Sicily sitting at 700 metres above sea level. The venue is around 5km from the town centre and about 1h30 from Catania. We recommend arriving the day before to explore the town at your own pace.",
+          "Piazza Armerina is worth the trip on its own: it's a beautiful medieval borgo in the heart of Sicily sitting at 700 metres above sea level. The venue is around 5km from the town centre, about 1h30 from Catania and 2h30 from Palermo. We recommend arriving the day before to explore the town at your own pace.",
           "Unfortunately we can't help with transportation directly, but if you're having trouble getting there, just reach out — we'll figure something out together ;)",
         ],
         ctas: [
@@ -248,23 +250,24 @@ export const content = {
       },
       {
         q: "Where to stay",
-        a: [
-          "We're working on preferential rates with nearby hotels and will share details soon.",
-          "Piazza Armerina is full of nice Airbnbs and hotels if you're looking for other options.",
+        blocks: [
+          { type: "text", parts: ["We're in talks with ", { text: "G.H. Hotel", href: "https://maps.app.goo.gl/HG99EGFef7Co1pT76" }, " for preferential rates — a relaxed, no-fuss spot, nothing pretentious. Approximate prices:"] },
+          { type: "list", items: ["Single: ~€50", "Double: ~€75", "Quad: ~€110"] },
+          { type: "text", value: "Prices may vary (hopefully less). We'll keep you posted once things are confirmed." },
+          { type: "text", value: "If you'd rather sort your own accommodation, Piazza Armerina has plenty of nice Airbnbs and hotels to choose from." },
         ],
       },
       {
         q: "The plan",
-        items: [
-          "The ceremony will start around 3:00 p.m.",
-          "There will be an aperitivo and a dinner outside (hopefully 🤞)",
-          "The party will wrap up around 2:00 a.m.",
+        blocks: [
+          { type: "list", items: ["The ceremony will start around 3:00 p.m.", "There will be an aperitivo and a dinner outside (hopefully 🤞)", "The party will wrap up around 2:00 a.m."] },
+          { type: "text", parts: ["More updates soon — stay in touch via the ", { text: "WhatsApp group", href: "https://chat.whatsapp.com/HKQWLGYdniv8btV1Utv03y?mode=gi_t" }, "."] },
         ],
       },
       {
         q: "Stay updated",
         a: [
-          "We've set up a WhatsApp group for all guests — a great place to connect before the day, coordinate travel, or just say hi. We'll also use it to share any last-minute updates, so we recommend joining so you don't miss a thing.",
+          "Join our WhatsApp group to stay up to date with everything wedding-related. Only the admins can post, so no spam — just the information you actually need. We recommend joining so you don't miss a thing.",
         ],
         ctas: [
           { label: "Join the WhatsApp group", url: "https://chat.whatsapp.com/HKQWLGYdniv8btV1Utv03y?mode=gi_t" },
@@ -273,6 +276,7 @@ export const content = {
       {
         q: "Dresscode",
         items: [
+          { text: "Patagonia only", strikethrough: true },
           "Dress elegantly, but make it yours",
           "Warm, earthy tones fit the season and the location beautifully",
           "Grass and stilettos don't mix well — heels are absolutely fine",

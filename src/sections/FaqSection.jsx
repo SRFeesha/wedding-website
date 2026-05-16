@@ -81,6 +81,36 @@ export default function FaqSection({ copy }) {
                           : "opacity 200ms cubic-bezier(0.5, 0, 0.75, 0), transform 200ms cubic-bezier(0.5, 0, 0.75, 0)",
                       }}
                     >
+                      {item.blocks && (
+                        <div className="flex flex-col gap-4">
+                          {item.blocks.map((block, i) =>
+                            block.type === "list" ? (
+                              <ul key={i} className="space-y-3 pl-3">
+                                {block.items.map((line) => {
+                                  const text = typeof line === "string" ? line : line.text;
+                                  const strike = typeof line === "object" && line.strikethrough;
+                                  return (
+                                    <li key={text} className="flex items-start gap-2">
+                                      <span className="mt-[0.5em] h-2 w-2 shrink-0 rounded-full bg-gold-600" aria-hidden="true" />
+                                      <p className={`font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]${strike ? " line-through opacity-50" : ""}`}>{text}</p>
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            ) : (
+                              <p key={i} className="font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]">
+                                {block.parts
+                                  ? block.parts.map((part, j) =>
+                                      typeof part === "string" ? part : (
+                                        <a key={j} href={part.href} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 decoration-ink/30 hover:decoration-ink/60 transition-[text-decoration-color]">{part.text}</a>
+                                      )
+                                    )
+                                  : block.value}
+                              </p>
+                            )
+                          )}
+                        </div>
+                      )}
                       {item.a && (
                         Array.isArray(item.a)
                           ? <div className="flex flex-col gap-2">{item.a.map((para, i) => (
@@ -143,12 +173,16 @@ export default function FaqSection({ copy }) {
                       )}
                       {item.items && (
                         <ul className="space-y-3 pl-3">
-                          {item.items.map((line) => (
-                            <li key={line} className="flex items-start gap-2">
-                              <span className="mt-[0.5em] h-2 w-2 shrink-0 rounded-full bg-gold-600" aria-hidden="true" />
-                              <p className="font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]">{line}</p>
-                            </li>
-                          ))}
+                          {item.items.map((line) => {
+                            const text = typeof line === "string" ? line : line.text;
+                            const strike = typeof line === "object" && line.strikethrough;
+                            return (
+                              <li key={text} className="flex items-start gap-2">
+                                <span className="mt-[0.5em] h-2 w-2 shrink-0 rounded-full bg-gold-600" aria-hidden="true" />
+                                <p className={`font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]${strike ? " line-through opacity-50" : ""}`}>{text}</p>
+                              </li>
+                            );
+                          })}
                         </ul>
                       )}
                     </div>
