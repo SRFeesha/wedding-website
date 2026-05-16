@@ -6,3 +6,10 @@ dist/
 *.log
 .DS_Store
 .vercel
+
+# Claude Code
+.claude/settings.local.json
+.playwright-mcp/
+
+# Screenshot scratchpad (root-level only, keeps public/ assets tracked)
+/*.png
