@@ -7,7 +7,7 @@ export default function HeroSection({ copy, locale, onChangeLocale }) {
   return (
     <section
       id="hero"
-      className="relative z-10 -mt-[20vh] flex flex-col items-center bg-linen-50 pb-24 pt-12 sm:pb-32 sm:pt-16"
+      className="flex flex-col items-center bg-linen-50 pb-24 pt-[15vh] sm:pb-32"
       aria-label="Hero"
     >
       <div className="flex flex-col items-center gap-5 px-5 text-center sm:px-10">
