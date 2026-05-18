@@ -13,3 +13,6 @@ dist/
 
 # Screenshot scratchpad (root-level only, keeps public/ assets tracked)
 /*.png
+
+# Local font assets (not wired up to the project)
+public/fonts/
