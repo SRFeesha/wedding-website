@@ -106,7 +106,7 @@ export const content = {
         q: "Dove dormire",
         blocks: [
           { type: "text", parts: ["Stiamo trattando tariffe agevolate con il ", { text: "G.H. Hotel", href: "https://maps.app.goo.gl/HG99EGFef7Co1pT76" }, " — un posto tranquillo, senza pretese. I prezzi indicativi sono:"] },
-          { type: "list", items: ["Singola: ~50€", "Doppia: ~75€", "Quadrupla: ~110€"] },
+          { type: "list", items: ["Singola: ~55€", "Doppia: ~80€", "Quadrupla: ~115€"] },
           { type: "text", value: "I prezzi potrebbero variare (speriamo in meglio). Vi aggiorneremo non appena avremo dettagli definitivi." },
           { type: "text", value: "Se preferite organizzarvi in autonomia, Piazza Armerina ha tanti bei B&B, Airbnb e hotel tra cui scegliere." },
         ],
@@ -252,7 +252,7 @@ export const content = {
         q: "Where to stay",
         blocks: [
           { type: "text", parts: ["We're in talks with ", { text: "G.H. Hotel", href: "https://maps.app.goo.gl/HG99EGFef7Co1pT76" }, " for preferential rates — a relaxed, no-fuss spot, nothing pretentious. Approximate prices:"] },
-          { type: "list", items: ["Single: ~€50", "Double: ~€75", "Quad: ~€110"] },
+          { type: "list", items: ["Single: ~€55", "Double: ~€80", "Quad: ~€115"] },
           { type: "text", value: "Prices may vary (hopefully less). We'll keep you posted once things are confirmed." },
           { type: "text", value: "If you'd rather sort your own accommodation, Piazza Armerina has plenty of nice Airbnbs and hotels to choose from." },
         ],
