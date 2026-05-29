@@ -352,15 +352,27 @@ export default function RSVPForm({ copy }) {
   return (
     <section id="rsvp" className="bg-linen-100 px-3 pt-20 sm:px-8">
       <div
-        className="mx-auto max-w-2xl rounded-t-[4px] px-5 pt-24 pb-12 sm:px-12 sm:pt-24 sm:pb-12"
+        className="relative isolate mx-auto max-w-2xl rounded-t-[4px] bg-linen-50 px-5 pt-24 pb-12 sm:px-12 sm:pt-24 sm:pb-12"
         style={{
           border: "1px solid rgba(196,168,122,0.40)",
           boxShadow: "0 2px 20px rgba(44,22,16,0.07)",
-          backgroundImage: "url('/paper-texture.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
         }}
       >
+        {/* Paper texture layer — separate element so opacity only affects the image */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            borderRadius: "4px 4px 0 0",
+            backgroundImage: "url('/paper-texture.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center top",
+            opacity: 0.5,
+            zIndex: -1,
+            pointerEvents: "none",
+          }}
+        />
         {/* Header */}
         <div className="text-center">
           <h2 className="font-display text-5xl font-semibold text-ink [text-wrap:balance]">{t.title}</h2>
