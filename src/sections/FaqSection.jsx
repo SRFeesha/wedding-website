@@ -173,13 +173,19 @@ export default function FaqSection({ copy }) {
                       )}
                       {item.items && (
                         <ul className="space-y-3 pl-3">
-                          {item.items.map((line) => {
-                            const text = typeof line === "string" ? line : line.text;
-                            const strike = typeof line === "object" && line.strikethrough;
+                          {item.items.map((line, i) => {
+                            const parts = typeof line === "object" && line.parts ? line.parts : null;
+                            const text = typeof line === "string" ? line : (parts ? null : line.text);
+                            const strike = typeof line === "object" && !parts && line.strikethrough;
+                            const key = typeof line === "string" ? line : (parts ? i : line.text);
                             return (
-                              <li key={text} className="flex items-start gap-2">
+                              <li key={key} className="flex items-start gap-2">
                                 <span className="mt-[0.5em] h-2 w-2 shrink-0 rounded-full bg-gold-600" aria-hidden="true" />
-                                <p className={`font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]${strike ? " line-through opacity-50" : ""}`}>{text}</p>
+                                <p className={`font-body text-[24px] leading-[1.25] text-ink/85 [text-wrap:pretty]${strike ? " line-through opacity-50" : ""}`}>
+                                  {parts
+                                    ? parts.map((part, j) => typeof part === "string" ? part : <span key={j} className="line-through opacity-50">{part.text}</span>)
+                                    : text}
+                                </p>
                               </li>
                             );
                           })}
