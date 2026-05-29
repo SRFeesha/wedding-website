@@ -92,7 +92,10 @@ function CrossfadeIcon({ Icon, active, size = 16 }) {
 const ACTIVE_PILL_SHADOW =
   "0px 1px 2px 0px rgba(0,0,0,0.12), inset 0px 2px 4px 0px rgba(255,255,255,0.04)";
 const SUBMIT_SHADOW =
-  "0px 2px 4px 0px rgba(0,0,0,0.18), inset 0px 4px 6px 0px rgba(255,255,255,0.04)";
+  "0px -1px 0px 1px rgba(0,0,0,0.55) inset, 0px 0px 0px 1px rgba(100,32,8,0.9) inset, 0px 0.5px 0px 1.5px rgba(255,255,255,0.22) inset, 0px 2px 6px 0px rgba(0,0,0,0.2)";
+
+const SUBMIT_GRADIENT =
+  "linear-gradient(180deg, rgba(0,0,0,0) 63.53%, rgba(255,255,255,0.12))";
 
 const bodyDelay = 2000;
 
@@ -679,8 +682,8 @@ export default function RSVPForm({ copy }) {
           {/* Submit */}
           <div className="py-2">
             <button
-              className="group w-full rounded-2xl bg-sienna-600/95 px-7 py-3 font-sans text-2xl font-medium text-white outline outline-2 outline-offset-[-2px] outline-black/15 transition hover:bg-sienna-600 active:scale-[0.97] disabled:active:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500"
-              style={{ boxShadow: SUBMIT_SHADOW }}
+              className="group w-full rounded-2xl bg-sienna-600/95 px-7 py-3 font-sans text-2xl font-medium text-white transition hover:bg-sienna-600 active:scale-[0.97] disabled:active:scale-100 disabled:cursor-not-allowed flex items-center justify-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500"
+              style={{ boxShadow: SUBMIT_SHADOW, backgroundImage: SUBMIT_GRADIENT }}
               onClick={handleSubmit}
               disabled={status === "loading"}
               aria-label={status === "loading" ? t.submittingLabel : undefined}
