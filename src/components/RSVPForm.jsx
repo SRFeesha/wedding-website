@@ -92,7 +92,7 @@ function CrossfadeIcon({ Icon, active, size = 16 }) {
 const ACTIVE_PILL_SHADOW =
   "0px 1px 2px 0px rgba(0,0,0,0.12), inset 0px 2px 4px 0px rgba(255,255,255,0.04)";
 const SUBMIT_SHADOW =
-  "0px -1px 0px 1px rgba(0,0,0,0.55) inset, 0px 0px 0px 1px rgba(100,32,8,0.9) inset, 0px 0.5px 0px 1.5px rgba(255,255,255,0.22) inset, 0px 2px 6px 0px rgba(0,0,0,0.2)";
+  "0px -1px 0px 1px rgba(0,0,0,0.01) inset, 0px 0px 0px 1px rgba(100,32,8,0.9) inset, 0px 0.5px 0px 1.5px rgba(255,255,255,0.22) inset, 0px 2px 6px 0px rgba(0,0,0,0.2)";
 
 const SUBMIT_GRADIENT =
   "linear-gradient(180deg, rgba(0,0,0,0) 63.53%, rgba(255,255,255,0.12))";
