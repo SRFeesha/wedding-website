@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, LayoutGroup, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useControls, button } from "leva";
 import {
   WarningCircleIcon, CircleNotchIcon, CaretDownIcon,
   CheckCircleIcon, XSquareIcon, PlusIcon, ArrowRightIcon,
@@ -215,6 +216,22 @@ export default function RSVPForm({ copy }) {
   const shouldReduce = useReducedMotion();
   const [expandedGuests, setExpandedGuests] = useState(() => new Set());
 
+  // ── Entrance animation ────────────────────────────────────────────────────
+  const [animKey, setAnimKey] = useState(0);
+  const { y, duration, stiffness, damping, animationType } = useControls("RSVP entrance", {
+    replay:       button(() => setAnimKey((k) => k + 1)),
+    y:            { value: 48,   min: 0,   max: 200, step: 1,    label: "y offset (px)" },
+    animationType:{ value: "spring", options: ["spring", "tween"], label: "type" },
+    stiffness:    { value: 260,  min: 10,  max: 500, step: 10 },
+    damping:      { value: 22,   min: 1,   max: 80,  step: 1  },
+    duration:     { value: 0.65, min: 0.1, max: 3,   step: 0.05 },
+  });
+  const entranceTransition =
+    animationType === "spring"
+      ? { type: "spring", stiffness, damping }
+      : { type: "tween", duration, ease: [0.25, 1, 0.5, 1] };
+  // ─────────────────────────────────────────────────────────────────────────
+
   const addGuest = () => {
     const id = ++guestIdRef.current;
     setForm((p) => ({
@@ -351,12 +368,17 @@ export default function RSVPForm({ copy }) {
 
   return (
     <section id="rsvp" className="bg-linen-100 px-3 pt-20 sm:px-8">
-      <div
+      <motion.div
+        key={animKey}
         className="relative isolate mx-auto max-w-2xl rounded-t-[4px] bg-linen-50 px-5 pt-24 pb-12 sm:px-12 sm:pt-24 sm:pb-12"
         style={{
           border: "1px solid rgba(196,168,122,0.40)",
           boxShadow: "0 2px 20px rgba(44,22,16,0.07)",
         }}
+        initial={shouldReduce ? false : { opacity: 0, y }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.05 }}
+        transition={entranceTransition}
       >
         {/* Paper texture layer — separate element so opacity only affects the image */}
         <div
@@ -715,7 +737,7 @@ export default function RSVPForm({ copy }) {
           </div>
 
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
