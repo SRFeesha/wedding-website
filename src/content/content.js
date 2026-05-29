@@ -94,9 +94,11 @@ export const content = {
     faqList: [
       {
         q: "Come arrivare",
-        a: [
-          "Piazza Armerina vale già da sola il viaggio: un bellissimo borgo medievale nel cuore della Sicilia, a 700 metri sul livello del mare. La location si trova a circa 5km dal centro, a 1h30 da Catania e a 2h30 da Palermo. Vi consigliamo di arrivare il giorno prima per esplorare il borgo con calma.",
-          "Purtroppo non possiamo aiutare direttamente con il trasporto, ma se avete difficoltà a raggiungere il posto scriveteci — troveremo una soluzione insieme ;)",
+        blocks: [
+          { type: "text", value: "Piazza Armerina vale già da sola il viaggio: un bellissimo borgo medievale nel cuore della Sicilia, a 700 metri sul livello del mare. La location si trova a circa 5km dal centro, a 1h30 da Catania e a 2h30 da Palermo. Vi consigliamo di arrivare il giorno prima per esplorare il borgo con calma." },
+          { type: "text", value: "Se arrivate il giorno prima, potete raggiungere Piazza Armerina in autobus — le fermate sono a pochi minuti a piedi dal G.H. Hotel:" },
+          { type: "list", items: ["Da Palermo: SAIS Autolinee (~3 min a piedi dall'hotel)", "Da Catania: Etna Trasporti (~7–10 min a piedi dall'hotel)"] },
+          { type: "text", value: "Controllate gli orari sui siti di SAIS Autolinee e Etna Trasporti. Se avete difficoltà a raggiungere il posto scriveteci — troveremo una soluzione insieme ;)" },
         ],
         ctas: [
           { label: "Apri Google Maps", url: mapsUrl },
@@ -105,9 +107,12 @@ export const content = {
       {
         q: "Dove dormire",
         blocks: [
-          { type: "text", parts: ["Stiamo trattando tariffe agevolate con il ", { text: "G.H. Hotel", href: "https://maps.app.goo.gl/HG99EGFef7Co1pT76" }, " — un posto tranquillo, senza pretese. I prezzi indicativi sono:"] },
-          { type: "list", items: ["Singola: ~55€", "Doppia: ~80€", "Quadrupla: ~115€"] },
-          { type: "text", value: "I prezzi potrebbero variare (speriamo in meglio). Vi aggiorneremo non appena avremo dettagli definitivi." },
+          { type: "text", value: "Se volete dormire direttamente alla Tenuta Savoca, ci sono alcune camere disponibili in struttura:" },
+          { type: "list", items: ["Doppia: €140", "Tripla: €190", "Quadrupla: €225"] },
+          { type: "text", value: "Per prenotare scriveteci direttamente — possiamo coordinare con la struttura. Se ci sono camere libere, può essere anche una scelta last minute." },
+          { type: "text", parts: ["In alternativa, abbiamo tariffe agevolate con il ", { text: "G.H. Hotel", href: "https://maps.app.goo.gl/HG99EGFef7Co1pT76" }, " — un posto tranquillo, a pochi minuti a piedi dalla fermata del bus. I prezzi confermati sono:"] },
+          { type: "list", items: ["Singola: €50", "DUS (doppia uso singola): €55", "Matrimoniale/Doppia: €70", "Tripla: €90", "Quadrupla: €100"] },
+          { type: "text", value: "Per gli ospiti del G.H. Hotel ci sarà una navetta dalla Tenuta Savoca all'hotel a fine serata." },
           { type: "text", value: "Se preferite organizzarvi in autonomia, Piazza Armerina ha tanti bei B&B, Airbnb e hotel tra cui scegliere." },
         ],
       },
@@ -240,9 +245,11 @@ export const content = {
     faqList: [
       {
         q: "Getting there",
-        a: [
-          "Piazza Armerina is worth the trip on its own: it's a beautiful medieval borgo in the heart of Sicily sitting at 700 metres above sea level. The venue is around 5km from the town centre, about 1h30 from Catania and 2h30 from Palermo. We recommend arriving the day before to explore the town at your own pace.",
-          "Unfortunately we can't help with transportation directly, but if you're having trouble getting there, just reach out — we'll figure something out together ;)",
+        blocks: [
+          { type: "text", value: "Piazza Armerina is worth the trip on its own: it's a beautiful medieval borgo in the heart of Sicily sitting at 700 metres above sea level. The venue is around 5km from the town centre, about 1h30 from Catania and 2h30 from Palermo. We recommend arriving the day before to explore the town at your own pace." },
+          { type: "text", value: "If you're arriving the day before, you can get to Piazza Armerina by bus — the stops are a short walk from the G.H. Hotel:" },
+          { type: "list", items: ["From Palermo: SAIS Autolinee (~3 min walk from the hotel)", "From Catania: Etna Trasporti (~7–10 min walk from the hotel)"] },
+          { type: "text", value: "Check schedules on the SAIS Autolinee and Etna Trasporti websites. If you're having trouble getting there, just reach out — we'll figure something out together ;)" },
         ],
         ctas: [
           { label: "Open in Google Maps", url: mapsUrl },
@@ -251,9 +258,12 @@ export const content = {
       {
         q: "Where to stay",
         blocks: [
-          { type: "text", parts: ["We're in talks with ", { text: "G.H. Hotel", href: "https://maps.app.goo.gl/HG99EGFef7Co1pT76" }, " for preferential rates — a relaxed, no-fuss spot, nothing pretentious. Approximate prices:"] },
-          { type: "list", items: ["Single: ~€55", "Double: ~€80", "Quad: ~€115"] },
-          { type: "text", value: "Prices may vary (hopefully less). We'll keep you posted once things are confirmed." },
+          { type: "text", value: "If you'd like to stay at Tenuta Savoca itself, there are a few rooms available on site:" },
+          { type: "list", items: ["Double: €140", "Triple: €190", "Quad: €225"] },
+          { type: "text", value: "To book, just get in touch with us directly — we'll coordinate with the venue. If rooms are still available, it can even be a last-minute decision." },
+          { type: "text", parts: ["Alternatively, we have preferential rates at ", { text: "G.H. Hotel", href: "https://maps.app.goo.gl/HG99EGFef7Co1pT76" }, " — a relaxed, no-fuss spot a short walk from the bus stop. Confirmed prices are:"] },
+          { type: "list", items: ["Single: €50", "DUS (single occupancy double): €55", "Double: €70", "Triple: €90", "Quad: €100"] },
+          { type: "text", value: "G.H. Hotel guests will have a shuttle from Tenuta Savoca back to the hotel at the end of the evening." },
           { type: "text", value: "If you'd rather sort your own accommodation, Piazza Armerina has plenty of nice Airbnbs and hotels to choose from." },
         ],
       },
