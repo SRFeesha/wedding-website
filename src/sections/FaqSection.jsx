@@ -84,7 +84,9 @@ export default function FaqSection({ copy }) {
                       {item.blocks && (
                         <div className="flex flex-col gap-4">
                           {item.blocks.map((block, i) =>
-                            block.type === "list" ? (
+                            block.type === "spacer" ? (
+                              <div key={i} className="h-4" />
+                            ) : block.type === "list" ? (
                               <ul key={i} className="space-y-3 pl-3">
                                 {block.items.map((line) => {
                                   const text = typeof line === "string" ? line : line.text;

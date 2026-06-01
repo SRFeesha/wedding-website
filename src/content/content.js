@@ -97,7 +97,7 @@ export const content = {
         blocks: [
           { type: "text", value: "Piazza Armerina vale già da sola il viaggio: un bellissimo borgo medievale nel cuore della Sicilia, a 700 metri sul livello del mare. La location si trova a circa 5km dal centro, a 1h30 da Catania e a 2h30 da Palermo. Vi consigliamo di arrivare il giorno prima per esplorare il borgo con calma." },
           { type: "text", value: "Potete anche arrivare in autobus — mi raccomando però il giorno prima ;) Le fermate sono a pochi minuti a piedi dal G.H. Hotel: SAIS Autolinee (da Palermo) e Etna Trasporti (da Catania)." },
-          { type: "text", value: "Se avete difficoltà a raggiungere il posto scriveteci — troveremo una soluzione insieme ;)" },
+          { type: "text", value: "Se avete difficoltà a raggiungere il posto scriveteci — troveremo una soluzione insieme" },
         ],
         ctas: [
           { label: "Apri Google Maps", url: mapsUrl },
@@ -110,9 +110,10 @@ export const content = {
           { type: "list", items: ["Singola: €50", "DUS (doppia uso singola): €55", "Matrimoniale/Doppia: €70", "Tripla: €90", "Quadrupla: €100"] },
           { type: "text", value: "Per ottenere la tariffa agevolata, scrivete una email al G.H. Hotel specificando che è per il matrimonio “LaMuse”." },
           { type: "text", value: "Per gli ospiti del G.H. Hotel ci sarà una navetta dalla Tenuta Savoca all'hotel a fine serata." },
+          { type: "spacer" },
           { type: "text", value: "Se volete dormire direttamente alla Tenuta Savoca, ci sono alcune camere disponibili in struttura:" },
           { type: "list", items: ["Doppia: €140", "Tripla: €190", "Quadrupla: €225"] },
-          { type: "text", value: "Per prenotare scriveteci direttamente — possiamo coordinare con la struttura. Se ci sono camere libere, può essere anche una scelta last minute." },
+          { type: "text", value: "Per prenotare scriveteci direttamente: possiamo coordinare con la struttura. Se ci sono camere libere, può essere anche una scelta last minute." },
           { type: "text", value: "Se preferite organizzarvi in autonomia, Piazza Armerina ha tanti bei B&B, Airbnb e hotel tra cui scegliere." },
         ],
       },
@@ -258,8 +259,9 @@ export const content = {
         blocks: [
           { type: "text", parts: ["We have preferential rates at ", { text: "G.H. Hotel", href: "https://maps.app.goo.gl/HG99EGFef7Co1pT76" }, " — a relaxed, no-fuss spot a short walk from the bus stop. Confirmed prices are:"] },
           { type: "list", items: ["Single: €50", "DUS (single occupancy double): €55", "Double: €70", "Triple: €90", "Quad: €100"] },
-          { type: "text", value: "To get this preferential rate, you'll need to send an email to the G.H. Hotel mentioning that it's for the matrimonio “LaMuse”." },
+          { type: "text", value: "To get this preferential rate, you'll need to send an email to the G.H. Hotel mentioning that it's for the 'matrimonio LaMuse'." },
           { type: "text", value: "G.H. Hotel guests will have a shuttle from Tenuta Savoca back to the hotel at the end of the evening." },
+          { type: "spacer" },
           { type: "text", value: "If you'd like to stay at Tenuta Savoca itself, there are also a few rooms available on site:" },
           { type: "list", items: ["Double: €140", "Triple: €190", "Quad: €225"] },
           { type: "text", value: "To book, just get in touch with us directly — we'll coordinate with the venue. If rooms are still available, it can even be a last-minute decision." },
