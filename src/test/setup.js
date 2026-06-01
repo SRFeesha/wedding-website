@@ -7,6 +7,15 @@ global.fetch = vi.fn();
 // internally, which causes unhandled errors that make vitest exit with code 1 on CI
 window.scrollTo = vi.fn();
 
+// jsdom has no layout engine, so IntersectionObserver doesn't exist — framer-motion's
+// whileInView feature calls new IntersectionObserver() on mount
+global.IntersectionObserver = class {
+  constructor() {}
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};
+
 afterEach(() => {
   vi.clearAllMocks();
 });
