@@ -108,6 +108,7 @@ export const content = {
         blocks: [
           { type: "text", parts: ["Abbiamo tariffe agevolate con il ", { text: "G.H. Hotel", href: "https://maps.app.goo.gl/HG99EGFef7Co1pT76" }, " — un posto tranquillo, a pochi minuti a piedi dalla fermata del bus. I prezzi confermati sono:"] },
           { type: "list", items: ["Singola: €50", "DUS (doppia uso singola): €55", "Matrimoniale/Doppia: €70", "Tripla: €90", "Quadrupla: €100"] },
+          { type: "text", value: "Per ottenere la tariffa agevolata, scrivete una email al G.H. Hotel specificando che è per il matrimonio “LaMuse”." },
           { type: "text", value: "Per gli ospiti del G.H. Hotel ci sarà una navetta dalla Tenuta Savoca all'hotel a fine serata." },
           { type: "text", value: "Se volete dormire direttamente alla Tenuta Savoca, ci sono alcune camere disponibili in struttura:" },
           { type: "list", items: ["Doppia: €140", "Tripla: €190", "Quadrupla: €225"] },
@@ -257,6 +258,7 @@ export const content = {
         blocks: [
           { type: "text", parts: ["We have preferential rates at ", { text: "G.H. Hotel", href: "https://maps.app.goo.gl/HG99EGFef7Co1pT76" }, " — a relaxed, no-fuss spot a short walk from the bus stop. Confirmed prices are:"] },
           { type: "list", items: ["Single: €50", "DUS (single occupancy double): €55", "Double: €70", "Triple: €90", "Quad: €100"] },
+          { type: "text", value: "To get this preferential rate, you'll need to send an email to the G.H. Hotel mentioning that it's for the matrimonio “LaMuse”." },
           { type: "text", value: "G.H. Hotel guests will have a shuttle from Tenuta Savoca back to the hotel at the end of the evening." },
           { type: "text", value: "If you'd like to stay at Tenuta Savoca itself, there are also a few rooms available on site:" },
           { type: "list", items: ["Double: €140", "Triple: €190", "Quad: €225"] },
