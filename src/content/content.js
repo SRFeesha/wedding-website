@@ -71,7 +71,7 @@ export const content = {
       successAttending: "Non vediamo l'ora di vederti in Sicilia!",
       successDecline: "Ci mancherai ❤️",
       successAttendingBody:
-        "Abbiamo creato un gruppo WhatsApp con gli altri ospiti — ottimo per organizzare i viaggi, trovare compagnia per il tragitto o semplicemente presentarsi prima del grande giorno. Se hai bisogno di aiuto con l'alloggio o per arrivare, scrivici pure.",
+        "Abbiamo creato una community WhatsApp per tutti gli ospiti — un gruppo annunci per gli aggiornamenti, un gruppo car sharing per organizzare i tragitti e un gruppo chit chat per presentarsi prima del grande giorno.",
       successDeclineBody: null,
       errorMsg: "Qualcosa è andato storto. Riprova o contattaci direttamente.",
       validationName: "Per favore inserisci il tuo nome.",
@@ -97,10 +97,11 @@ export const content = {
         blocks: [
           { type: "text", value: "Piazza Armerina vale già da sola il viaggio: un bellissimo borgo medievale nel cuore della Sicilia, a 700 metri sul livello del mare. La location si trova a circa 5km dal centro, a 1h30 da Catania e a 2h30 da Palermo. Vi consigliamo di arrivare il giorno prima per esplorare il borgo con calma." },
           { type: "text", value: "Potete anche arrivare in autobus — mi raccomando però il giorno prima ;) Le fermate sono a pochi minuti a piedi dal G.H. Hotel: SAIS Autolinee (da Palermo) e Etna Trasporti (da Catania)." },
-          { type: "text", value: "Se avete difficoltà a raggiungere il posto scriveteci — troveremo una soluzione insieme" },
+          { type: "text", value: "Se avete difficoltà a raggiungere il posto scriveteci — troveremo una soluzione insieme. Potete anche unirvi al gruppo car sharing per organizzarvi con gli altri ospiti." },
         ],
         ctas: [
           { label: "Apri Google Maps", url: mapsUrl },
+          { label: "Unisciti al gruppo car sharing", url: "https://chat.whatsapp.com/F5kjZeGjx5lFN5t6Rui1AZ?mode=gi_t" },
         ],
       },
       {
@@ -121,16 +122,17 @@ export const content = {
         q: "Programma",
         blocks: [
           { type: "list", items: ["La cerimonia inizierà intorno alle 15:00", "Seguiranno aperitivo e cena all'aperto (speriamo 🤞)", "La festa finirà intorno alle 2:00"] },
-          { type: "text", parts: ["Presto altri aggiornamenti. Restate in contatto tramite il ", { text: "gruppo WhatsApp", href: "https://chat.whatsapp.com/HKQWLGYdniv8btV1Utv03y?mode=gi_t" }, "."] },
+          { type: "text", parts: ["Presto altri aggiornamenti. Restate in contatto tramite il ", { text: "gruppo WhatsApp", href: "https://chat.whatsapp.com/J8O0gSRtwhmGyaVHbb3UJl?mode=gi_t" }, "."] },
         ],
       },
       {
         q: "Resta aggiornato",
         a: [
-          "Unitevi al gruppo WhatsApp per restare aggiornati su tutto quello che riguarda il matrimonio. Solo gli admin possono scrivere, quindi niente spam — solo le informazioni che vi servono davvero. Vi consigliamo di unirvi per non perdervi niente.",
+          "Unitevi alla nostra community WhatsApp per restare aggiornati su tutto quello che riguarda il matrimonio. Solo gli admin possono scrivere nel gruppo annunci, quindi niente spam — solo le informazioni che vi servono davvero. C'è anche un gruppo chit chat per chi vuole presentarsi, organizzarsi o semplicemente farsi due chiacchiere.",
         ],
         ctas: [
-          { label: "Unisciti al gruppo WhatsApp", url: "https://chat.whatsapp.com/HKQWLGYdniv8btV1Utv03y?mode=gi_t" },
+          { label: "Unisciti al gruppo annunci", url: "https://chat.whatsapp.com/J8O0gSRtwhmGyaVHbb3UJl?mode=gi_t" },
+          { label: "Unisciti al gruppo chit chat", url: "https://chat.whatsapp.com/Kobi4a7mj955lcoqqSt66i?mode=gi_t" },
         ],
       },
       {
@@ -221,7 +223,7 @@ export const content = {
       successAttending: "We can't wait to see you in Sicily!",
       successDecline: "We'll miss you ❤️",
       successAttendingBody:
-        "We've set up a WhatsApp group with the other guests — great for coordinating travel, finding company for the journey, or just saying hello before the big day. If you need any help with accommodation or getting there, don't hesitate to reach out.",
+        "We've set up a WhatsApp community for all guests — there's an announcements group for updates, a car sharing group to coordinate travel, and a chit chat group to say hello before the big day.",
       successDeclineBody: "",
       errorMsg:
         "Something went wrong. Please try again or contact us directly.",
@@ -248,10 +250,11 @@ export const content = {
         blocks: [
           { type: "text", value: "Piazza Armerina is worth the trip on its own: it's a beautiful medieval borgo in the heart of Sicily sitting at 700 metres above sea level. The venue is around 5km from the town centre, about 1h30 from Catania and 2h30 from Palermo. We recommend arriving the day before to explore the town at your own pace." },
           { type: "text", value: "You can also get to Piazza Armerina by bus — just make sure to arrive the day before, lol. The stops are a short walk from the G.H. Hotel: SAIS Autolinee (from Palermo) and Etna Trasporti (from Catania)." },
-          { type: "text", value: "If you're having trouble getting there, just reach out — we'll figure something out together ;)" },
+          { type: "text", value: "If you're having trouble getting there, just reach out — we'll figure something out together. You can also join the car sharing group to find fellow guests heading the same way." },
         ],
         ctas: [
           { label: "Open in Google Maps", url: mapsUrl },
+          { label: "Join the car sharing group", url: "https://chat.whatsapp.com/F5kjZeGjx5lFN5t6Rui1AZ?mode=gi_t" },
         ],
       },
       {
@@ -272,16 +275,17 @@ export const content = {
         q: "The plan",
         blocks: [
           { type: "list", items: ["The ceremony will start around 3:00 p.m.", "There will be an aperitivo and a dinner outside (hopefully 🤞)", "The party will wrap up around 2:00 a.m."] },
-          { type: "text", parts: ["More updates soon — stay in touch via the ", { text: "WhatsApp group", href: "https://chat.whatsapp.com/HKQWLGYdniv8btV1Utv03y?mode=gi_t" }, "."] },
+          { type: "text", parts: ["More updates soon — stay in touch via the ", { text: "WhatsApp group", href: "https://chat.whatsapp.com/J8O0gSRtwhmGyaVHbb3UJl?mode=gi_t" }, "."] },
         ],
       },
       {
         q: "Stay updated",
         a: [
-          "Join our WhatsApp group to stay up to date with everything wedding-related. Only the admins can post, so no spam — just the information you actually need. We recommend joining so you don't miss a thing.",
+          "Join our WhatsApp community to stay up to date with everything wedding-related. Only the admins can post in the announcements group, so no spam — just the information you actually need. There's also a chit chat group if you want to say hi, coordinate, or just get excited together.",
         ],
         ctas: [
-          { label: "Join the WhatsApp group", url: "https://chat.whatsapp.com/HKQWLGYdniv8btV1Utv03y?mode=gi_t" },
+          { label: "Join the announcements group", url: "https://chat.whatsapp.com/J8O0gSRtwhmGyaVHbb3UJl?mode=gi_t" },
+          { label: "Join the chit chat group", url: "https://chat.whatsapp.com/Kobi4a7mj955lcoqqSt66i?mode=gi_t" },
         ],
       },
       {
