@@ -103,6 +103,10 @@ const OPEN_TRANSITION  = { duration: 0.35, ease: [0.25, 1, 0.5, 1] };
 const CLOSE_TRANSITION = { duration: 0.26, ease: [0.5, 0, 0.75, 0] };
 const SPRING = { type: "spring", stiffness: 460, damping: 32 };
 
+// Sent to Notion's Dietary multi-select when the guest picks the "other/note" option,
+// so the note doesn't get saved without a tag. Matches the existing Notion option.
+const DIETARY_OTHER_TAG = "Altro (vedi nota)";
+
 function Disclosure({ show, children, className = "", contentClassName = "", delay = 0 }) {
   const shouldReduce = useReducedMotion();
   const enter = shouldReduce ? { duration: 0 } : { ...OPEN_TRANSITION, delay };
@@ -279,13 +283,13 @@ export default function RSVPForm({ copy }) {
         body: JSON.stringify({
           name: form.name,
           attending: form.attending ? "Yes" : "No",
-          dietary: form.dietary === t.dietaryOtherValue ? "" : (form.dietary || t.dietaryOptions[0]),
+          dietary: form.dietary === t.dietaryOtherValue ? DIETARY_OTHER_TAG : (form.dietary || t.dietaryOptions[0]),
           dietaryNote: form.dietary === t.dietaryOtherValue ? form.dietaryNote : "",
           message: form.message,
           guests: form.guests.map((g) => ({
             name: g.name,
             ageGroup: g.ageGroup ?? "",
-            dietary: g.ageGroup === "baby" ? "" : (g.dietary === t.dietaryOtherValue ? "" : (g.dietary || t.dietaryOptions[0])),
+            dietary: g.ageGroup === "baby" ? "" : (g.dietary === t.dietaryOtherValue ? DIETARY_OTHER_TAG : (g.dietary || t.dietaryOptions[0])),
             dietaryNote: g.ageGroup === "adult" && g.dietary === t.dietaryOtherValue ? (g.dietaryNote || "") : "",
             babySeating: g.babySeating ?? "",
           })),
