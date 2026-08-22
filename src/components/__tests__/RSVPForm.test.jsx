@@ -32,9 +32,9 @@ describe("RSVPForm — rendering", () => {
     expect(screen.getByText(copy.rsvp.attendanceNo)).toBeInTheDocument();
   });
 
-  it("does not show dietary or guest button when attending is not selected", () => {
+  it("shows dietary but not the guest button when attending is not selected", () => {
     renderForm();
-    expect(screen.queryByText(copy.rsvp.dietaryLabel)).not.toBeInTheDocument();
+    expect(screen.getByText(copy.rsvp.dietaryLabel)).toBeInTheDocument();
     expect(screen.queryByText(copy.rsvp.addGuestLabel)).not.toBeInTheDocument();
   });
 

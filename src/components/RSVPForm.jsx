@@ -490,7 +490,7 @@ export default function RSVPForm({ copy }) {
           </div>
 
           {/* Dietary (conditional) */}
-          <Disclosure show={form.attending === true} contentClassName="pb-0.5" delay={0}>
+          <Disclosure show={form.attending !== false} contentClassName="pb-0.5" delay={0}>
             <div>
               <label htmlFor="rsvp-dietary" className={labelClass}>{t.dietaryLabel}</label>
               <div className="relative">
