@@ -358,7 +358,7 @@ export default function RSVPForm({ copy }) {
   return (
     <section id="rsvp" className="bg-linen-100 px-3 pt-20 sm:px-8">
       <motion.div
-        className="relative isolate mx-auto max-w-2xl rounded-t-[4px] bg-linen-50 px-5 pt-24 pb-12 sm:px-12 sm:pt-24 sm:pb-12"
+        className="relative isolate mx-auto max-w-2xl rounded-t-[12px] bg-linen-50 px-5 pt-24 pb-12 sm:px-12 sm:pt-24 sm:pb-12"
         style={{
           border: "1px solid rgba(196,168,122,0.7)",
           boxShadow: "0 2px 20px rgba(44,22,16,0.07)",
@@ -374,7 +374,7 @@ export default function RSVPForm({ copy }) {
           style={{
             position: "absolute",
             inset: 0,
-            borderRadius: "4px 4px 0 0",
+            borderRadius: "12px 12px 0 0",
             backgroundImage: "url('/paper-texture.jpg')",
             backgroundSize: "100% auto",
             backgroundPosition: "top",
@@ -387,7 +387,7 @@ export default function RSVPForm({ copy }) {
         {/* Header */}
         <div className="text-center">
           <h2 className="font-display text-5xl font-semibold text-ink [text-wrap:balance]">{t.title}</h2>
-          <p className="mt-3 font-display text-xl italic text-ink/75">{t.deadline}</p>
+          <p className="mt-3 font-display text-xl italic text-ink/75 line-through">{t.deadline}</p>
         </div>
 
         {/* Error summary */}

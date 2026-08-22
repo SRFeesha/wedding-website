@@ -7,6 +7,7 @@ export const content = {
   it: {
     heroEyebrow: "Siete invitati a festeggiare il matrimonio di",
     dateLabel: "Domenica 27 settembre 2026",
+    heroConfirmCta: "Conferma la tua presenza",
     locationEyebrow: "Dove",
     mapsUrl,
     rsvp: {
@@ -159,6 +160,7 @@ export const content = {
   en: {
     heroEyebrow: "You are invited to celebrate the wedding of",
     dateLabel: "Sunday, September 27, 2026",
+    heroConfirmCta: "Confirm your presence",
     locationEyebrow: "Where",
     locationSubtitle: "Piazza Armerina, Sicily",
     mapsUrl,
